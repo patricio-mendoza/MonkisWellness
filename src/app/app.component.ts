@@ -12,11 +12,12 @@ interface SideNavToggle {
 })
 export class AppComponent {
   title = 'sidenav';
+  
   isSideNavCollapsed = false;
   screenWidth = 0;
 
   onToggleSideNav(data: SideNavToggle): void {
-    this.isSideNavCollapsed = data.collapsed;
     this.screenWidth = data.screenWidth;
+    this.isSideNavCollapsed = data.collapsed;
   }
 }
