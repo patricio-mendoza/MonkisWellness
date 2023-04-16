@@ -1,6 +1,8 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
     <div class="logo-container">
-        <button class="logo" (click)="toggleCollapse()">A</button>
+        <button class="logo" (click)="toggleCollapse()">
+            <img class="logo-img" src="../../assets/borrego-white.svg" alt="logo"/>        
+        </button>
         <div class="logo-text" *ngIf="collapsed">Wellness</div>
         <button class="btn-close" *ngIf="collapsed" (click)="closeSidenav()">
             <i class="fal fa-times close-icon"></i>
