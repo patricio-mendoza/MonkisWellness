@@ -11,10 +11,12 @@ interface SideNavToggle {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'sidenav';
+  title = 'WellnessApp';
   
-  isSideNavCollapsed = false;
-  screenWidth = 0;
+  isLogged: boolean = false;
+  
+  isSideNavCollapsed: boolean = false;
+  screenWidth: number = 0;
 
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidth = data.screenWidth;
