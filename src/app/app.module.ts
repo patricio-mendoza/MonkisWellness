@@ -9,6 +9,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { ReservacionesComponent } from './reservaciones/reservaciones.component';
 import { AvisosComponent } from './avisos/avisos.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AvisosComponent } from './avisos/avisos.component';
     HomeComponent,
     ReservacionesComponent,
     AvisosComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
