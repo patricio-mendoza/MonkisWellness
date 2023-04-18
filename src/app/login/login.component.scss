@@ -5,9 +5,54 @@ body {
 
 .bg {
     background-image: url("../../assets/wellness-foto.jpg");
+    width: 100%;
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     box-shadow: inset 0 0 0 1000px rgba(216, 225, 255, .35);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    width: 500px;
+    height: 500px;
+    background-color: #004891;
+    border-radius: 1.825rem;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-family:'Trebuchet MS';
+
+    .login-logo { 
+        width: 150px;
+        padding-bottom: 25px;
+    }
+ 
+    .login-text {
+        font-size: 70px;
+        font-weight: 50px;
+        padding-bottom: 1cm;
+        letter-spacing: 2px;
+    }
+
+    .login-divider {
+        background-color: #fff;
+        width: 100%;
+        height: 5px;
+    }
+
+    .login-placeholder {
+        font-size: 20px;
+        align-self: start;
+        padding-left: 30px;
+        padding-top: 50px;
+    }
 }
