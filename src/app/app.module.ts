@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 import { ReservacionesComponent } from './reservaciones/reservaciones.component';
 import { AvisosComponent } from './avisos/avisos.component';
 import { LoginComponent } from './login/login.component';
+import { EstadoGymComponent } from './home/estado-gym/estado-gym.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { LoginComponent } from './login/login.component';
     ReservacionesComponent,
     AvisosComponent,
     LoginComponent,
+    EstadoGymComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,23 @@
+.header-container{
+    margin-bottom: 30px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    //align-content: space-around;
+    
+}
+.header{
+    width: 78vw;
+    height: 117px;
+    background-color: #004891;
+    //flex-grow: 1;
+    //margin-right: 0px;
+    border-radius: 20px;
+}
+.img-fluid{
+    max-width: 100%;
+    max-height: 100%;
+    
+}
