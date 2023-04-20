@@ -1,14 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
-
-.titulo-aforo{
-    font-family: 'Poppins', sans-serif;
-    font-size: 30px;
-    color: white;
-    margin-left: 2vw;
-    margin-top: 1vw;
-    position: absolute;
-    //z-index: 1;
-}
 .separator{
     width: 10vw;
     //margin-left: 1.5vw;
@@ -22,6 +12,14 @@
     position: absolute;
     margin-top: 60px;
     //z-index: 1;
+}
+.titulo-proximashoras{
+    font-family: 'Poppins', sans-serif;
+    font-size: 30px;
+    color: white;
+    margin-left: 2vw;
+    margin-top: 1vw;
+    position: absolute;
 }
 .img-fluid{
     max-width: 100%;
