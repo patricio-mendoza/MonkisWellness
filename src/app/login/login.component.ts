@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FormGroup, FormControl } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit{
 
   ngOnInit() {
     this.authService.logout();
-
+    
     this.formData = new FormGroup({
       matricula: new FormControl(""),
     });
@@ -31,7 +31,10 @@ export class LoginComponent implements OnInit{
       .subscribe( data => { 
         console.log("Is Login Success: " + data); 
         
-        if(data) this.router.navigate(['/inicio']); 
+        if(data) {
+          this.router.navigate(['/inicio']);
+          window.location.replace("http://localhost:4200/inicio");
+        } 
     });
   }
 }

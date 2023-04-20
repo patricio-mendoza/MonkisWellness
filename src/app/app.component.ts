@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth.service';
+import { AuthService } from './auth/auth.service';
 
 import { delay } from 'rxjs/operators';
 
@@ -17,14 +17,11 @@ export class AppComponent implements OnInit {
   title = 'WellnessApp';
   
   isLogged: boolean = false;
-  trigger: number = 0;
 
   isSideNavCollapsed: boolean = false;
   screenWidth: number = 0;
 
   constructor(private authService: AuthService) { }
-  
-  render() { this.trigger++; }
 
   ngOnInit() {
     let storeData = localStorage.getItem("isUserLoggedIn");
