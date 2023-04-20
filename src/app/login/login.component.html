@@ -4,12 +4,10 @@
             <img class="login-logo" src="../../assets/borrego-white.svg" alt="logo"/>
             <div class="login-text">INICIA SESIÓN</div>
             <div class="login-placeholder">Matrícula o nómina</div>
-            <div class="form-group">
+            <div class="form-group" [class.wrong]="matriculaInvalida">
                 <input [(ngModel)]="matricula" type="text" class="form-control login-text-input" placeholder="Ej. A00123456">
-                <a class="login-button"
-                   (click)="login()"    
-                >
-                    <i class="fal fa-angle-right login-button-icon"></i>
+                <a class="btn btn-primary login-button ms-4" (click)="login()">
+                    <i class="fal fa-arrow-right login-button-icon"></i>
                 </a>
             </div>
         </div>

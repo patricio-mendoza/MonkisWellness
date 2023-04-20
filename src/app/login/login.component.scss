@@ -62,4 +62,17 @@ body {
             background-color: #E1E1E1;
         }
     }
+
+    .form-group.wrong{
+        align-self: start;
+        padding-top: 10px;
+        padding-left: 30px;
+        width: 60%;
+        display: flex;
+
+        .login-text-input {
+            border: lightcoral;
+            background-color: lightcoral;
+        }
+    }
 }

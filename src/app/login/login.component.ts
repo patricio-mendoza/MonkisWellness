@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { matriculasValidas } from './matriculas';
+import { Router } from '@angular/router';
+
+import { globals } from '../globals';
 
 @Component({
   selector: 'app-login',
@@ -7,15 +10,22 @@ import { matriculasValidas } from './matriculas';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  constructor(private router: Router) { }
+
   matricula: string = "";
+  routeLink: string = 'inicio'
+
+  matriculaInvalida: boolean = false
 
   login(): void {
     // CALL API WITH MATRICULA
     if (matriculasValidas.includes(this.matricula)){
       // Mandar a Inicio y settear "src/app.component.ts -> isLogged = True"
-      console.log("is valid user");
+      this.router.navigateByUrl('/inicio');
     } else {
-      // Añadir clase de incorrect en login CSS
+      this.matriculaInvalida = true;
     }
   }
+
+  
 }
