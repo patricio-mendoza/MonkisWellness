@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { matriculasValidas } from './matriculas';
+import { Component, OnInit } from '@angular/core';
+
+import { FormGroup, FormControl } from '@angular/forms';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,23 +9,29 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
-  constructor(private router: Router) { }
-
+export class LoginComponent implements OnInit{
   matricula: string = "";
-  routeLink: string = 'inicio'
+  matriculaInvalida: boolean = false;
+  formData!: FormGroup;
 
-  matriculaInvalida: boolean = false
+  constructor(private authService : AuthService, private router : Router) { }
 
-  login(): void {
-    // CALL API WITH MATRICULA
-    if (matriculasValidas.includes(this.matricula)){
-      // Mandar a Inicio y settear "src/app.component.ts -> isLogged = True"
-      this.router.navigateByUrl('/inicio');
-    } else {
-      this.matriculaInvalida = true;
-    }
+  ngOnInit() {
+    this.authService.logout();
+
+    this.formData = new FormGroup({
+      matricula: new FormControl(""),
+    });
   }
-
   
+  onClickSubmit(data: any) {
+    this.matricula = data.matricula;
+
+    this.authService.login(this.matricula)
+      .subscribe( data => { 
+        console.log("Is Login Success: " + data); 
+        
+        if(data) this.router.navigate(['/inicio']); 
+    });
+  }
 }
