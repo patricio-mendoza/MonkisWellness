@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { matriculasValidas } from './matriculas';
 import { Router } from '@angular/router';
 
-import { globals } from '../globals';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
