@@ -6,6 +6,22 @@
     color: white;
     margin-left: 2vw;
     margin-top: 1vw;
+    position: absolute;
+    //z-index: 1;
+}
+.separator{
+    width: 10vw;
+    //margin-left: 1.5vw;
+    height: 3px;
+    background-color: white;
+    //flex-grow: 1;
+    //margin-right: 2.5vw;
+    //border-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: absolute;
+    margin-top: 60px;
+    //z-index: 1;
 }
 .titulo-proximashoras{
     font-family: 'Poppins', sans-serif;
@@ -13,6 +29,7 @@
     color: white;
     margin-left: 2vw;
     margin-top: 1vw;
+    position: absolute;
 }
 .titulo-estasemana{
     font-family: 'Poppins', sans-serif;
@@ -20,6 +37,7 @@
     color: white;
     margin-left: 2vw;
     margin-top: 1vw;
+    position: absolute;
 }
 .titulo-historial{
     font-family: 'Poppins', sans-serif;
@@ -27,6 +45,7 @@
     color: white;
     margin-left: 2vw;
     margin-top: 1vw;
+    position: absolute;
 }
 .upper-container{
     width: 100%;
@@ -34,12 +53,14 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    position: relative;
     //align-content: space-around;
     
 }
 .img-fluid{
     max-width: 100%;
     height: auto;
+    //z-index: 0;
 }
 .lower-container{
     margin-top: 20px;
@@ -49,6 +70,7 @@
     flex-direction: row;
     justify-content: center;
     //align-content: space-around;
+    position:relative;
     
 }
 .flex-box{
