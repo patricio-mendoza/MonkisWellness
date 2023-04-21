@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@700&display=swap');
+
 body {
     height: 100%;
     margin: 0;
@@ -25,37 +27,55 @@ body {
     border-radius: 1.825rem;
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
     align-items: center;
     color: #fff;
-    font-family:'Trebuchet MS';
+    font-family:'Bebas Neue', cursive;;
 
     .login-logo { 
         width: 150px;
-        padding-bottom: 25px;
+        padding-top: 50px;
     }
  
     .login-text {
-        font-size: 70px;
+        font-size: 80px;
         font-weight: 50px;
-        padding-bottom: 1cm;
-        letter-spacing: 2px;
+        margin-bottom: 2cm;
+        padding-left: 10px;
+        letter-spacing: 15px;
     }
 
     .login-placeholder {
         font-size: 20px;
         align-self: start;
         padding-left: 30px;
-        padding-top: 50px;
+        padding-bottom: 15px;
+        font-family: "Poppins";
     }
 
-    .form-group {
+    .login-form {
+        align-self: start;
+        padding-left: 30px;
+        display: flex;
+        border-spacing: 30px;
+
+        .login-text-input {
+            width: 100%;
+            box-shadow: 2px 2px 2px 2px rgba(0,0,0,.3);
+        }
+        .login-button {
+            border: #FF2976;
+            background-color: #FF2976;
+            box-shadow: 2px 2px 2px 2px rgba(0,0,0,.3);
+            width: 100px;
+        }
+    }
+
+    .login-form {
         align-self: start;
         padding-top: 10px;
         padding-left: 30px;
         width: 60%;
-        display: flex;
+        flex-direction: row;
 
         .login-text-input {
             border: #E1E1E1;
@@ -63,7 +83,7 @@ body {
         }
     }
 
-    .form-group.wrong{
+    .login-form.wrong{
         align-self: start;
         padding-top: 10px;
         padding-left: 30px;
