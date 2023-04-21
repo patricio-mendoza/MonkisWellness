@@ -16,7 +16,7 @@ interface SideNavToggle {
 export class AppComponent implements OnInit {
   title = 'WellnessApp';
   
-  isLogged: boolean = false;
+  isLogged: boolean = true;
 
   isSideNavCollapsed: boolean = false;
   screenWidth: number = 0;
