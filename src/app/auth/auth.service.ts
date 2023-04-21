@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 
-import { matriculasValidas } from './matriculas';
+import { matriculasValidas, nominasValidas } from './matriculas';
 
 @Injectable({
    providedIn: 'root'
@@ -11,10 +11,14 @@ import { matriculasValidas } from './matriculas';
 export class AuthService {
 
    isUserLoggedIn: boolean = false;
+   isAdmin: boolean= false;
 
    login(matricula: string): Observable<any> {
-      this.isUserLoggedIn = matriculasValidas.includes(matricula);
+      this.isUserLoggedIn = matriculasValidas.includes(matricula) || nominasValidas.includes(matricula);
+      this.isAdmin = nominasValidas.includes(matricula);
+
       localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
+      localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false"); 
    
    return of(this.isUserLoggedIn).pipe(
       tap(val => { 

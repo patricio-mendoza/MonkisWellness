@@ -1,6 +1,5 @@
 import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
-import { navbarData } from './nav-data';
-import { NumberFormatStyle } from '@angular/common';
+import { navbarData, navbarDataAdmin } from './nav-data';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -17,7 +16,7 @@ export class SidenavComponent implements OnInit {
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter;
   collapsed = false;
   screenWidth = 0;
-  navData = navbarData;
+  navData = localStorage.getItem("isAdmin") ? navbarDataAdmin : navbarData;
   
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
