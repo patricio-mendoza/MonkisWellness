@@ -5,11 +5,12 @@ import { Component, Input } from '@angular/core';
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
-export class BodyComponent {
-  
-  @Input() isLogged: boolean = false;
+export class BodyComponent{
+
   @Input() collapsed: boolean = false;
   @Input() screenWidth: number = 0;
+  @Input() isLogged: boolean = false;
+  
 
   getBodyClass(): string {
     let styleClass = '';

@@ -1,3 +1,16 @@
 <body>
-    <div class="bg"></div>
+    <div class="bg">
+        <div class="login">
+            <img class="login-logo" src="../../assets/borrego-white.svg" alt="logo"/>
+            <div class="login-text">INICIA SESIÓN</div>
+            <div class="login-placeholder">Matrícula o nómina</div>
+            <form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)" [class.wrong]="matriculaInvalida">
+                <input type="text" id="matricula" class="form-control" 
+                                formControlName="matricula" placeholder="Ej. A00830337" required autofocus>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    <i class="fal fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+    </div>
 </body>
