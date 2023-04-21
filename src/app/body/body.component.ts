@@ -10,6 +10,8 @@ export class BodyComponent{
   @Input() collapsed: boolean = false;
   @Input() screenWidth: number = 0;
   @Input() isLogged: boolean = false;
+
+  title = "gimnasio"
   
 
   getBodyClass(): string {

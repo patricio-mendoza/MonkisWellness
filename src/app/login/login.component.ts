@@ -34,7 +34,9 @@ export class LoginComponent implements OnInit{
         if(data) {
           this.router.navigate(['/inicio']);
           window.location.replace("http://localhost:4200/inicio");
-        } 
+        }  else {
+          this.matriculaInvalida = true;
+        }
     });
   }
 }
