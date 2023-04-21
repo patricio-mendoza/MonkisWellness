@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/auth.service';
-
-import { delay } from 'rxjs/operators';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -20,8 +17,6 @@ export class AppComponent implements OnInit {
 
   isSideNavCollapsed: boolean = false;
   screenWidth: number = 0;
-
-  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     let storeData = localStorage.getItem("isUserLoggedIn");
