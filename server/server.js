@@ -29,12 +29,20 @@ server.listen(8088, function check(error) {
     else console.log("Started...!!!!")
 });
 
-server.get("/api/user-exists", (req, res) => {
+server.get("/api/user/:id", (req, res) => {
+    let id = req.params.id
+
+    if (id.length != 9 || (id[0] != 'A' && id[0] != 'L')) {
+        console.log('a')
+        res.send({ status: false, data: [] })
+        return;
+    }
+
     var sql = ""
-    if (req.body.matricula) {
-        sql += `SELECT * FROM Alumno WHERE "${req.body.matricula}" = matricula`
+    if (id[0] === 'A') {
+        sql += `SELECT * FROM Alumno WHERE "${id}" = matricula`
     } else {
-        sql += `SELECT * FROM Administrador WHERE "${req.body.num_nomina}" = num_nomina`
+        sql += `SELECT * FROM Administrador WHERE "${id}" = num_nomina`
     }
 
     db.query(sql, function (error, result) {
