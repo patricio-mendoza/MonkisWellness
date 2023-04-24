@@ -3,7 +3,7 @@ const bodyParser = require("body-parser")
 const mysql = require("mysql")
 
 const server = express()
-server.use(bodyParser.json())
+server.use(bodyParser.urlencoded({ extended: false}));
 
 // Conexion con base de datos
 var config = {
@@ -29,18 +29,19 @@ server.listen(8088, function check(error) {
     else console.log("Started...!!!!")
 });
 
-server.post("/api/add/alumno", (req, res) => {
-    let details = {
-        matricula: req.body.matricula,
-        nombre: req.body.nombre,
-        carrera: req.body.carrera
-    };
-    let sqlquery = "INSERT INTO Alumno(matricula, nombre, carrera) VALUES ('A12345678', 'Omar Mendoza', 'ITC')"
-    db.query(sqlquery, details, (error) => {
+server.get("/api/user-exists", (req, res) => {
+    var sql = ""
+    if (req.body.matricula) {
+        sql += `SELECT * FROM Alumno WHERE "${req.body.matricula}" = matricula`
+    } else {
+        sql += `SELECT * FROM Administrador WHERE "${req.body.num_nomina}" = num_nomina`
+    }
+
+    db.query(sql, function (error, result) {
         if (error) {
-            res.send({ status: false, message: "student created failed" });
+            console.log("Error retrieving the data") 
         } else {
-            res.send({ status: true, message: "student created succeded" });
+            res.send({ status: true, data: result })
         }
-    })
+    });
 });
