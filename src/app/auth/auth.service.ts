@@ -9,11 +9,11 @@ import { matriculasValidas, nominasValidas } from './matriculas';
    providedIn: 'root'
 })
 export class AuthService {
-
    isUserLoggedIn: boolean = false;
-   isAdmin: boolean= false;
+   isAdmin: boolean = false;
 
    login(matricula: string): Observable<any> {
+      // obtener desde la API
       this.isUserLoggedIn = matriculasValidas.includes(matricula) || nominasValidas.includes(matricula);
       this.isAdmin = nominasValidas.includes(matricula);
 
