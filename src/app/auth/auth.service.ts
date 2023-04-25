@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { Observable, of } from 'rxjs';
 import { tap, delay } from 'rxjs/operators';
 
-import { matriculasValidas, nominasValidas } from './matriculas';
+const API_URI = 'http://localhost:8888/api';
 
 @Injectable({
    providedIn: 'root'
@@ -11,16 +12,26 @@ import { matriculasValidas, nominasValidas } from './matriculas';
 export class AuthService {
    isUserLoggedIn: boolean = false;
    isAdmin: boolean = false;
+   reqData: any;
+
+   constructor(private http: HttpClient) { }
 
    login(matricula: string): Observable<any> {
       // obtener desde la API
-      this.isUserLoggedIn = matriculasValidas.includes(matricula) || nominasValidas.includes(matricula);
-      this.isAdmin = nominasValidas.includes(matricula);
+      this.http.get(`${API_URI}/user/${matricula}`).subscribe(res => {
+         this.reqData = res;
 
+         if (this.reqData.data.length !== 0) {
+            this.isUserLoggedIn = true;
+            this.isAdmin = this.reqData.data[0].matricula ? false : true;
+            console.log(this.isAdmin);
+         }
+      });
+      
       localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
       localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false"); 
-   
-   return of(this.isUserLoggedIn).pipe(
+
+      return of(this.isUserLoggedIn).pipe(
       tap(val => { 
          console.log("Is User Authentication is successful: " + val); 
       })
@@ -31,6 +42,4 @@ export class AuthService {
       this.isUserLoggedIn = false;
       localStorage.clear(); 
    }
-
-   constructor() { }
 }

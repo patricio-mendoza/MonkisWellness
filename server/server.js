@@ -1,9 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser")
 const mysql = require("mysql")
+const cors = require("cors")
 
 const server = express()
+const port = 8888;
+
 server.use(bodyParser.urlencoded({ extended: false}));
+server.use(cors());
 
 // Conexion con base de datos
 var config = {
@@ -24,16 +28,15 @@ db.connect( function (error) {
     }
 });
 
-server.listen(8088, function check(error) {
+server.listen(port, function check(error) {
     if (error) console.log("Error...!!!!")
-    else console.log("Started...!!!!")
+    else console.log(`Started in port ${port}`)
 });
 
 server.get("/api/user/:id", (req, res) => {
     let id = req.params.id
 
     if (id.length != 9 || (id[0] != 'A' && id[0] != 'L')) {
-        console.log('a')
         res.send({ status: false, data: [] })
         return;
     }
