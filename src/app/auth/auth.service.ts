@@ -16,26 +16,28 @@ export class AuthService {
 
    constructor(private http: HttpClient) { }
 
-   login(matricula: string): Observable<any> {
+   login(matricula: string) {
       // obtener desde la API
-      this.http.get(`${API_URI}/user/${matricula}`).subscribe(res => {
-         this.reqData = res;
+      let promise = new Promise((resolve, reject) => {         
+         let apiURL = `${API_URI}/user/${matricula}`;
+         this.http.get(apiURL)
+           .toPromise()
+           .then( res => {
+                  this.reqData = res;
 
-         if (this.reqData.data.length !== 0) {
-            this.isUserLoggedIn = true;
-            this.isAdmin = this.reqData.data[0].matricula ? false : true;
-            console.log(this.isAdmin);
-         }
-      });
-      
-      localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
-      localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false"); 
+                  if (this.reqData.status) {
+                     this.isUserLoggedIn = true;
+                     this.isAdmin = this.reqData.data[0].matricula ? false : true;  
+                  }
+                  
+                  localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
+                  localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false");  
 
-      return of(this.isUserLoggedIn).pipe(
-      tap(val => { 
-         console.log("Is User Authentication is successful: " + val); 
-      })
-   );
+                  resolve(res);
+               }
+            );
+         });
+         return promise;
    }
 
    logout(): void {

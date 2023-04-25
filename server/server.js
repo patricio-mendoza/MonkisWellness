@@ -33,7 +33,7 @@ server.listen(port, function check(error) {
     else console.log(`Started in port ${port}`)
 });
 
-server.get("/api/user/:id", (req, res) => {
+server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id
 
     if (id.length != 9 || (id[0] != 'A' && id[0] != 'L')) {
@@ -49,10 +49,8 @@ server.get("/api/user/:id", (req, res) => {
     }
 
     db.query(sql, function (error, result) {
-        if (error) {
-            console.log("Error retrieving the data") 
-        } else {
-            res.send({ status: true, data: result })
-        }
+        if (error) console.log("Error retrieving the data")
+        else res.send({ status: true, data: result });
+            
     });
 });
