@@ -27,16 +27,13 @@ export class LoginComponent implements OnInit{
   onClickSubmit(data: any) {
     this.matricula = data.matricula;
 
-    this.authService.login(this.matricula)
-      .subscribe( data => { 
-        console.log("Is Login Success: " + data); 
-        
-        if(data) {
-          this.router.navigate(['/inicio']);
-          window.location.replace("http://localhost:4200/inicio");
-        }  else {
-          this.matriculaInvalida = true;
-        }
+    this.authService.login(this.matricula).then( () => {
+      if (localStorage.getItem("isUserLoggedIn") === "true") {
+        this.router.navigate(['/inicio']);
+        window.location.replace("http://localhost:4200/inicio");
+      } else {
+        this.matriculaInvalida = true;
+      }
     });
   }
 }
