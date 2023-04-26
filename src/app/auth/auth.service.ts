@@ -25,7 +25,7 @@ export class AuthService {
            .then( res => {
                   this.reqData = res;
 
-                  if (this.reqData.status) {
+                  if (this.reqData.data.length > 0) {
                      this.isUserLoggedIn = true;
                      this.isAdmin = this.reqData.data[0].matricula ? false : true;  
                   }
