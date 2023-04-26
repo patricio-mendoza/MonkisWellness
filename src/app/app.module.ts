@@ -1,7 +1,10 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { HttpClientModule } from '@angular/common/http';
+import { DatePipe } from '@angular/common';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +20,10 @@ import { HeaderComponent } from './header/header.component';
 import { HorasProximasComponent } from './home/horas-proximas/horas-proximas.component';
 import { EstaSemanaComponent } from './home/esta-semana/esta-semana.component';
 import { HistorialComponent } from './home/historial/historial.component';
+
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -41,7 +48,7 @@ import { HistorialComponent } from './home/historial/historial.component';
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [DatePipe, {provide: LOCALE_ID, useValue: 'es'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
