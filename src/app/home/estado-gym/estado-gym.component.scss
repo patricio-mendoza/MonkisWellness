@@ -28,3 +28,42 @@
     height: auto;
     //z-index: 0;
 }
+
+.textos-estado{
+    font-size: 1.5vw;
+}
+
+.tabla-estado{
+    position: absolute;
+    bottom: 0%;
+}
+
+.letrero-estado{
+    position: relative;
+}
+
+.texto-estado{
+    font-size: 3vw;
+}
+
+.tipo-text{
+    font-weight: lighter;
+}
+
+.valor-text{
+    font-weight: bolder;
+}
+
+.fecha-hora{
+    position: absolute;
+    top: 25%;
+}
+
+.reloj{
+    font-size: 1.5vw;
+}
+
+.saludo{
+    font-weight: bold;
+    font-size: 1.5vw;
+}
