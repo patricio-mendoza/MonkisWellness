@@ -10,6 +10,7 @@
     </div>
 </div>
 <div class="tabla-estado">
+    <div *ngIf="administrador=='true'" class="btn btn-primary ms-5">Programar cierres</div>
     <div class="textos-estado ms-5 text-white">
         <div class="razon-cierre" *ngIf="!estado">
             <span class="tipo-text">Razón de cierre: </span>
