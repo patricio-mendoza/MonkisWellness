@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@700&display=swap');
+
 body {
     height: 100%;
     margin: 0;
@@ -5,9 +7,92 @@ body {
 
 .bg {
     background-image: url("../../assets/wellness-foto.jpg");
+    width: 100%;
     height: 100%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     box-shadow: inset 0 0 0 1000px rgba(216, 225, 255, .35);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.login {
+    background-image: url("../../assets/login.png");
+    width: 562px;
+    height: 526px;
+    border-radius: 1.825rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #fff;
+    font-family:'Bebas Neue', cursive;;
+
+    .login-logo { 
+        width: 150px;
+        padding-top: 50px;
+    }
+ 
+    .login-text {
+        font-size: 80px;
+        font-weight: 50px;
+        margin-bottom: 2cm;
+        padding-left: 10px;
+        letter-spacing: 15px;
+    }
+
+    .login-placeholder {
+        font-size: 20px;
+        align-self: start;
+        padding-left: 30px;
+        padding-bottom: 15px;
+        font-family: "Poppins";
+    }
+
+    .login-form {
+        align-self: start;
+        padding-left: 30px;
+        display: flex;
+        border-spacing: 30px;
+
+        .login-text-input {
+            width: 100%;
+            box-shadow: 2px 2px 2px 2px rgba(0,0,0,.3);
+        }
+        .login-button {
+            border: #FF2976;
+            background-color: #FF2976;
+            box-shadow: 2px 2px 2px 2px rgba(0,0,0,.3);
+            width: 100px;
+        }
+    }
+
+    .login-form {
+        align-self: start;
+        padding-top: 10px;
+        padding-left: 30px;
+        width: 60%;
+        flex-direction: row;
+
+        .login-text-input {
+            border: #E1E1E1;
+            background-color: #E1E1E1;
+        }
+    }
+
+    .login-form.wrong{
+        align-self: start;
+        padding-top: 10px;
+        padding-left: 30px;
+        width: 60%;
+        display: flex;
+
+        .login-text-input {
+            border: lightcoral;
+            background-color: lightcoral;
+        }
+    }
 }

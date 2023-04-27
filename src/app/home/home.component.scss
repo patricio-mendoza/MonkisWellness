@@ -1,0 +1,59 @@
+.upper-container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+    //align-content: space-around;
+    
+}
+.lower-container{
+    margin-top: 20px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    //align-content: space-around;
+    position:relative;
+    
+}
+.flex-box{
+    width: 60.7vw;
+    margin-left: 1.5vw;
+    height: 51.6vh;
+    background-color: #004891;
+    //flex-grow: 1;
+    margin-right: 2.5vw;
+    border-radius: 20px;
+}
+.flex-box2{
+    width: 31.5vw;
+    height: 51.6vh;
+    background-color: #59DC59;
+    //flex-grow: 2;
+    border-radius: 20px;
+}
+.flex-box3{
+    margin-left: 1.5vw;
+    width: 69vw;
+    height: 19.6vh;
+    background-color: #E94F37;
+    //flex-grow: 2;
+    border-radius: 20px;
+    margin-right: 2.5vw;
+}
+.flex-box4{
+    width: 23.6vw;
+    height: 19.4vh;
+    background-color: #F6AE2D;
+    //flex-grow: 2;
+    border-radius: 20px;
+}
+
+.estado-gym{
+    background-image: url("../../assets/bg-estatusgym.png");
+    background-size: cover;
+}
+
