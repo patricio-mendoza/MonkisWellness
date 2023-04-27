@@ -17,6 +17,7 @@ export class HeaderComponent {
         this.title = e.url.substring(1);       
         // en inicio se pone 'gimnasio'
         this.title = this.title == 'inicio' ? 'gimnasio' : this.title;
+        this.title = this.title == 'misreservas' ? 'mis reservas' : this.title;
  });
   }
 }

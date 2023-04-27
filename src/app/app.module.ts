@@ -23,6 +23,8 @@ import { HistorialComponent } from './home/historial/historial.component';
 
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
+import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -39,6 +41,8 @@ registerLocaleData(localeEs, 'es');
     HorasProximasComponent,
     EstaSemanaComponent,
     HistorialComponent,
+    SublevelMenuComponent,
+    MisReservasComponent,
   ],
   imports: [
     BrowserModule,
