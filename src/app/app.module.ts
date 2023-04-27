@@ -25,7 +25,6 @@ import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 registerLocaleData(localeEs, 'es');
 
-import { GrafPorcentajeComponent } from './graf-porcentaje/graf-porcentaje.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { bufferToggle } from 'rxjs';
 
@@ -43,7 +42,6 @@ import { bufferToggle } from 'rxjs';
     HorasProximasComponent,
     EstaSemanaComponent,
     HistorialComponent,
-    GrafPorcentajeComponent,
   ],
   imports: [
     BrowserModule,
