@@ -27,6 +27,7 @@ registerLocaleData(localeEs, 'es');
 
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { bufferToggle } from 'rxjs';
+import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { bufferToggle } from 'rxjs';
     HorasProximasComponent,
     EstaSemanaComponent,
     HistorialComponent,
+    GrafPorcentajeComponent,
   ],
   imports: [
     BrowserModule,
