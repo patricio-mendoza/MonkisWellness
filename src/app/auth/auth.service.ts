@@ -21,12 +21,18 @@ export class AuthService {
            .toPromise()
            .then( res => {
                   this.reqData = res;
+                  if (this.reqData.data.length === 0) {
+                     this.isUserLoggedIn = false;
+                     this.isAdmin = false;
+                  } else {
+                     let id = 'matricula' in this.reqData.data[0] ? this.reqData.data[0].matricula : this.reqData.data[0].num_nomina;
 
-                  if (this.reqData.data.length > 0) {
                      this.isUserLoggedIn = true;
-                     this.isAdmin = this.reqData.data[0].matricula ? false : true;  
+                     this.isAdmin = id[0] === 'L';  
+
+                     localStorage.setItem('matricula', id);
                   }
-                  
+
                   localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
                   localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false");  
 

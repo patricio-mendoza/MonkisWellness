@@ -36,7 +36,7 @@ server.listen(port, function check(error) {
 server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id
 
-    if (id.length != 9 || (id[0] != 'A' && id[0] != 'L')) {
+    if (id.length != 9 || (id[0] !== 'A' && id[0] !== 'L')) {
         res.send({ status: false, data: [] })
         return;
     }
@@ -61,4 +61,8 @@ server.get("/api/gym/estado", (req, res) => {
         if (error) console.log("Error retrieving the data")
         else res.send({ estado: result[0].estado });    
     });
+});
+
+server.get("/api/gym/estado", (req, res) => {   
+    sql = `SELECT estado FROM Wellness WHERE id = 1`
 });
