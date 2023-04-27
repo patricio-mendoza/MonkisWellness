@@ -50,7 +50,15 @@ server.get("/api/user/:id", (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ status: true, data: result });
-            
+        else res.send({ status: true, data: result });    
+    });
+});
+
+server.get("/api/gym/estado", (req, res) => {    
+    sql = `SELECT estado FROM Wellness WHERE id = 1`
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ estado: result[0].estado });    
     });
 });

@@ -1,38 +1,30 @@
 <div class="titulo-aforo">Aforo actual</div>
 <div class="separator"></div>
-<table class="fecha-hora ms-4 text-white">
-    <tr class="saludo">
-        HOY
-    </tr>
-    <tr class="reloj">
-        {{time | date: 'MMMM dd'}}
-    </tr>
-    <tr class="reloj">
-        {{time | date: 'hh:mm a'}}
-    </tr>
-</table>
-<table class="tabla-estado">
-    <tr>
-        <div class="textos-estado ms-4 text-white">
-            <div class="razon-cierre" *ngIf="estado==false">
-                <span class="tipo-text">Razón de cierre: </span>
-                <span class="valor-text">Mantenimiento</span>
-            </div>
-            <div class="hora-apertura">
-                <span class="tipo-text">Hora de
-                    <span *ngIf="estado==false"> Apertura</span>
-                    <span *ngIf="estado==true"> Cierre</span>:
-                </span>
-                <span class="valor-text">3:00 p.m.</span>
-            </div>
+<div class="fecha-hora ms-5">
+    <p class="saludo">
+        HOY, {{dia.toUpperCase()}}
+    </p>
+    <div class="reloj">
+            <p class="fecha">{{time | date: 'dd'}} de {{time | date: 'MMMM'}}</p>
+            <p class="fecha">{{time | date: 'hh:mm a'}}</p>
+    </div>
+</div>
+<div class="tabla-estado">
+    <div class="textos-estado ms-5 text-white">
+        <div class="razon-cierre" *ngIf="!estado">
+            <span class="tipo-text">Razón de cierre: </span>
+            <span class="valor-text">{{razon}}</span>
         </div>
-    </tr>
-    <tr>
+        <div class="hora-apertura">
+            <span class="tipo-text"> Hora de {{estado ? 'Cierre' : 'Apertura'}} </span>
+            <span class="valor-text">{{hora_cambio}}</span>
+        </div>
+    </div>
+    <div>
         <div class="letrero-estado">
-            <td *ngIf="estado==true"><span class="icono-estado fas fa-circle ms-1" style="color: green"></span></td>
-            <td *ngIf="estado==true"><h1 class="texto-estado text-white ms-1">Abierto</h1></td>
-            <td *ngIf="estado==false"><span class="icono-estado fas fa-circle ms-1" style="color: red"></span></td>
-            <td *ngIf="estado==false"><h1 class="texto-estado text-white ms-1">Cerrado</h1></td>
+            <td *ngIf="estado"><span class="icono-estado fas fa-circle ms-4" style="color: green"></span></td>
+            <td *ngIf="!estado"><span class="icono-estado fas fa-circle ms-4" style="color: red"></span></td>
+            <td><h1 class="texto-estado text-white">{{estado ? 'Abierto' : 'Cerrado'}}</h1></td>
         </div>
-    </tr>
-</table>
+    </div>
+</div>

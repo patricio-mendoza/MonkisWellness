@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@300&display=swap');
 
 .titulo-aforo{
     font-family: 'Poppins', sans-serif;
@@ -7,63 +8,73 @@
     margin-left: 2vw;
     margin-top: 1vw;
     position: absolute;
-    //z-index: 1;
 }
 .separator{
     width: 10vw;
-    //margin-left: 1.5vw;
     height: 3px;
     background-color: white;
-    //flex-grow: 1;
-    //margin-right: 2.5vw;
-    //border-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     position: absolute;
     margin-top: 60px;
-    //z-index: 1;
-}
-.img-fluid{
-    max-width: 100%;
-    height: auto;
-    //z-index: 0;
-}
-
-.textos-estado{
-    font-size: 1.5vw;
-}
-
-.tabla-estado{
-    position: absolute;
-    bottom: 0%;
-}
-
-.letrero-estado{
-    position: relative;
-}
-
-.texto-estado{
-    font-size: 3vw;
-}
-
-.tipo-text{
-    font-weight: lighter;
-}
-
-.valor-text{
-    font-weight: bolder;
 }
 
 .fecha-hora{
     position: absolute;
-    top: 25%;
+    top: 22%;
+    color: white;
+
+    .saludo {
+        font-weight: bold;
+        font-size: 2vw;
+        font-family: 'Bebas Neue';
+        margin-bottom: 0px;
+    }
+    .reloj {
+        font-size: 1.5vw;
+        font-family: 'M PLUS 1p';
+        margin-bottom: 0px;
+
+        .fecha {
+            margin-bottom: 0px;
+        }
+    }
 }
 
-.reloj{
-    font-size: 1.5vw;
+.tabla-estado{
+    position: absolute;
+    bottom: -9%;
+
+    .textos-estado{
+        font-size: 1.5vw;
+    }
+
+    .tipo-text{
+        font-weight: lighter;
+    }
+    
+    .valor-text{
+        font-weight: bolder;
+    }
+
+    .letrero-estado{
+        position: relative;
+        font-family: 'Bebas Neue';
+        height:100%;
+        padding-bottom:0px;
+        
+        .texto-estado{
+            font-size: 5vw;
+            padding-left: 47px;
+        }
+        .icono-estado {
+            position: absolute;
+            bottom: 48px;
+        }
+    }
+    
 }
 
-.saludo{
-    font-weight: bold;
-    font-size: 1.5vw;
-}
+
+
+
