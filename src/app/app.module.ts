@@ -23,6 +23,7 @@ import { HistorialComponent } from './home/historial/historial.component';
 
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { CierresComponent } from './home/estado-gym/cierres/cierres.component';
 registerLocaleData(localeEs, 'es');
 
 @NgModule({
@@ -39,6 +40,7 @@ registerLocaleData(localeEs, 'es');
     HorasProximasComponent,
     EstaSemanaComponent,
     HistorialComponent,
+    CierresComponent,
   ],
   imports: [
     BrowserModule,
