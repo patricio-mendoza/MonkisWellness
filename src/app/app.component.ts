@@ -13,7 +13,7 @@ interface SideNavToggle {
 export class AppComponent {
   title = 'WellnessApp';
   
-  isLogged: boolean = false;
+  isLogged: boolean = true;
   
   isSideNavCollapsed: boolean = false;
   screenWidth: number = 0;
@@ -22,4 +22,5 @@ export class AppComponent {
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
+  porcentaje_actual = 75;
 }

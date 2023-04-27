@@ -1,0 +1,42 @@
+
+<h1>hola</h1>
+
+<!-- <body>
+    <div class="container">
+        <div class="circular-progress">
+            <div class="value-container">75%</div> 
+            <div class="personas-container">{{num_personas}} / 280 Personas</div> 
+        </div>
+    </div>
+</body>
+ -->
+
+ <!-- <div class="container">
+    <div align="center" style="margin-top:10%;">
+        <div class="value-container">{{porcentaje_actual}} % 
+            <circle-progress [percent]="70"  [space]="-10" [radius]="100" [outerStrokeWidth]="10"
+          [innerStrokeWidth]="10" [outerStrokeColor]="'#53a9ff'" [innerStrokeColor]="'#e7e8ea'" [animation]="true"
+          [animationDuration]="1000"></circle-progress>
+        </div>
+        <div class="personas-container">{{num_personas}} / 280 Personas</div> 
+    </div>
+ </div>
+-->
+
+ <!-- <div align="center" style="margin-top:10%;">
+
+    <circle-progress [percent]= porcentaje_actual [space]="-10" [radius]="100" [outerStrokeWidth]="10"
+      [innerStrokeWidth]="10" [outerStrokeColor]="'#D9D9D9'" [innerStrokeColor]="'rgba(231, 231, 231, 0.13)'" [animation]="true"
+      [animationDuration]="1000">
+    </circle-progress>
+      <div class="personas-container">{{num_personas}} / 280 Personas</div> 
+  </div> -->
+
+<div class="container">
+    <circle-progress [title] = porcentaje_actual [subtitle] = "''" [percent]= porcentaje [space]="-28" [radius]="100" [outerStrokeWidth]="30" 
+        [innerStrokeWidth]="30" [outerStrokeColor]="'#D9D9D9'" [innerStrokeColor]="'rgba(231, 231, 231, 0.13)'" [animation]="true"
+        [animationDuration]="1000">
+    </circle-progress>
+    <div class="personas-container">{{num_personas.toString()}} / 280 Personas</div>
+</div>
+  
