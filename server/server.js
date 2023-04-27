@@ -63,6 +63,12 @@ server.get("/api/gym/estado", (req, res) => {
     });
 });
 
-server.get("/api/gym/estado", (req, res) => {   
-    sql = `SELECT estado FROM Wellness WHERE id = 1`
+server.get("/api/user/reservaciones/:id", (req, res) => {   
+    let id = req.params.id
+    sql = `SELECT * FROM Reservacion WHERE '${id}' = matricula OR '${id}' = num_nomina`
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
 });
