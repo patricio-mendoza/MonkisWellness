@@ -14,7 +14,6 @@ export class AppComponent implements OnInit {
   title = 'WellnessApp';
   
   isLogged: boolean = true;
-
   isSideNavCollapsed: boolean = false;
   screenWidth: number = 0;
 
@@ -30,4 +29,5 @@ export class AppComponent implements OnInit {
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
+  porcentaje_actual = 75;
 }
