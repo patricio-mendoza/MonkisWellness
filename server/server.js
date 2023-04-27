@@ -65,7 +65,7 @@ server.get("/api/gym/estado", (req, res) => {
 
 server.get("/api/user/reservaciones/:id", (req, res) => {   
     let id = req.params.id
-    sql = `SELECT * FROM Reservacion WHERE '${id}' = matricula OR '${id}' = num_nomina`
+    sql = `SELECT * FROM Reservacion WHERE '${id}' = matricula OR '${id}' = num_nomina ORDER BY hora_entrada DESC`
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")

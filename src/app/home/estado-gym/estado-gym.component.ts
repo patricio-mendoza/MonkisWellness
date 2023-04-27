@@ -20,7 +20,6 @@ export class EstadoGymComponent {
   razon: string = "Mantenimiento";
   hora_cambio: string = "3:00 pm";
 
-
   reqData: any;
 
   constructor(private http: HttpClient) { }
