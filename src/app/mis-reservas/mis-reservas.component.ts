@@ -19,7 +19,7 @@ interface Reserva {
   templateUrl: './mis-reservas.component.html',
   styleUrls: ['./mis-reservas.component.scss']
 })
-export class MisReservasComponent {
+export class MisReservasComponent implements OnInit {
   reservaciones: Reserva[];
   reqData: any;
 

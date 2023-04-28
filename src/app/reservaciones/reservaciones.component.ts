@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
-interface Reservaciones {
-
+interface Deporte {
+  id_deporte: number,
+  nombre: string
 }
 
 @Component({
@@ -13,22 +14,22 @@ interface Reservaciones {
   styleUrls: ['./reservaciones.component.scss']
 })
 export class ReservacionesComponent implements OnInit {
-  reservaciones: Reservaciones[];
+  deportes: Deporte[];
   reqData: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit(){
-    this.getReservaciones();
+    this.getDeportes();
   }
 
-  getReservaciones() {
-    let id = localStorage.getItem('id');
-    let apiURL = `${API_URI}/user/reservaciones/${id}`;
+  getDeportes() {
+    let apiURL = `${API_URI}/deportes`;
 
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
-      this.reservaciones = this.reqData.data
+      this.deportes = this.reqData.data
+      console.log(this.deportes)
     });
   }
 }
