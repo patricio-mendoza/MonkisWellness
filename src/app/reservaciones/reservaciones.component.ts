@@ -24,6 +24,14 @@ export class ReservacionesComponent implements OnInit {
     this.getDeportes();
   }
 
+  backgroundURL(nombre_deporte: string): string {
+    let img_url = nombre_deporte.toLocaleLowerCase();
+    img_url = img_url.replaceAll(' ', '_') + '.jpeg';
+    img_url = '../../assets/foto_deporte/' + img_url;
+
+    return img_url;
+  }
+
   getDeportes() {
     let apiURL = `${API_URI}/deportes`;
 

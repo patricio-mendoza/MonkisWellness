@@ -1,5 +1,6 @@
 <div class="container">
     <div (click)="handleClick(deporte.id_deporte)" *ngFor="let deporte of deportes" class="deporte">
+        <img src="{{backgroundURL(deporte.nombre)}}">
         {{deporte.nombre}}
     </div>
 </div>
