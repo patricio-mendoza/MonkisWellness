@@ -23,8 +23,9 @@ import { HistorialComponent } from './home/historial/historial.component';
 
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
+import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 registerLocaleData(localeEs, 'es');
-
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { bufferToggle } from 'rxjs';
 import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
@@ -43,7 +44,8 @@ import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-
     HorasProximasComponent,
     EstaSemanaComponent,
     HistorialComponent,
-    GrafPorcentajeComponent,
+    SublevelMenuComponent,
+    MisReservasComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,29 +53,7 @@ import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
-    NgCircleProgressModule.forRoot({
-      "radius": 100,
-      "space": -10,
-      "outerStrokeGradient": false,
-      "outerStrokeWidth": 15,
-      "outerStrokeColor": "#D9D9D9",
-      //"outerStrokeGradientStopColor": "#D9D9D9",
-      "innerStrokeColor": "#D9D9D9",
-      "innerStrokeWidth": 20,
-      //"title": "titulo" ,
-      "titleColor" : "#ffffff",
-      "titleFontSize" : "60",
-      "animateTitle": false,
-      "subtitleColor" : "#ffffff", 
-      "subtitleFontSize" : "20",
-      "animationDuration": 1000,
-      "showUnits": false,
-      "showBackground": true,
-      "backgroundColor": "#004891",
-      "clockwise": true,
-      "startFromZero": false,
-      "lazy": true})
+    HttpClientModule
   ],
   providers: [DatePipe, {provide: LOCALE_ID, useValue: 'es'}],
   bootstrap: [AppComponent]
