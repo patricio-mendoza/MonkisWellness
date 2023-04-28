@@ -56,14 +56,24 @@ registerLocaleData(localeEs, 'es');
     ReactiveFormsModule,
     HttpClientModule,
     NgCircleProgressModule.forRoot({
-      // set defaults here
-      radius: 100,
-      outerStrokeWidth: 16,
-      innerStrokeWidth: 8,
-      outerStrokeColor: "#78C000",
-      innerStrokeColor: "#C7E596",
-      animationDuration: 300,
-    })
+      "radius": 100,
+      "space": -10,
+      "outerStrokeGradient": false,
+      "outerStrokeWidth": 15,
+      "outerStrokeColor": "#D9D9D9",
+      "innerStrokeWidth": 20,
+      "titleColor" : "#ffffff",
+      "titleFontSize" : "60",
+      "animateTitle": false,
+      "subtitleColor" : "#ffffff", 
+      "subtitleFontSize" : "20",
+      "animationDuration": 1000,
+      "showUnits": false,
+      "showBackground": true,
+      "backgroundColor": "#004891",
+      "clockwise": true,
+      "startFromZero": false,
+      "lazy": true})
   ],
   providers: [DatePipe, {provide: LOCALE_ID, useValue: 'es'}],
   bootstrap: [AppComponent]
