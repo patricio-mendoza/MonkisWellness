@@ -1,5 +1,5 @@
 <div class="container">
-    <div *ngFor="let deporte of deportes" class="deporte">
+    <div (click)="handleClick(deporte.id_deporte)" *ngFor="let deporte of deportes" class="deporte">
         {{deporte.nombre}}
     </div>
 </div>

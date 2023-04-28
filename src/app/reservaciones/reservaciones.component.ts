@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -17,7 +18,7 @@ export class ReservacionesComponent implements OnInit {
   deportes: Deporte[];
   reqData: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router : Router) { }
 
   ngOnInit(){
     this.getDeportes();
@@ -29,7 +30,10 @@ export class ReservacionesComponent implements OnInit {
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
       this.deportes = this.reqData.data
-      console.log(this.deportes)
     });
+  }
+
+  handleClick(espacioId: number) {
+    this.router.navigate([`/reservarEspacio/${espacioId}`]);
   }
 }

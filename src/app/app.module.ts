@@ -28,6 +28,7 @@ import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { bufferToggle } from 'rxjs';
+import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -47,6 +48,7 @@ registerLocaleData(localeEs, 'es');
     SublevelMenuComponent,
     GrafPorcentajeComponent,
     MisReservasComponent,
+    EspacioComponent,
   ],
   imports: [
     BrowserModule,
