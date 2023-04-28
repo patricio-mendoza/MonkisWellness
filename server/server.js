@@ -33,6 +33,7 @@ server.listen(port, function check(error) {
     else console.log(`Started in port ${port}`)
 });
 
+// USERS
 server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id
 
@@ -53,16 +54,6 @@ server.get("/api/user/:id", (req, res) => {
         else res.send({ status: true, data: result });    
     });
 });
-
-server.get("/api/gym/estado", (req, res) => {    
-    sql = `SELECT estado FROM Wellness WHERE id = 1`
-
-    db.query(sql, function (error, result) {
-        if (error) console.log("Error retrieving the data")
-        else res.send({ estado: result[0].estado });    
-    });
-});
-
 server.get("/api/user/reservaciones/:id", (req, res) => {   
     let id = req.params.id;
     sql = `SELECT * FROM Reservacion WHERE "${id}" = matricula OR "${id}" = num_nomina`;
@@ -72,7 +63,28 @@ server.get("/api/user/reservaciones/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
+server.get("/api/avisos/:id", (req, res) => {
+    let id = req.params.id;
+    sql = `SELECT * FROM Anuncio WHERE matricula = "${id}"`;
 
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+
+// GYM
+server.get("/api/gym/estado", (req, res) => {    
+    sql = `SELECT estado FROM Wellness WHERE id = 1`
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ estado: result[0].estado });    
+    });
+});
+
+
+//DEPORTES
 server.get("/api/deportes", (req, res) => {
     sql = `SELECT * FROM Deporte`;
 
@@ -81,10 +93,12 @@ server.get("/api/deportes", (req, res) => {
         else res.send({ data: result });    
     });
 });
-
-server.get("/api/avisos/:id", (req, res) => {
+server.get("/api/deportes/cancha/:id", (req, res) => {    
     let id = req.params.id;
-    sql = `SELECT * FROM Anuncio WHERE matricula = "${id}"`;
+    let sql = `SELECT esp.id_espacio, esp.nombre AS nombre_espacio, esp.url_fotos, ins.nombre AS nombre_instalacion
+    FROM Espacio esp JOIN Instalacion ins ON esp.id_instalacion = ins.id_instalacion JOIN EspacioDeporte espdep ON esp.id_espacio = espdep.id_espacio JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
+    WHERE espdep.id_deporte = ${id}
+    ORDER BY esp.id_espacio`
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
