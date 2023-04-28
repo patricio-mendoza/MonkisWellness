@@ -29,7 +29,7 @@ export class ReservacionesComponent implements OnInit {
     img_url = img_url.replaceAll(' ', '_') + '.jpeg';
     img_url = '../../assets/foto_deporte/' + img_url;
 
-    return img_url;
+    return img_url; 
   }
 
   getDeportes() {

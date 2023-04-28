@@ -17,7 +17,7 @@ export class AuthService {
    login(matricula: string) {
       // obtener desde la API
       let promise = new Promise((resolve, reject) => {         
-         let apiURL = `${API_URI}/user/${matricula}`;
+         let apiURL = `${API_URI}/user/${matricula.toUpperCase()}`;
          this.http.get(apiURL)
            .toPromise()
            .then( res => {
@@ -33,7 +33,7 @@ export class AuthService {
 
                      localStorage.setItem('id', id);
                   }
-
+                  
                   localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
                   localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false");  
 
