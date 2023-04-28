@@ -26,8 +26,9 @@ import { registerLocaleData } from '@angular/common';
 import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 registerLocaleData(localeEs, 'es');
-
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { bufferToggle } from 'rxjs';
+import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
 
 @NgModule({
   declarations: [
