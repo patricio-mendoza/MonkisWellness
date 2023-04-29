@@ -8,8 +8,6 @@ setOptions({
     themeVariant: 'light'
 });
 
-const minDate = '2023-04-29T00:00';
-const maxDate = '2023-10-29T00:00';
 
 @Component({
   selector: 'app-reservar-espacio',
@@ -17,7 +15,14 @@ const maxDate = '2023-10-29T00:00';
   styleUrls: ['./reservar-espacio.component.scss']
 })
 export class ReservarEspacioComponent {
-    constructor(private http: HttpClient) {}
+    today = new Date();
+    tomorrow = new Date();
+    
+
+    constructor(private http: HttpClient) {
+      this.tomorrow.setDate(this.today.getDate() + 1);
+      this.tomorrow.setHours(22, 0, 0);
+    }
 
     multiple = [
         '2023-04-11T00:00',
@@ -48,8 +53,8 @@ export class ReservarEspacioComponent {
     singleSettings: MbscDatepickerOptions = {
         display: 'inline',
         controls: ['calendar'],
-        min: minDate,
-        max: maxDate,
+        min: this.today,
+        max: this.tomorrow,
         pages: 'auto',
         onPageLoading: (event) => {
             this.getPrices(event.firstDay, (bookings: any) => {
@@ -62,10 +67,10 @@ export class ReservarEspacioComponent {
     datetimeSettings: MbscDatepickerOptions = {
         display: 'inline',
         controls: ['calendar', 'timegrid'],
-        min: minDate,
-        max: maxDate,
-        minTime: '08:00',
-        maxTime: '19:59',
+        min: this.today,
+        max: this.tomorrow,
+        minTime: '06:00',
+        maxTime: '21:59',
         stepMinute: 30,
         width: undefined,
         onPageLoading: (event) => {
@@ -79,8 +84,8 @@ export class ReservarEspacioComponent {
     multipleSettings: MbscDatepickerOptions = {
         display: 'inline',
         controls: ['calendar'],
-        min: minDate,
-        max: maxDate,
+        min: this.today,
+        max: this.tomorrow,
         pages: 'auto',
         selectMultiple: true,
         onPageLoading: (event) => {
