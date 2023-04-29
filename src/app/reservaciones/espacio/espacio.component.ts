@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
@@ -22,7 +22,7 @@ export class EspacioComponent implements OnInit {
 
   reqData: any;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient) { }
+  constructor(private router : Router, private route: ActivatedRoute, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -31,7 +31,10 @@ export class EspacioComponent implements OnInit {
     this.http.get(`${API_URI}/deportes/cancha/${this.id_espacio}`).subscribe(res => {
       this.reqData = res;
       this.espacios = this.reqData.data;
-      console.log(this.espacios);
     });
+  }
+
+  handleClick(espacioId: number) {
+    this.router.navigate([`/reservarEspacio/${espacioId}`]);
   }
 }

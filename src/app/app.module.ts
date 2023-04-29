@@ -1,3 +1,4 @@
+import { MbscModule } from '@mobiscroll/angular';
 import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -27,8 +28,8 @@ import { registerLocaleData } from '@angular/common';
 import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { bufferToggle } from 'rxjs';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
+import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -49,8 +50,10 @@ registerLocaleData(localeEs, 'es');
     GrafPorcentajeComponent,
     MisReservasComponent,
     EspacioComponent,
+    ReservarEspacioComponent,
   ],
-  imports: [
+  imports: [  
+    MbscModule, 
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

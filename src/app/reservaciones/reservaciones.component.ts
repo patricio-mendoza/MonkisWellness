@@ -42,6 +42,6 @@ export class ReservacionesComponent implements OnInit {
   }
 
   handleClick(espacioId: number) {
-    this.router.navigate([`/reservarEspacio/${espacioId}`]);
+    this.router.navigate([`/reservarCancha/${espacioId}`]);
   }
 }
