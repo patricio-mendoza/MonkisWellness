@@ -1,6 +1,13 @@
-<mbsc-page>
+<div class="container">
     <div class="mbsc-form-group">
-        <div class="mbsc-form-group-title">Select date & time</div>
-        <mbsc-datepicker [options]="datetimeSettings" [labels]="myLabels" [invalid]="myInvalid"></mbsc-datepicker>
+        <mbsc-datepicker 
+            [options]="settings" 
+            [invalid]="myInvalid"
+            select="range"
+            [showRangeLabels]="true"
+            [minRange]="1"
+            [maxRange]="5400000"
+            [touchUi]="true">
+        </mbsc-datepicker>
     </div>
-</mbsc-page>
+</div>
