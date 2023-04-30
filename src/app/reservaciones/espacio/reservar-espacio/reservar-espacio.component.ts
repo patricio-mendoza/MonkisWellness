@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+
+const API_URI = 'http://localhost:8888/api';
 
 setOptions({
     locale: localeEs,
@@ -18,15 +21,19 @@ export class ReservarEspacioComponent {
     today = new Date();
     tomorrow = new Date();
 
-    constructor(private http: HttpClient) {
+    id_espacio: number;
+    reqData: any;
+
+    constructor(private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     }
+
+    ngOnInit() {
+        this.getBloqueosActivos();
+    }
     
-    myInvalid = [{
-        start: '2023-04-29T20:30',
-        end: '2023-04-29T21:00'
-    }];
+    bloqueos = [];
 
     settings: MbscDatepickerOptions = {
         display: 'inline',
@@ -37,4 +44,16 @@ export class ReservarEspacioComponent {
         maxTime: '22:00',
         selectMultiple: true,
     };
+
+    getBloqueosActivos(): void {
+        this.route.paramMap.subscribe((params: ParamMap) => {
+            this.id_espacio = +params.get('id')
+        })
+        this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
+            this.reqData = res;
+            this.bloqueos = this.reqData.data;
+            console.log(this.bloqueos);
+        });
+
+    }
 }
