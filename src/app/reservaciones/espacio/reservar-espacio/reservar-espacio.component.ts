@@ -5,6 +5,11 @@ import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
+interface Bloqueo {
+    start: string;
+    end: string;
+}
+
 setOptions({
     locale: localeEs,
     theme: 'ios',
@@ -24,6 +29,8 @@ export class ReservarEspacioComponent {
     id_espacio: number;
     reqData: any;
 
+    bloqueos: Bloqueo[];
+
     constructor(private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
@@ -31,10 +38,9 @@ export class ReservarEspacioComponent {
 
     ngOnInit() {
         this.getBloqueosActivos();
+        this.bloqueos = [{start: '2023-04-29T20:30', end: '2023-04-29T21:30'}];
     }
     
-    bloqueos = [];
-
     settings: MbscDatepickerOptions = {
         display: 'inline',
         controls: ['calendar', 'timegrid'],
@@ -52,7 +58,6 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.bloqueos = this.reqData.data;
-            console.log(this.bloqueos);
         });
 
     }

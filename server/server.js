@@ -109,7 +109,7 @@ server.get("/api/deportes/cancha/:id", (req, res) => {
 //ESPACIOS
 server.get("/api/reservaciones/espacio/:id", (req, res) => {
     let id = req.params.id;
-    let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio='${id}'`
+    let sql = `SELECT DATE_FORMAT(hora_entrada, "%Y-%m-%dT%k:%i") as start, DATE_FORMAT(hora_salida, "%Y-%m-%dT%k:%i") as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
