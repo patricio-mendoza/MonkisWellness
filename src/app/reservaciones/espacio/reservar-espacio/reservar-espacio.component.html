@@ -1,13 +1,15 @@
 <div class="container">
     <div class="mbsc-form-group">
-        <mbsc-datepicker 
+        <mbsc-datepicker [(ngModel)]="selectedDate"
             [options]="settings" 
             [invalid]="bloqueos"
             select="range"
             [showRangeLabels]="true"
             [minRange]="1"
             [maxRange]="5400000"
-            [touchUi]="true">
+            [touchUi]="true"
+            >
         </mbsc-datepicker>
     </div>
+    <button (click)="reservar()" class="btn btn-primary">Reservar</button>
 </div>

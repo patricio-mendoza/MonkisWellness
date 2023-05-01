@@ -3,6 +3,7 @@ import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angula
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+
 const API_URI = 'http://localhost:8888/api';
 
 interface Bloqueo {
@@ -25,6 +26,9 @@ setOptions({
 export class ReservarEspacioComponent {
     today = new Date();
     tomorrow = new Date();
+    selectedDate: any = []
+
+    invalidRequest: boolean = false;
 
     id_espacio: number;
     reqData: any;
@@ -38,7 +42,7 @@ export class ReservarEspacioComponent {
 
     ngOnInit() {
         this.getBloqueosActivos();
-        this.bloqueos = [{start: '2023-04-29T20:30', end: '2023-04-29T21:30'}];
+        this.bloqueos = [];
     }
     
     settings: MbscDatepickerOptions = {
@@ -59,6 +63,25 @@ export class ReservarEspacioComponent {
             this.reqData = res;
             this.bloqueos = this.reqData.data;
         });
+    }
 
+    reservar(): void {
+        if (this.selectedDate === null || this.selectedDate[0] === null || this.selectedDate[1] === null) {
+            this.invalidRequest = true;
+            console.log('Invalid Request')
+            return;
+        }
+
+        const mybody = {
+            matricula : localStorage.getItem('id')[0] === 'A' ? localStorage.getItem('id') : null,
+            num_nomina : localStorage.getItem('id')[0] !== 'A' ? localStorage.getItem('id') : null,
+            id_espacio : this.id_espacio,
+            hora_entrada : this.selectedDate[0],
+            hora_salida : this.selectedDate[1],
+            prioridad : localStorage.getItem('id')[0] === 'A' ? 2 : 1,
+            estatus : 1
+        }
+
+        this.http.post(`${API_URI}/reservar/espacio`, mybody).subscribe();
     }
 }

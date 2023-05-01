@@ -116,3 +116,13 @@ server.get("/api/reservaciones/espacio/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
+server.post('/api/reservar/espacio', (req, res) => {
+    let data = req.body;
+    console.log(data);
+    let sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${data.matricula}, ${data.num_nomina}, ${data.id_espacio}, "${data.hora_entrada}", "${data.hora_salida}", ${data.prioridad}, ${data.estatus})`
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error Inserting Data")
+        else console.log("Successfull Insert")
+    });
+
+});
