@@ -28,6 +28,14 @@ import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { bufferToggle } from 'rxjs';
+import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
+import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estimaciones.component';
+import { EstimacionesDosComponent } from './home/horas-proximas/estimaciones-dos/estimaciones-dos.component';
+import { EstimacionesTresComponent } from './home/horas-proximas/estimaciones-tres/estimaciones-tres.component';
+import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
+import { HoraMinutoDosComponent } from './home/horas-proximas/estimaciones-dos/hora-minuto-dos/hora-minuto-dos.component';
+import { HoraMinutoTresComponent } from './home/horas-proximas/estimaciones-tres/hora-minuto-tres/hora-minuto-tres.component';
+
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 
 registerLocaleData(localeEs, 'es');
@@ -47,6 +55,12 @@ registerLocaleData(localeEs, 'es');
     HistorialComponent,
     SublevelMenuComponent,
     GrafPorcentajeComponent,
+    EstimacionesComponent,
+    EstimacionesDosComponent,
+    EstimacionesTresComponent,
+    HoraMinutoComponent,
+    HoraMinutoDosComponent,
+    HoraMinutoTresComponent,
     MisReservasComponent,
     EspacioComponent,
   ],
@@ -66,6 +80,7 @@ registerLocaleData(localeEs, 'es');
       "innerStrokeWidth": 20,
       "titleColor" : "#ffffff",
       "titleFontSize" : "60",
+      "titleFontWeight":"10",
       "animateTitle": false,
       "subtitleColor" : "#ffffff", 
       "subtitleFontSize" : "20",
@@ -77,7 +92,12 @@ registerLocaleData(localeEs, 'es');
       "startFromZero": false,
       "lazy": true})
   ],
-  providers: [DatePipe, {provide: LOCALE_ID, useValue: 'es'}],
+  providers: 
+  [DatePipe, {provide: LOCALE_ID, useValue: 'es'}
+  
+
+],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { 
