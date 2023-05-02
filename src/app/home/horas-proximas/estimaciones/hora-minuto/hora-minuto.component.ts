@@ -7,9 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HoraMinutoComponent implements OnInit {
   @Input() tiempo: number;
-
-  horas: string;
-
+  
   ngOnInit(): void {
   }
 }
