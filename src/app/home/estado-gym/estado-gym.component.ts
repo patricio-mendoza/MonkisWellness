@@ -15,8 +15,7 @@ export class EstadoGymComponent {
   time = new Date();
   dia: string = dias[this.time.getDay()];
   intervalId;
-  
-  administrador:string;
+
   estado: boolean;
   razon: string = "Mantenimiento";
   hora_cambio: string = "3:00 pm";
@@ -27,7 +26,6 @@ export class EstadoGymComponent {
 
   ngOnInit(){
     this.getEstadoGym();
-    this.administrador = localStorage.getItem('isAdmin');
 
     this.intervalId = setInterval(()=>{
       this.time = new Date();
