@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-
+import localeEs from '@angular/common/locales/es';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -21,13 +21,13 @@ import { HeaderComponent } from './header/header.component';
 import { HorasProximasComponent } from './home/horas-proximas/horas-proximas.component';
 import { EstaSemanaComponent } from './home/esta-semana/esta-semana.component';
 import { HistorialComponent } from './home/historial/historial.component';
-import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
-
-import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
+import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estimaciones.component';
+import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
 
@@ -48,6 +48,8 @@ registerLocaleData(localeEs, 'es');
     HistorialComponent,
     SublevelMenuComponent,
     GrafPorcentajeComponent,
+    EstimacionesComponent,
+    HoraMinutoComponent,
     MisReservasComponent,
     EspacioComponent,
     ReservarEspacioComponent,
@@ -69,6 +71,7 @@ registerLocaleData(localeEs, 'es');
       "innerStrokeWidth": 20,
       "titleColor" : "#ffffff",
       "titleFontSize" : "60",
+      "titleFontWeight":"10",
       "animateTitle": false,
       "subtitleColor" : "#ffffff", 
       "subtitleFontSize" : "20",
@@ -80,7 +83,12 @@ registerLocaleData(localeEs, 'es');
       "startFromZero": false,
       "lazy": true})
   ],
-  providers: [DatePipe, {provide: LOCALE_ID, useValue: 'es'}],
+  providers: 
+  [DatePipe, {provide: LOCALE_ID, useValue: 'es'}
+  
+
+],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { 
