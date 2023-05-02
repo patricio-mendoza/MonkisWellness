@@ -30,6 +30,7 @@ export class ReservarEspacioComponent {
     selectedDate: any = []
 
     invalidRequest: boolean = false;
+    clicked: boolean = false;
 
     id_espacio: number;
     reqData: any;
@@ -63,7 +64,6 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.bloqueos = this.reqData.data;
-            console.log(this.bloqueos);
         });
     }
 
@@ -73,8 +73,13 @@ export class ReservarEspacioComponent {
             console.log('Invalid Request')
             return;
         }
-        let formattedStartDate = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd HH:mm')
-        let formattedFinishDate = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd HH:mm')
+        
+        this.clicked = true;
+        
+        let formattedStartDate = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd HH:mm:ss')
+        let formattedFinishDate = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd HH:mm:ss')
+        console.log(formattedStartDate)
+        console.log(formattedFinishDate)
 
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };

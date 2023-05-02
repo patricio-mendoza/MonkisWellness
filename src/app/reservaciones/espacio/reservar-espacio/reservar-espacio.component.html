@@ -11,5 +11,6 @@
             >
         </mbsc-datepicker>
     </div>
-    <button (click)="reservar()" class="btn btn-primary">Reservar</button>
+    <button *ngIf="!clicked" (click)="reservar()" class="btn btn-primary">Reservar</button>
+    <button *ngIf="clicked" class="btn btn-primary">Reservar</button>
 </div>
