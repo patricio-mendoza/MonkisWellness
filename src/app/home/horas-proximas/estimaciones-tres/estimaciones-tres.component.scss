@@ -1,29 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@700&display=swap');
 
 .container{
-    height: 400px;
-    width: 400px;
+    height: 120px;
+    width: 140px;
+    top: 430px;
+    margin-right: 12px;
     background-color: transparent;
-    top: 100px;
-    left: 0%;
-    right: 53%;
-    left: 45%;
     place-items: center;
     display: grid;
     
 
 }
 
-.personas-container{
-    position: absolute;
-    top: 205px;
-    font-family: "M PLUS 1p", sans-serif;
-    font-size: 15px;
-    color: #ffffff;
-    font-weight: bold;
-    
-    
-}
+
 .empty-container{
     position: absolute;
     top: 250px;
@@ -31,5 +20,9 @@
 
 .porcentaje_actual{
     color: #ffffff;
-    
+    font-size: 25px;
+    font-weight: bold;
+    position: absolute;
+    margin-top: -80px;
+    right:100px;
 }
