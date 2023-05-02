@@ -9,6 +9,7 @@ const API_URI = 'http://localhost:8888/api';
 export class AuthService {
    isUserLoggedIn: boolean = false;
    isAdmin: boolean = false;
+   
    reqData: any;
 
    constructor(private http: HttpClient) { }
@@ -21,7 +22,7 @@ export class AuthService {
            .toPromise()
            .then( res => {
                   this.reqData = res;
-                  if (this.reqData.data.length === 0) {
+                  if (!this.reqData.status) {
                      this.isUserLoggedIn = false;
                      this.isAdmin = false;
                   } else {
@@ -30,7 +31,7 @@ export class AuthService {
                      this.isUserLoggedIn = true;
                      this.isAdmin = id[0] === 'L';  
 
-                     localStorage.setItem('matricula', id);
+                     localStorage.setItem('id', id);
                   }
 
                   localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 

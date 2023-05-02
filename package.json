@@ -25,7 +25,6 @@
     "express": "^4.18.2",
     "mysql": "^2.18.1",
     "ng-circle-progress": "^1.7.1",
-    "node-sass": "^8.0.0",
     "nodemon": "^2.0.22",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -42,6 +41,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "nodemon": "^2.0.22",
     "typescript": "~4.9.4"
   },
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.5.",
