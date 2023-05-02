@@ -15,4 +15,3 @@ export class GrafPorcentajeComponent {
   
   porcentaje_actual = this.porcentaje === 100 ? "100%" : this.porcentaje_redondeado.toString() + "%";
 }
-
