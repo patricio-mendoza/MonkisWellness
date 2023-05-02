@@ -118,12 +118,10 @@ server.get("/api/reservaciones/espacio/:id", (req, res) => {
     });
 });
 server.post('/api/reservar/espacio', (req, res) => {
-    console.log(req.body.matricula)
     let sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
-    console.log(sql);
     
     db.query(sql, function (error, result) {
-        if (error) return false
-        else return true;
+        if (error) console.log("Error")
+        else res.send({ status: true });
     });
 });

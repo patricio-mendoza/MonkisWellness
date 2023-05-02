@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -36,7 +36,7 @@ export class ReservarEspacioComponent {
 
     bloqueos: Bloqueo[];
 
-    constructor(private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
+    constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     }
@@ -63,6 +63,7 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.bloqueos = this.reqData.data;
+            console.log(this.bloqueos);
         });
     }
 
@@ -79,17 +80,21 @@ export class ReservarEspacioComponent {
         const options = { headers: headers };
         
         const body = {
-            matricula : localStorage.getItem('id')[0] === 'A' ? localStorage.getItem('id') : null,
-            num_nomina : localStorage.getItem('id')[0] !== 'A' ? localStorage.getItem('id') : null,
+            matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
+            num_nomina : localStorage.getItem('isAdmin') === 'true' ? localStorage.getItem('id') : null,
             id_espacio : this.id_espacio,
             hora_entrada : formattedStartDate,
             hora_salida : formattedFinishDate,
-            prioridad : localStorage.getItem('id')[0] === 'A' ? 2 : 1,
+            prioridad : localStorage.getItem('isAdmin') === 'true' ? 1 : 2,
             estatus : 1
         };
 
-        this.http.post(`${API_URI}/reservar/espacio`, JSON.stringify(body), options).subscribe(data => {
-            console.log(data);   
+        this.http.post(`${API_URI}/reservar/espacio`, JSON.stringify(body), options).subscribe(res => {
+            this.reqData = res;
+            if (this.reqData.status) {
+                // get most current reservation and compare to avoid conflicts
+                window.location.replace(this.location.path());
+            }
         });
     }
 }
