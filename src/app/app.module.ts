@@ -1,3 +1,4 @@
+import { MbscModule } from '@mobiscroll/angular';
 import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -27,8 +28,8 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
 import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estimaciones.component';
 import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
-
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
+import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -51,8 +52,10 @@ registerLocaleData(localeEs, 'es');
     HoraMinutoComponent,
     MisReservasComponent,
     EspacioComponent,
+    ReservarEspacioComponent,
   ],
-  imports: [
+  imports: [  
+    MbscModule, 
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

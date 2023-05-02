@@ -6,6 +6,7 @@ import { AvisosComponent } from './avisos/avisos.component';
 import { LoginComponent } from './login/login.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
+import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'reservaciones', 
-    component: ReservacionesComponent,
+    component: ReservacionesComponent
   },
   {
     path: 'misreservas', 
@@ -29,8 +30,12 @@ const routes: Routes = [
     component: AvisosComponent
   },
   {
-    path: 'reservarEspacio/:id',
+    path: 'reservarCancha/:id',
     component: EspacioComponent
+  },
+  {
+    path: 'reservarEspacio/:id',
+    component: ReservarEspacioComponent
   }
 ];
 

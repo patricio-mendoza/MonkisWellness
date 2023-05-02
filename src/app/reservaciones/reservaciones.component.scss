@@ -1,12 +1,24 @@
 .container {
-    float: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 
     .deporte {
-        float:left;
-        width:200px;
-        height: 50px;
-        margin: 5px;
-        background-color: black;
-        color: white
+        position: relative;
+        margin: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 0 black;
+
+
+        .foto {
+            width: 250px;
+            height: 150px;
+            border-radius: 15px;
+        }
+
+        .nombre-deporte {
+            color: white;
+            position: absolute;
+        }
     }
 }

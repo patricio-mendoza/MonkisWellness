@@ -6,7 +6,8 @@ const cors = require("cors")
 const server = express()
 const port = 8888;
 
-server.use(bodyParser.urlencoded({ extended: false}));
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
 server.use(cors());
 
 // Conexion con base de datos
@@ -33,6 +34,7 @@ server.listen(port, function check(error) {
     else console.log(`Started in port ${port}`)
 });
 
+// USERS
 server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id
 
@@ -53,16 +55,6 @@ server.get("/api/user/:id", (req, res) => {
         else res.send({ status: true, data: result });    
     });
 });
-
-server.get("/api/gym/estado", (req, res) => {    
-    sql = `SELECT estado FROM Wellness WHERE id = 1`
-
-    db.query(sql, function (error, result) {
-        if (error) console.log("Error retrieving the data")
-        else res.send({ estado: result[0].estado });    
-    });
-});
-
 server.get("/api/user/reservaciones/:id", (req, res) => {   
     let id = req.params.id;
     sql = `SELECT * FROM Reservacion WHERE "${id}" = matricula OR "${id}" = num_nomina`;
@@ -72,7 +64,28 @@ server.get("/api/user/reservaciones/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
+server.get("/api/avisos/:id", (req, res) => {
+    let id = req.params.id;
+    sql = `SELECT * FROM Anuncio WHERE matricula = "${id}"`;
 
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+
+// GYM
+server.get("/api/gym/estado", (req, res) => {    
+    sql = `SELECT estado FROM Wellness WHERE id = 1`
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ estado: result[0].estado });    
+    });
+});
+
+
+//DEPORTES
 server.get("/api/deportes", (req, res) => {
     sql = `SELECT * FROM Deporte`;
 
@@ -81,13 +94,34 @@ server.get("/api/deportes", (req, res) => {
         else res.send({ data: result });    
     });
 });
-
-server.get("/api/avisos/:id", (req, res) => {
+server.get("/api/deportes/cancha/:id", (req, res) => {    
     let id = req.params.id;
-    sql = `SELECT * FROM Anuncio WHERE matricula = "${id}"`;
+    let sql = `SELECT esp.id_espacio, esp.nombre AS nombre_espacio, esp.url_fotos, ins.nombre AS nombre_instalacion
+    FROM Espacio esp JOIN Instalacion ins ON esp.id_instalacion = ins.id_instalacion JOIN EspacioDeporte espdep ON esp.id_espacio = espdep.id_espacio JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
+    WHERE espdep.id_deporte = ${id}
+    ORDER BY esp.id_espacio`
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
+    });
+});
+
+//ESPACIOS
+server.get("/api/reservaciones/espacio/:id", (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT ADDTIME(hora_entrada, '-06:00:10') as start, ADDTIME(hora_salida, '-06:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+server.post('/api/reservar/espacio', (req, res) => {
+    let sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ status: true });
     });
 });

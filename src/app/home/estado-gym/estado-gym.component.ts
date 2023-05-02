@@ -25,15 +25,13 @@ export class EstadoGymComponent {
 
   constructor(private http: HttpClient) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getEstadoGym();
     this.administrador = localStorage.getItem('isAdmin');
 
     this.intervalId = setInterval(()=>{
       this.time = new Date();
     }, 1000);
-    
-    console.log(this.time);
   }
 
   ngOnDestroy(){
