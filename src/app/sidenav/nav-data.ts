@@ -1,4 +1,6 @@
-export const navbarData = [
+import { INavbarData } from "./helper";
+
+export const navbarData: INavbarData[] = [
     {
         routeLink: "inicio",
         icon: "fal fa-home",
@@ -7,7 +9,17 @@ export const navbarData = [
     {
         routeLink: "reservaciones",
         icon: "fal fa-bookmark",
-        label: "Reservaciones"
+        label: "Reservaciones",
+        items: [
+            {
+                routeLink: "reservaciones",
+                label: "Reservar"
+            },
+            {
+                routeLink: "misreservas",
+                label: "Mis Reservaciones"
+            }
+        ]
     },
     {
         routeLink: "avisos",
@@ -16,7 +28,7 @@ export const navbarData = [
     },
 ];
 
-export const navbarDataAdmin = [
+export const navbarDataAdmin: INavbarData[] = [
     {
         routeLink: "inicio",
         icon: "fal fa-home",

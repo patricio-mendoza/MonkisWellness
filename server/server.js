@@ -36,7 +36,7 @@ server.listen(port, function check(error) {
 server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id
 
-    if (id.length != 9 || (id[0] != 'A' && id[0] != 'L')) {
+    if (id.length != 9 || (id[0] !== 'A' && id[0] !== 'L')) {
         res.send({ status: false, data: [] })
         return;
     }
@@ -60,5 +60,34 @@ server.get("/api/gym/estado", (req, res) => {
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ estado: result[0].estado });    
+    });
+});
+
+server.get("/api/user/reservaciones/:id", (req, res) => {   
+    let id = req.params.id;
+    sql = `SELECT * FROM Reservacion WHERE "${id}" = matricula OR "${id}" = num_nomina`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+
+server.get("/api/deportes", (req, res) => {
+    sql = `SELECT * FROM Deporte`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+
+server.get("/api/avisos/:id", (req, res) => {
+    let id = req.params.id;
+    sql = `SELECT * FROM Anuncio WHERE matricula = "${id}"`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
     });
 });

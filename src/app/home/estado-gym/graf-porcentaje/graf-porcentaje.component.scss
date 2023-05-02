@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@700&display=swap');
+
+.container{
+    height: 400px;
+    width: 400px;
+    background-color: transparent;
+    top: 100px;
+    left: 0%;
+    right: 55%;
+    left: 45%;
+    place-items: center;
+    display: grid;
+    font-family: "M PLUS 1p", sans-serif;
+}
+
+.personas-container{
+    position: absolute;
+    top: 205px;
+    font-family: "M PLUS 1p", sans-serif;
+    font-size: 15px;
+    color: #ffffff;
+    
+}
+.empty-container{
+    position: absolute;
+    top: 250px;
+}
+
+.porcentaje_actual{
+    color: #ffffff;
+}

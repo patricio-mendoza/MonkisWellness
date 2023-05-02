@@ -88,6 +88,9 @@
             .sidenav-link-text {
                 margin-left: 1.5rem;
             }
+            .menu-collapse-icon {
+                padding-left: 30px;
+            }
         }
     }
 
@@ -105,5 +108,41 @@
     .sidenav-link-icon,
     .sidenav-link-text {
         color: #000
+    }
+}
+
+.menu-collapse-icon {
+    font-size: 25px;
+    width: 2rem;
+    min-width: 2rem;
+    margin: auto 0.5 auto auto;
+    text-align: center;
+    color: #f3f3f3;
+}
+
+.sublevel-nav {
+    list-style: none;
+    margin-left: 10px;
+
+    .sublevel-nav-item {
+        .sublevel-nav-link {
+            display: flex;
+            align-items: center;
+            height: 3rem;
+            color: #d2d2d2;
+            text-decoration: none;
+            border-radius: 0.625rem;
+            transition: all .3s ease;
+            
+            .sublevel-link-icon {
+                font-size: 4px;
+                width: 2rem;
+                text-align: center;
+            }
+            
+        }
+        .sublevel-nav-link:hover {
+            color: white;
+        }
     }
 }

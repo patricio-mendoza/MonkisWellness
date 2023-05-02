@@ -20,11 +20,17 @@ import { HeaderComponent } from './header/header.component';
 import { HorasProximasComponent } from './home/horas-proximas/horas-proximas.component';
 import { EstaSemanaComponent } from './home/esta-semana/esta-semana.component';
 import { HistorialComponent } from './home/historial/historial.component';
+import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
 
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
-registerLocaleData(localeEs, 'es');
+import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
+import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
+import { bufferToggle } from 'rxjs';
+import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 
+registerLocaleData(localeEs, 'es');
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +45,10 @@ registerLocaleData(localeEs, 'es');
     HorasProximasComponent,
     EstaSemanaComponent,
     HistorialComponent,
+    SublevelMenuComponent,
+    GrafPorcentajeComponent,
+    MisReservasComponent,
+    EspacioComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,8 +57,28 @@ registerLocaleData(localeEs, 'es');
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgCircleProgressModule.forRoot({
+      "radius": 100,
+      "space": -10,
+      "outerStrokeGradient": false,
+      "outerStrokeWidth": 15,
+      "outerStrokeColor": "#D9D9D9",
+      "innerStrokeWidth": 20,
+      "titleColor" : "#ffffff",
+      "titleFontSize" : "60",
+      "animateTitle": false,
+      "subtitleColor" : "#ffffff", 
+      "subtitleFontSize" : "20",
+      "animationDuration": 1000,
+      "showUnits": false,
+      "showBackground": true,
+      "backgroundColor": "#004891",
+      "clockwise": true,
+      "startFromZero": false,
+      "lazy": true})
   ],
   providers: [DatePipe, {provide: LOCALE_ID, useValue: 'es'}],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}
