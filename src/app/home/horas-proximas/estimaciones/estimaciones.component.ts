@@ -7,15 +7,17 @@ import { Component, Input } from '@angular/core';
 })
 export class EstimacionesComponent {
   @Input() num_personas: number;
+  @Input() lugar: number;
 
   aforo_max: number;
   porcentaje: number;
   porcentaje_redondeado: string;
   porcentaje_actual: string;
-  currentDateTime: number;
+  currentDateTime: Date;
 
   ngOnInit() {
-    this.currentDateTime = Date.now();
+    this.currentDateTime = new Date();
+    this.currentDateTime.setHours(this.currentDateTime.getHours()+this.lugar);
     this.aforo_max = 280;
     this.porcentaje = this.num_personas < this.aforo_max ? (this.num_personas * 100 / this.aforo_max) : 100;
     this.porcentaje_redondeado = this.porcentaje.toPrecision(2);

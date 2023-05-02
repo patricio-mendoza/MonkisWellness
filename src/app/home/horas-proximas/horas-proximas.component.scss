@@ -48,20 +48,20 @@
     border-bottom-right-radius: 20px;
     position: absolute;
     margin-top: -60px;
-    right: px;
     top: 270px;
 }
 
 .separator4{
-    width: 4vw;
+    width: 4vw;//width normal es en 4
+    //margin-left: 1.5vw;
+    height: 6px; //height normal es en 6
     background-color: white;
     font-weight: 800;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 20px;
     position: absolute;
     margin-top: -60px;
-    right: px;
-    top: 375px;
+    top: 380px;
 }
 .img-fluid{
     max-width: 100%;

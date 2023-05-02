@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-
+import localeEs from '@angular/common/locales/es';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +20,6 @@ import { HeaderComponent } from './header/header.component';
 import { HorasProximasComponent } from './home/horas-proximas/horas-proximas.component';
 import { EstaSemanaComponent } from './home/esta-semana/esta-semana.component';
 import { HistorialComponent } from './home/historial/historial.component';
-import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';

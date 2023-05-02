@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./horas-proximas.component.scss']
 })
 export class HorasProximasComponent {
-
+  
 }
