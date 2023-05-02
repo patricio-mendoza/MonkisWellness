@@ -33,8 +33,11 @@ export class ReservarEspacioComponent {
     clicked: boolean = false;
 
     id_espacio: number;
-    reqData: any;
+    
+    hora_inicio: number = 6;
+    hora_fin: number = 23;
 
+    reqData: any;
     bloqueos: Bloqueo[];
 
     constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
@@ -44,18 +47,13 @@ export class ReservarEspacioComponent {
 
     ngOnInit() {
         this.getBloqueosActivos();
-        this.bloqueos = [];
+        this.getHorarioInstalacion();
+
+        this.settings.minTime = `${this.hora_inicio}:00`;
+        this.settings.maxTime = `${this.hora_fin}:00`;
     }
     
-    settings: MbscDatepickerOptions = {
-        display: 'inline',
-        controls: ['calendar', 'timegrid'],
-        min: this.today,
-        max: this.tomorrow,
-        minTime: '06:00',
-        maxTime: '22:00',
-        selectMultiple: true,
-    };
+    settings: MbscDatepickerOptions;
 
     getBloqueosActivos(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
@@ -64,6 +62,26 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.bloqueos = this.reqData.data;
+        });
+    }
+    getHorarioInstalacion(): void {
+        this.route.paramMap.subscribe((params: ParamMap) => {
+            this.id_espacio = +params.get('id')
+        })
+        this.http.get(`${API_URI}/instalacion/horario/${this.id_espacio}`).subscribe(res => {
+            this.reqData = res
+            this.hora_inicio = this.reqData.data[0].apertura;
+            this.hora_fin = this.reqData.data[0].cierre;
+
+            this.settings = {
+                display: 'inline',
+                controls: ['calendar', 'timegrid'],
+                min: this.today,
+                max: this.tomorrow,
+                minTime: `${this.hora_inicio}:00`,
+                maxTime: `${this.hora_fin}:00`,
+                selectMultiple: true,
+            };
         });
     }
 
@@ -78,8 +96,6 @@ export class ReservarEspacioComponent {
         
         let formattedStartDate = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd HH:mm:ss')
         let formattedFinishDate = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd HH:mm:ss')
-        console.log(formattedStartDate)
-        console.log(formattedFinishDate)
 
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };
@@ -98,7 +114,7 @@ export class ReservarEspacioComponent {
             this.reqData = res;
             if (this.reqData.status) {
                 // get most current reservation and compare to avoid conflicts
-                window.location.replace(this.location.path());
+                //window.location.replace(this.location.path());
             }
         });
     }
