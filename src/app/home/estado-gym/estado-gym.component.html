@@ -1,24 +1,15 @@
-<div class="titulo-aforo">Aforo actual</div>
-<div class="separator"></div>
-<div class="fecha-hora ms-5">
-    <p class="saludo">
-        HOY, {{dia.toUpperCase()}}
-    </p>
-    <div class="reloj">
-            <p class="fecha">{{time | date: 'dd'}} de {{time | date: 'MMMM'}}</p>
-            <p class="fecha">{{time | date: 'hh:mm a'}}</p>
-    </div>
-</div>
-<div class="tabla-estado">
-    <div *ngIf="administrador=='true'" class="btn btn-primary ms-5">Programar cierres</div>
-    <div class="textos-estado ms-5 text-white">
-        <div class="razon-cierre" *ngIf="!estado">
-            <span class="tipo-text">Razón de cierre: </span>
-            <span class="valor-text">{{razon}}</span>
-        </div>
-        <div class="hora-apertura">
-            <span class="tipo-text"> Hora de {{estado ? 'Cierre' : 'Apertura'}} </span>
-            <span class="valor-text">{{hora_cambio}}</span>
+<div class="container">
+    <div class="estado">
+        <div class="titulo-aforo">Aforo actual</div>
+        <div class="separator"></div>
+        <div class="fecha-hora ms-5">
+            <p class="saludo">
+                HOY, {{dia.toUpperCase()}}
+            </p>
+            <div class="reloj">
+                    <p class="fecha">{{time | date: 'dd'}} de {{time | date: 'MMMM'}}</p>
+                    <p class="fecha">{{time | date: 'hh:mm a'}}</p>
+            </div>
         </div>
         <div class="tabla-estado">
             <div class="textos-estado ms-5 text-white">
