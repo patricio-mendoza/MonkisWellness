@@ -6,7 +6,8 @@ const cors = require("cors")
 const server = express()
 const port = 8888;
 
-server.use(bodyParser.urlencoded({ extended: false}));
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
 server.use(cors());
 
 // Conexion con base de datos
@@ -117,12 +118,12 @@ server.get("/api/reservaciones/espacio/:id", (req, res) => {
     });
 });
 server.post('/api/reservar/espacio', (req, res) => {
-    let data = req.body;
-    console.log(data);
-    let sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${data.matricula}, ${data.num_nomina}, ${data.id_espacio}, "${data.hora_entrada}", "${data.hora_salida}", ${data.prioridad}, ${data.estatus})`
+    console.log(req.body.matricula)
+    let sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
+    console.log(sql);
+    
     db.query(sql, function (error, result) {
-        if (error) console.log("Error Inserting Data")
-        else console.log("Successfull Insert")
+        if (error) return false
+        else return true;
     });
-
 });

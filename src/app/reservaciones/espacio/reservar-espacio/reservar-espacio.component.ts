@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { DatePipe } from '@angular/common';
 import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -35,7 +36,7 @@ export class ReservarEspacioComponent {
 
     bloqueos: Bloqueo[];
 
-    constructor(private route: ActivatedRoute, private http: HttpClient) {
+    constructor(private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     }
@@ -71,17 +72,24 @@ export class ReservarEspacioComponent {
             console.log('Invalid Request')
             return;
         }
+        let formattedStartDate = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd HH:mm')
+        let formattedFinishDate = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd HH:mm')
 
-        const mybody = {
+        const headers = { 'Content-Type': 'application/json' };
+        const options = { headers: headers };
+        
+        const body = {
             matricula : localStorage.getItem('id')[0] === 'A' ? localStorage.getItem('id') : null,
             num_nomina : localStorage.getItem('id')[0] !== 'A' ? localStorage.getItem('id') : null,
             id_espacio : this.id_espacio,
-            hora_entrada : this.selectedDate[0],
-            hora_salida : this.selectedDate[1],
+            hora_entrada : formattedStartDate,
+            hora_salida : formattedFinishDate,
             prioridad : localStorage.getItem('id')[0] === 'A' ? 2 : 1,
             estatus : 1
-        }
+        };
 
-        this.http.post(`${API_URI}/reservar/espacio`, mybody).subscribe();
+        this.http.post(`${API_URI}/reservar/espacio`, JSON.stringify(body), options).subscribe(data => {
+            console.log(data);   
+        });
     }
 }
