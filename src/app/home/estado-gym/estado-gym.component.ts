@@ -48,4 +48,8 @@ export class EstadoGymComponent {
       this.estado = this.reqData.estado;
     });
   }
+
+  cambiarEstado(){
+    this.estado = !this.estado;
+  }
 }
