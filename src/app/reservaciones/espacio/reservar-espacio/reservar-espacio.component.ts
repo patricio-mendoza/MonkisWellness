@@ -33,6 +33,7 @@ export class ReservarEspacioComponent {
     clicked: boolean = false;
 
     id_espacio: number;
+    nombreEspacio: string;
     
     hora_inicio: number = 6;
     hora_fin: number = 23;
@@ -117,5 +118,6 @@ export class ReservarEspacioComponent {
                 window.location.replace(this.location.path());
             }
         });
+        this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
     }
 }

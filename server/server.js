@@ -73,6 +73,13 @@ server.get("/api/avisos/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
+server.post('/api/generar/aviso', (req, res) => {
+    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo) VALUES ('${req.body.matricula}', 'Reservacion Confirmada', 'Tu reservacion en la ${req.body.id_espacio} en el CBD2 ha sido guardada', now())`;
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+    });
+});
 
 // GYM
 server.get("/api/gym/estado", (req, res) => {    
