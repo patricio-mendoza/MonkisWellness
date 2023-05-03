@@ -21,6 +21,6 @@ export class EstimacionesComponent {
     this.aforo_max = 280;
     this.porcentaje = this.num_personas < this.aforo_max ? (this.num_personas * 100 / this.aforo_max) : 100;
     this.porcentaje_redondeado = this.porcentaje.toPrecision(2);
-    this.porcentaje_actual = this.porcentaje === 100 ? "100%" : this.porcentaje_redondeado.toString() + "%";
+    this.porcentaje_actual = this.porcentaje === 100 ? "100%" : this.porcentaje_redondeado.toString() + "%";  
   }
 }
