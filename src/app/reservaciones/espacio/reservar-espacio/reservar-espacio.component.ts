@@ -114,7 +114,7 @@ export class ReservarEspacioComponent {
             this.reqData = res;
             if (this.reqData.status) {
                 // get most current reservation and compare to avoid conflicts
-                //window.location.replace(this.location.path());
+                window.location.replace(this.location.path());
             }
         });
     }
