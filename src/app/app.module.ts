@@ -28,7 +28,6 @@ import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { bufferToggle } from 'rxjs';
-import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
 import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estimaciones.component';
 import { EstimacionesDosComponent } from './home/horas-proximas/estimaciones-dos/estimaciones-dos.component';
 import { EstimacionesTresComponent } from './home/horas-proximas/estimaciones-tres/estimaciones-tres.component';
