@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import fa from '@mobiscroll/angular/dist/js/i18n/fa';
 import { HomeComponent } from '../home.component';
 
 
@@ -10,5 +9,4 @@ import { HomeComponent } from '../home.component';
 })
 export class ModifAforoComponent extends HomeComponent{
 
-  
 }

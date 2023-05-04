@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CompartidovarService } from './compartidovar.service';
 
 @Component({
   selector: 'app-home',
@@ -6,14 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+
+
   isAdmin = localStorage.getItem("isAdmin");
 
-  isModifyingAforo: boolean = true;
+  constructor(public miServicio : CompartidovarService){}
+
 
 
   ocultar(){
-    this.isModifyingAforo = !this.isModifyingAforo;
-    console.log(this.isModifyingAforo)
+    this.miServicio.isModifyingAforo = !this.miServicio.isModifyingAforo;
   }
   
 }
