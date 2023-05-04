@@ -1,13 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
 .container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
 
     .deporte {
+        align-content:center;
         position: relative;
         margin: 10px;
         border-radius: 15px;
         box-shadow: 0 2px 5px rgb(166, 166, 166);
+        width: 300px;
+        height: 150px;
         
  
         
@@ -18,11 +23,11 @@
             position:absolute;
             border-radius: 15px;
         }
-        .lineas-text {
-            
-            margin-left: 0;
+        .lineas-text {  
+            margin-top: 15vh;  
+            margin-left: 9vw;
             margin-right: auto;
-            width: 200px;
+            width: 150px;
             height: auto;
             border-radius: 15px;
             position:absolute;  
@@ -37,8 +42,16 @@
         }
 
         .nombre-deporte {
+            text-align:right;
+            margin-top: 11vh;
+            margin-left: 0.5vw;
+            //margin-right: -10vw;
+            font-size: 25px;
+            line-height: 95%;
+            letter-spacing: 0.05em;
             color: white;
             position: absolute;
+            font-family: 'Poppins', sans-serif;
         }
     }
 }
