@@ -14,8 +14,6 @@
         width: 300px;
         height: 150px;
         
- 
-        
         .gradient{
             width: 300px;
             height: 150px;
@@ -49,18 +47,28 @@
             border-radius: 15px;
             //position:absolute;  
         }
-
-        .nombre-deporte {
-            text-align:right;
+        .nombre-deporte-container{
+            display: flex;
+            justify-content: right;
+            position:absolute;
+            height: 5vh;
+            width: 100%;
+            //background-color: #f94c9d;
             margin-top: 11vh;
-            margin-left: 0.5vw;
-            //margin-right: -10vw;
-            font-size: 25px;
-            line-height: 95%;
-            letter-spacing: 0.05em;
-            color: white;
-            position: absolute;
-            font-family: 'Poppins', sans-serif;
+            
+            //margin-left: 0.5vw;
+            .nombre-deporte {
+                margin-right: 0.5vw;
+                text-align:right;
+                
+                //margin-right: -10vw;
+                font-size: 25px;
+                line-height: 95%;
+                letter-spacing: 0.05em;
+                color: white;
+                position: absolute;
+                font-family: 'Poppins', sans-serif;
+            }
         }
     }
 }
