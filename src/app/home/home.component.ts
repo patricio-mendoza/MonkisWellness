@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   isAdmin = localStorage.getItem("isAdmin");
+
+  isModifyingAforo: boolean = true;
+
+
+  ocultar(){
+    this.isModifyingAforo = !this.isModifyingAforo;
+    console.log(this.isModifyingAforo)
+  }
+  
 }

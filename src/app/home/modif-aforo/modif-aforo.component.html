@@ -1,7 +1,16 @@
 
-<div class="hola">
+<div *ngIf="isModifyingAforo" class="hola">
     <div class="container">
+        <div class="ModificarAforoTitulo"><h1>Modificar Aforo del Gimnasio</h1></div>
+        <div class="aforoMaximoTitulo"><h2>Aforo máximo actual:</h2></div>
+        <img src="../../../../assets/Line 26.png" class="linea" alt="..." />
+        <div class="ingresarNuevoAf"><h2> Ingresa el nuevo aforo máximo de personas: </h2></div>
+        
         <div class="fondoblanco"></div>
         <div class="aforo"></div>
+        <div class="contenedor"><input type="text" id="cantidad" placeholder= "Ej.240">
+        <div class="botones mt-3"><button (click)="ocultar()" class=" btn btn-light cancelar col-md-4 ms-2 " >Cancelar</button> <button class="guardar btn btn-light col-md-4 ms-5">Guardar</button></div>
+
+        </div>
     </div>
 </div>

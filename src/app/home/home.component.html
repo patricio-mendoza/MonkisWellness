@@ -5,7 +5,13 @@
 <div class="lower-container">
     <div class="flex-box3"><app-esta-semana></app-esta-semana></div>
     <div  class="flex-box4"><app-historial></app-historial></div>
-    
+    <button (click)="ocultar()" type="button" class="boton">
+        <img src="../../../../assets/Vector.png" class="img-fluid" alt="..." />
+    </button>
+    <button id="boton-cierre" class="boton-cierre" >
+        <p class="cierre">ProgramarCierre</p> 
+      </button>
 </div>
 
-<app-modif-aforo></app-modif-aforo>
+
+<app-modif-aforo *ngIf="isModifyingAforo" ></app-modif-aforo>
