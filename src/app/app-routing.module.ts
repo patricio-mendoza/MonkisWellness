@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'reservarEspacio/:id',
     component: ReservarEspacioComponent
+  },
+  {
+    path: 'estadisticas',
+    component: EstadisticasComponent
   }
 ];
 

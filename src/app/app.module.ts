@@ -29,6 +29,7 @@ import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estima
 import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -52,6 +53,7 @@ registerLocaleData(localeEs, 'es');
     MisReservasComponent,
     EspacioComponent,
     ReservarEspacioComponent,
+    EstadisticasComponent,
   ],
   imports: [  
     MbscModule, 
