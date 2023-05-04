@@ -54,4 +54,9 @@ export const navbarDataAdmin: INavbarData[] = [
         icon: "fal fa-bell",
         label: "Avisos"
     },
+    {
+        routeLink: "estadisticas",
+        icon: "fal fa-chart-bar",
+        label: "Estadisticas"
+    },
 ];
