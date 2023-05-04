@@ -86,6 +86,15 @@ server.get("/api/gym/estado", (req, res) => {
 
 
 //DEPORTES
+server.get(`/api/deporte/:id`, (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT nombre FROM Deporte WHERE id_deporte=${id}`;
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
 server.get("/api/deportes", (req, res) => {
     sql = `SELECT * FROM Deporte`;
 
@@ -131,7 +140,6 @@ server.get('/api/instalacion/horario/:id', (req, res) => {
     numDia = dia.getDate() === 0 ? 7 : dia.getDate();
 
     let sql = `SELECT HOUR(ho.hora_apertura) as apertura, HOUR(ho.hora_cierre) as cierre FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
-    console.log(sql);
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
