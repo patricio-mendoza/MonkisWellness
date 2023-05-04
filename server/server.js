@@ -90,7 +90,19 @@ server.get("/api/gym/estado", (req, res) => {
         else res.send({ estado: result[0].estado });    
     });
 });
+server.get('/api/gym/estimaciones', (req, res) => {
+    let fecha = new Date();
+    var offset = -(new Date().getTimezoneOffset() / 60);
 
+    fecha.setHours(fecha.getHours() + offset)
+    fecha = fecha.toISOString().slice(0, 19).replace('T', ' ');
+
+    let sql = `SELECT aforo FROM Historial WHERE tiempo > '${fecha}' LIMIT 3;`
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+})
 
 //DEPORTES
 server.get("/api/deportes", (req, res) => {

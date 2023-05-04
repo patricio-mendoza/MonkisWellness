@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-estimaciones',
@@ -19,8 +19,11 @@ export class EstimacionesComponent {
     this.currentDateTime = new Date();
     this.currentDateTime.setHours(this.currentDateTime.getHours()+this.lugar);
     this.aforo_max = 280;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
     this.porcentaje = this.num_personas < this.aforo_max ? (this.num_personas * 100 / this.aforo_max) : 100;
     this.porcentaje_redondeado = this.porcentaje.toPrecision(2);
-    this.porcentaje_actual = this.porcentaje === 100 ? "100%" : this.porcentaje_redondeado.toString() + "%";  
+    this.porcentaje_actual = this.porcentaje === 100 ? "100%" : this.porcentaje_redondeado.toString() + "%";
   }
 }
