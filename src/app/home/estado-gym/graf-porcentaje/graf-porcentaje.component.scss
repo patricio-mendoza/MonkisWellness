@@ -3,6 +3,7 @@
 .container{
     height:400px;
     width: 400px;
+    margin-top: 7vh;
     margin-right: 44px;
     z-index: 1;
     place-items: center;
@@ -13,7 +14,7 @@
 
 .personas-container{
     position: absolute;
-    top: 205px;
+    top: 30vh;
     margin-left: 110px;
     font-family: "M PLUS 1p", sans-serif;
     font-size: 15px;
