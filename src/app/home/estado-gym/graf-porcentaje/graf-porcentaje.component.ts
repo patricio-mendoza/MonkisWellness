@@ -14,4 +14,5 @@ export class GrafPorcentajeComponent {
   porcentaje_redondeado = this.porcentaje.toPrecision(2);
   
   porcentaje_actual = this.porcentaje === 100 ? "100%" : this.porcentaje_redondeado.toString() + "%";
+  isAdmin = localStorage.getItem("isAdmin")
 }
