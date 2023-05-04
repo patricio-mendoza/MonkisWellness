@@ -90,12 +90,12 @@ server.get("/api/gym/estado", (req, res) => {
         else res.send({ estado: result[0].estado });    
     });
 });
-server.get("/api/gym/aforo_max", (req, res) => {
-    let sql = `SELECT aforo_max FROM Wellness WHERE id = 1`;
+server.get("/api/gym/aforo", (req, res) => {
+    let sql = `SELECT aforo_max, aforo_actual FROM Wellness WHERE id = 1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ aforo: result[0].aforo_max });    
+        else res.send({ data: result[0] });    
     });
 });
 server.get('/api/gym/estimaciones', (req, res) => {

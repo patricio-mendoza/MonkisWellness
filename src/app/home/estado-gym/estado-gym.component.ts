@@ -22,6 +22,7 @@ export class EstadoGymComponent {
   hora_cambio: string = "3:00 pm";
 
   aforo_max: number = 280;
+  aforo_actual: number = 0;
 
   reqData: any;
 
@@ -29,7 +30,7 @@ export class EstadoGymComponent {
 
   ngOnInit() {
     this.getEstadoGym();
-    this.getAforoMax();
+    this.getAforo();
     this.administrador = localStorage.getItem('isAdmin');
 
     this.intervalId = setInterval(()=>{
@@ -48,11 +49,12 @@ export class EstadoGymComponent {
       this.estado = this.reqData.estado;
     });
   }
-  getAforoMax() {
-    let apiURL = `${API_URI}/gym/aforo_max`;
+  getAforo() {
+    let apiURL = `${API_URI}/gym/aforo`;
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
-      this.aforo_max = this.reqData.aforo;
+      this.aforo_max = this.reqData.data.aforo_max;
+      this.aforo_actual = this.reqData.data.aforo_actual;
     });
   }
 }
