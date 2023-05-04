@@ -83,11 +83,19 @@ server.post('/api/generar/aviso', (req, res) => {
 
 // GYM
 server.get("/api/gym/estado", (req, res) => {    
-    sql = `SELECT estado FROM Wellness WHERE id = 1`
+    let sql = `SELECT estado FROM Wellness WHERE id = 1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ estado: result[0].estado });    
+    });
+});
+server.get("/api/gym/aforo_max", (req, res) => {
+    let sql = `SELECT aforo_max FROM Wellness WHERE id = 1`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ aforo: result[0].aforo_max });    
     });
 });
 server.get('/api/gym/estimaciones', (req, res) => {
@@ -97,7 +105,7 @@ server.get('/api/gym/estimaciones', (req, res) => {
     fecha.setHours(fecha.getHours() + offset)
     fecha = fecha.toISOString().slice(0, 19).replace('T', ' ');
 
-    let sql = `SELECT aforo FROM Historial WHERE tiempo > '${fecha}' LIMIT 3;`
+    let sql = `SELECT aforo FROM Historial WHERE tiempo > '${fecha}' LIMIT 3`;
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URI } from '../../../../server/server.js'
 
@@ -21,12 +21,15 @@ export class EstadoGymComponent {
   razon: string = "Mantenimiento";
   hora_cambio: string = "3:00 pm";
 
+  aforo_max: number = 280;
+
   reqData: any;
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.getEstadoGym();
+    this.getAforoMax();
     this.administrador = localStorage.getItem('isAdmin');
 
     this.intervalId = setInterval(()=>{
@@ -43,6 +46,13 @@ export class EstadoGymComponent {
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
       this.estado = this.reqData.estado;
+    });
+  }
+  getAforoMax() {
+    let apiURL = `${API_URI}/gym/aforo_max`;
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.aforo_max = this.reqData.aforo;
     });
   }
 }
