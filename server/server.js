@@ -113,6 +113,15 @@ server.get('/api/gym/estimaciones', (req, res) => {
 })
 
 //DEPORTES
+server.get(`/api/deporte/:id`, (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT nombre FROM Deporte WHERE id_deporte=${id}`;
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
 server.get("/api/deportes", (req, res) => {
     sql = `SELECT * FROM Deporte`;
 
