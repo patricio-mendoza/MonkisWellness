@@ -18,6 +18,7 @@ export class HeaderComponent {
         // en inicio se pone 'gimnasio'
         this.title = this.title == 'inicio' ? 'gimnasio' : this.title;
         this.title = this.title == 'misreservas' ? 'mis reservas' : this.title;
+        this.title = this.title.substring(0,8) == 'reservar' ? 'reservaciones' : this.title;
  });
   }
 }
