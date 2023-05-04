@@ -62,6 +62,7 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.bloqueos = this.reqData.data;
+            console.log(this.bloqueos)
         });
     }
     getHorarioInstalacion(): void {
