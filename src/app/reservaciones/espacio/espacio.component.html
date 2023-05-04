@@ -1,3 +1,21 @@
-<span *ngFor="let espacio of espacios" class="espacio" (click)="handleClick(espacio.id_espacio)">
-    {{espacio.nombre_espacio}}
-</span>
+<div class = "big-container">
+    <div class = "big-container-left">
+        <div class = "container-left">
+    
+        </div>
+    </div>
+    <div class = "big-container-right">
+        <div class = "container-right-up">
+    
+        </div>
+        <div class = "container-right-down">
+            <span *ngFor="let espacio of espacios" class="espacio" (click)="handleClick(espacio.id_espacio)">
+                {{espacio.nombre_espacio}}
+            </span>
+        </div>
+    </div>
+</div>
+
+
+
+
