@@ -8,8 +8,8 @@ import { HttpClient } from '@angular/common/http';
 const API_URI = 'http://localhost:8888/api';
 
 interface Bloqueo {
-    start: string;
-    end: string;
+    start: Date;
+    end: Date;
 }
 
 setOptions({
@@ -49,9 +49,6 @@ export class ReservarEspacioComponent {
     ngOnInit() {
         this.getBloqueosActivos();
         this.getHorarioInstalacion();
-
-        this.settings.minTime = `${this.hora_inicio}:00`;
-        this.settings.maxTime = `${this.hora_fin}:00`;
     }
     
     settings: MbscDatepickerOptions;
@@ -63,6 +60,8 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.bloqueos = this.reqData.data;
+
+            console.log(this.bloqueos);
         });
     }
     getHorarioInstalacion(): void {
