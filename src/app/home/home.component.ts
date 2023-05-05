@@ -10,7 +10,7 @@ const API_URI = 'http://localhost:8888/api';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  isAdmin = localStorage.getItem("isAdmin");
+  isAdmin = localStorage.getItem("isAdmin") === "true";
   newAforo: string;
 
   constructor(private http: HttpClient, public miServicio : CompartidovarService){}
