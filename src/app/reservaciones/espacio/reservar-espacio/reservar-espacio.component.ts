@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -25,6 +24,8 @@ setOptions({
   styleUrls: ['./reservar-espacio.component.scss']
 })
 export class ReservarEspacioComponent {
+    isAdmin = localStorage.getItem('isAdmin') === "true"
+
     today = new Date();
     tomorrow = new Date();
     selectedDate: any = []
@@ -34,7 +35,7 @@ export class ReservarEspacioComponent {
 
     id_espacio: number;
     nombreEspacio: string;
-    
+
     hora_inicio: number = 6;
     hora_fin: number = 23;
 
@@ -70,6 +71,7 @@ export class ReservarEspacioComponent {
             this.reqData = res
             this.hora_inicio = this.reqData.data[0].apertura;
             this.hora_fin = this.reqData.data[0].cierre;
+            this.nombreEspacio = this.reqData.data[0].nombre;
 
             this.settings = {
                 display: 'inline',
