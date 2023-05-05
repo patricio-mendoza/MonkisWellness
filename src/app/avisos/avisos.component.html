@@ -1,11 +1,26 @@
 <div class="container">
     <div *ngFor="let anuncio of anuncios" class="anuncio">
-        <div class="encabezado"> ¡{{anuncio.encabezado}}!</div>
-        <div class="horarsv">{{anuncio.tiempo}}</div>
+        <div class="tituloNotif">{{anuncio.encabezado}}</div>
+        <div class="encabezado"> {{anuncio.tituloNotif}}</div>
+        <div class="horaNotif">
+            <div class="tiempoNotif">{{anuncio.tiempo}}</div>
+        </div>
         <div class="msjNotif">{{anuncio.texto}}</div>
         <div class="imgContainer">
             <img class="image" src="../../assets/campoTenis.png"/> 
         </div>
-        <div class="tiempoRsv">{{anuncio.tiempo}}</div>
+        <div class="tiempoRsv">{{anuncio.tiempo_reserva1}}</div>
+    </div>
+    <div *ngFor="let anuncio of anuncios" class="anuncio">
+        <div class="tituloNotif">{{anuncio.encabezado}}</div>
+        <div class="encabezado"> {{anuncio.tituloNotif2}}</div>
+        <div class="horaNotif">
+            <div class="tiempoNotif">{{anuncio.tiempo}}</div>
+        </div>
+        <div class="msjNotif">{{anuncio.texto2}}</div>
+        <div class="imgContainer">
+            <img class="image" src="../../assets/campoTenis.png"/> 
+        </div>
+        <div class="tiempoRsv">{{anuncio.tiempo_reserva2}}</div>
     </div>
 </div>
