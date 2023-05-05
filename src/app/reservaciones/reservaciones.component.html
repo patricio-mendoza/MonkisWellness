@@ -1,6 +1,11 @@
 <div class="container">
     <div (click)="handleClick(deporte.id_deporte)" *ngFor="let deporte of deportes" class="deporte">
-        <p class="nombre-deporte">{{deporte.nombre}}</p>
+        <div class = "gradient"></div>
+        <div class="nombre-deporte-container"><div class="nombre-deporte">{{deporte.nombre}}</div></div>
+        <img class="lineas-text" src="../../assets/foto_deporte/lineas-text.png">
+        <img class="arrow" src="../../assets/foto_deporte/icons/arrow.png">
         <img class="foto" src="{{backgroundURL(deporte.nombre)}}">
+        
+        
     </div>
 </div>

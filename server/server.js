@@ -73,16 +73,24 @@ server.get("/api/avisos/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
+server.post('/api/generar/aviso', (req, res) => {
+    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo) VALUES ('${req.body.matricula}', 'Reservacion Confirmada', 'Tu reservacion en la ${req.body.id_espacio} en el CBD2 ha sido guardada', now())`;
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+    });
+});
 
 // GYM
 server.get("/api/gym/estado", (req, res) => {    
-    sql = `SELECT estado FROM Wellness WHERE id = 1`
+    let sql = `SELECT estado FROM Wellness WHERE id = 1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ estado: result[0].estado });    
     });
 });
+
 server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
     let newAforo = req.params.newAforo;
     let sql = `UPDATE Wellness SET aforo_max = ${newAforo} WHERE id=1;`
@@ -93,8 +101,38 @@ server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
     });
 });
 
+server.get("/api/gym/aforo", (req, res) => {
+    let sql = `SELECT aforo_max, aforo_actual FROM Wellness WHERE id = 1`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result[0] });    
+    });
+});
+server.get('/api/gym/estimaciones', (req, res) => {
+    let fecha = new Date();
+    var offset = -(new Date().getTimezoneOffset() / 60);
+
+    fecha.setHours(fecha.getHours() + offset)
+    fecha = fecha.toISOString().slice(0, 19).replace('T', ' ');
+
+    let sql = `SELECT aforo FROM Historial WHERE tiempo > '${fecha}' LIMIT 3`;
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+})
 
 //DEPORTES
+server.get(`/api/deporte/:id`, (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT nombre FROM Deporte WHERE id_deporte=${id}`;
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
 server.get("/api/deportes", (req, res) => {
     sql = `SELECT * FROM Deporte`;
 
@@ -119,8 +157,9 @@ server.get("/api/deportes/cancha/:id", (req, res) => {
 //ESPACIOS
 server.get("/api/reservaciones/espacio/:id", (req, res) => {
     let id = req.params.id;
-    let sql = `SELECT ADDTIME(hora_entrada, '-06:00:10') as start, ADDTIME(hora_salida, '-06:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`
-
+    let hourOffSet = new Date().getTimezoneOffset() / 60;
+    let sql = `SELECT ADDTIME(hora_entrada, '-${hourOffSet}:00:10') as start, ADDTIME(hora_salida, '-${hourOffSet}:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`;
+    
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
@@ -140,7 +179,6 @@ server.get('/api/instalacion/horario/:id', (req, res) => {
     numDia = dia.getDate() === 0 ? 7 : dia.getDate();
 
     let sql = `SELECT HOUR(ho.hora_apertura) as apertura, HOUR(ho.hora_cierre) as cierre FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
-    console.log(sql);
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });

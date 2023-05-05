@@ -19,6 +19,7 @@ interface Espacio{
 export class EspacioComponent implements OnInit {
   espacios: Espacio[];
   id_espacio: number;
+  nombre: string;
 
   reqData: any;
 
@@ -32,9 +33,16 @@ export class EspacioComponent implements OnInit {
       this.reqData = res;
       this.espacios = this.reqData.data;
     });
+    this.getNombreDeporte();
   }
 
   handleClick(espacioId: number) {
     this.router.navigate([`/reservarEspacio/${espacioId}`]);
+  }
+  getNombreDeporte() {
+    this.http.get(`${API_URI}/deporte/${this.id_espacio}`).subscribe(res => {
+      this.reqData = res;
+      this.nombre = this.reqData.data[0].nombre;
+    });
   }
 }
