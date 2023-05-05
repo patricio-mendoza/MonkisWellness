@@ -11,17 +11,20 @@
                     <p class="fecha">{{time | date: 'hh:mm a'}}</p>
             </div>
         </div>
+        
         <div class="tabla-estado">
             <div class="textos-estado ms-5 text-white">
                 <div class="razon-cierre" *ngIf="!estado">
                     <span class="tipo-text">Razón de cierre: </span>
                     <span class="valor-text">{{razon}}</span>
                 </div>
+                
                 <div class="hora-apertura">
                     <span class="tipo-text"> Hora de {{estado ? 'Cierre' : 'Apertura'}} </span>
                     <span class="valor-text">{{hora_cambio}}</span>
                 </div>
             </div>
+            <app-programar-cierre *ngIf="isAdmin=='true'"></app-programar-cierre>
             <div>
                 <div class="letrero-estado">
                     <td *ngIf="estado"><span class="icono-estado fas fa-circle ms-4" style="color: green"></span></td>

@@ -12,6 +12,9 @@ const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', '
 })
 
 export class EstadoGymComponent {
+  
+  isAdmin = localStorage.getItem("isAdmin")
+
   time = new Date();
   dia: string = dias[this.time.getDay()];
   intervalId;

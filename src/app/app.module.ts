@@ -30,6 +30,9 @@ import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estima
 import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
+import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/programar-cierre.component';
+import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
+
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -53,6 +56,8 @@ registerLocaleData(localeEs, 'es');
     MisReservasComponent,
     EspacioComponent,
     ReservarEspacioComponent,
+    ProgramarCierreComponent,
+    ModifAforoComponent
   ],
   imports: [  
     MbscModule, 
