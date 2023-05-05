@@ -24,11 +24,14 @@ export class AvisosComponent implements OnInit {
     tiempo_reserva1: "15:00 - 16:00",
     tiempo_reserva2: "18:00 - 19:00",
     tiempo: "14:05",
-    texto: "Tu reservación del Lunes 17 de abril 15:00 - 16:00 en Campo Fútbol 1 CDF1 ha sido correctamente guardada en “Mis reservaciones”",
-    texto2: "Tu reservación del Lunes 17 de abril 15:00 - 16:00 en Campo Fútbol 1 CDF1 ha sido cancelada debido a: *justificación de cancelación por evento*",
+    texto: "Tu reservación del Lunes 17 de abril 15:00 - 16:00 en Campo Fútbol Americano 1 | CDB 1 ha sido correctamente guardada en “Mis reservaciones”",
+    texto2: "Tu reservación del Lunes 17 de abril 18:00 - 19:00 en Campo Fútbol Americano 1 | CDB 1 ha sido cancelada debido a: *justificación de cancelación por evento*",
+    texto3: "Tu reservación del Lunes 17 de abril 18:00 - 19:00 en Campo Tenis 1 | CDB 1 ha sido correctamente guardada en “Mis reservaciones”",
     tituloNotif: "¡Reservación Guardada!",
     tituloNotif2: "¡Reservación Cancelada!",
-    encabezado: "Campo Fútbol 1 | CDB1"
+    encabezadoAmericano: "Campo Fútbol Americano 1 | CDB1",
+    encabezadoTenis: "Campo Tenis 1 | CDB1",
+    fechaNotif: "16/02/2023",
   } 
   /* {
     id_anunacio: 1,

@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 .container {
     float: left;
@@ -15,7 +16,7 @@
     place-items: center;
     margin-top: 35vh; */
 
-    .anuncio {
+    .anuncioCancelada {
         /* width:65vw;
         height: 15vh;
         margin: 5px;
@@ -36,6 +37,29 @@
         margin-top: 5vh;
         border-radius: 2vh;
         box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
+    }
+    .anuncioGuardada {
+        /* width:65vw;
+        height: 15vh;
+        margin: 5px;
+        background-color: #FC803A;
+        color: white;
+        border-radius: 8px;
+        margin-left: 18vw;
+        margin-top: 3vh;
+        height: 15vh; */
+        height: 15vh;
+        width: 70vw;
+        background-color: #282697;
+        position: relative;
+        transform: (translate(-50%,-50%));
+        top: 10vh;
+        //bottom: 10vh;
+        left: 50vw;
+        margin-top: 5vh;
+        border-radius: 2vh;
+        box-shadow: 20px 20px 40px rgba(60, 60, 150, 0.25);
+    }
 
         .tituloNotif
         {
@@ -54,6 +78,7 @@
 
         .encabezado{
             font-family: 'Poppins', sans-serif;
+            font-weight: 700;
             font-size: 3vh;
             color: #FFFFFF;
             margin-left: 35vw;
@@ -72,9 +97,20 @@
             margin-top: -4.5vh;
             color: #FFFFFF;
             font-family: 'Poppins', sans-serif;
+            font-weight: 700;
             font-size: 3vh;
             color: #FFFFFF;
             //margin-left: 1.2vw;
+        }
+
+        .fechaNotif
+        {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.3vh;
+            //font-style: italic;
+            color: #FFFFFF;
+            margin-left: 1.1vw;
+            margin-top: -1vh;
         }
 
         .msjNotif{
@@ -123,4 +159,3 @@
         }
     }
     
-}
