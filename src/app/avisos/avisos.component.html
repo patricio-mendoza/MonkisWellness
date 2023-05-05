@@ -1,6 +1,8 @@
 <div class="container">
     <div *ngFor="let anuncio of anuncios" class="anuncio">
-        {{anuncio.texto}}
-        {{anuncio.encabezado}}
+        <div class="encabezado"> ¡{{anuncio.encabezado}}!</div>
+        <div class="imgContainer">
+            <img class="image" src="../../assets/campoTenis.png"/> 
+        </div>
     </div>
 </div>

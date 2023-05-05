@@ -34,4 +34,7 @@ export class AvisosComponent implements OnInit {
       this.anuncios = this.reqData.data;
     });
   }
+
+  tituloCancelada: "¡Reservación Cancelada!";
+  tituloGuardada: "¡Reservación Guardada!";
 }
