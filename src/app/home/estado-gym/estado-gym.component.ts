@@ -22,7 +22,8 @@ export class EstadoGymComponent {
   administrador:string;
   estado: boolean;
   razon: string = "Mantenimiento";
-  hora_cambio: string = "3:00 pm";
+  hora_cierre: string = "10:00 pm";
+  hora_apertura: string = "6:00 am";
 
   aforo_max: number = 280;
   aforo_actual: number = 0;

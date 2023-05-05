@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: 'reservaciones', 
     component: ReservacionesComponent
-  },
+  },/*
   {
     path: 'misreservas', 
     component: MisReservasComponent
@@ -28,7 +28,7 @@ const routes: Routes = [
   {
     path: 'avisos', 
     component: AvisosComponent
-  },
+  },*/
   {
     path: 'reservarCancha/:id',
     component: EspacioComponent
