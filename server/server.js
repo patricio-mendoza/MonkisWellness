@@ -83,6 +83,15 @@ server.get("/api/gym/estado", (req, res) => {
         else res.send({ estado: result[0].estado });    
     });
 });
+server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
+    let newAforo = req.params.newAforo;
+    let sql = `UPDATE Wellness SET aforo_max = ${newAforo} WHERE id=1;`
+    
+    db.query(sql, function (error) {
+        if (error) console.log("Error Updating the Data")
+        else res.send({ data: true });    
+    });
+});
 
 
 //DEPORTES
