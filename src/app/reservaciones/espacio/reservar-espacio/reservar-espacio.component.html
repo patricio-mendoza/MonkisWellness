@@ -11,26 +11,36 @@
     </div>
     <div class = "big-container-right">
         <div class = "container-right-up">
-            <div class = "texto-area">Elige un área</div>
+            <div class = "texto-area">Elige un horario</div>
             <img class="barra-texto" src="../../../assets/assets-elegir-area/barra-texto.png">
         </div>
         <div class = "container-right-down">
-        <div *ngIf="isAdmin" class="reservaciones">  </div>
-            <div class="container">
-                <div class="mbsc-form-group">
-                    <mbsc-datepicker [(ngModel)]="selectedDate"
-                        [options]="settings" 
-                        [invalid]="bloqueos"
-                        select="range"
-                        [showRangeLabels]="true"
-                        [minRange]="1"
-                        [maxRange]="5400000"
-                        [touchUi]="true"
-                        >
-                    </mbsc-datepicker>
+            <div class = "container-right-down-left">
+                <div *ngIf="isAdmin" class="reservaciones">  </div>
+                <div class="container">
+                    <div class="mbsc-form-group">
+                        <mbsc-datepicker [(ngModel)]="selectedDate"
+                            [options]="settings" 
+                            [invalid]="bloqueos"
+                            select="range"
+                            [showRangeLabels]="true"
+                            [minRange]="1"
+                            [maxRange]="5400000"
+                            [touchUi]="true"
+                            >
+                        </mbsc-datepicker>
+                    </div>
+                    <button *ngIf="!clicked" (click)="reservar()" class="boton-reserva">Reservar</button>
+                    <button *ngIf="clicked" class="boton-reserva">Reservar</button>
                 </div>
-                <button *ngIf="!clicked" (click)="reservar()" class="boton-reserva">Reservar</button>
-                <button *ngIf="clicked" class="boton-reserva">Reservar</button>
+            </div>
+            <div class = "container-right-down-right">
+                <div class = "reservaciones-actuales-left">
+                
+                </div>
+                <div class = "reservaciones-actuales-right">
+                
+                </div>
             </div>
         </div>
     </div>
