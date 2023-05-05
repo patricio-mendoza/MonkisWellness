@@ -10,13 +10,24 @@
     background-color:rgba(0, 0, 255, 0);
     display: grid;
     font-family: "M PLUS 1p", sans-serif;
+}
 
-    .personas-container{
+.personas-container{
     position: absolute;
-    top: 13rem;
-        font-family: "M PLUS 1p", sans-serif;
-        font-size: 15px;
-        color: #ffffff;
-        font-weight: bold;
-    }
+    top: 30vh;
+    font-family: "M PLUS 1p", sans-serif;
+    font-size: 15px;
+    color: #ffffff;
+    font-weight: bold;
+    
+    
+}
+.empty-container{
+    position: absolute;
+    top: 250px;
+}
+
+.porcentaje_actual{
+    color: #ffffff;
+    
 }
