@@ -32,6 +32,25 @@
 
         }
 
+        .horarsv{
+            height: 6vh;
+            width: 6vw;
+            background-color: #FF971E;
+            border-bottom-left-radius: 2vh;
+            border-top-right-radius: 2vh;
+            //top: 0vh;
+            left: 64vw;
+            position: absolute;
+        }
+
+        .msjNotif{
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.6vh;
+            font-style: italic;
+            font-weight: lighter ;
+            z-index: 1;
+        }
+
         .image
         {
             //position: absolute; 

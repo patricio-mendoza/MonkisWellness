@@ -1,6 +1,8 @@
 <div class="container">
     <div *ngFor="let anuncio of anuncios" class="anuncio">
         <div class="encabezado"> ¡{{anuncio.encabezado}}!</div>
+        <div class="horarsv">{{anuncio.tiempo}}</div>
+        <div class="msjNotif">{{anuncio.texto}}</div>
         <div class="imgContainer">
             <img class="image" src="../../assets/campoTenis.png"/> 
         </div>

@@ -8,7 +8,7 @@ interface Aviso {
   matricula: string,
   encabezado: string,
   texto: string,
-  timepo: string,
+  tiempo: string,
 }
 
 @Component({
