@@ -11,6 +11,16 @@ interface Bloqueo {
     end: Date;
 }
 
+interface Reservacion {
+    matricula?: string;
+    num_nomina?: string;
+    id_espacio: number;
+    hora_entrada: string;
+    hora_salida: string;
+    prioridad: number;
+    estatus: number;
+}
+
 setOptions({
     locale: localeEs,
     theme: 'ios',
@@ -41,15 +51,22 @@ export class ReservarEspacioComponent {
 
     reqData: any;
     bloqueos: Bloqueo[];
+    reservaciones: Reservacion[];
 
     constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
+
+      if(this.today.getHours() > 22) this.today.setHours(24);
     }
 
     ngOnInit() {
         this.getBloqueosActivos();
         this.getHorarioInstalacion();
+
+        if (this.isAdmin) {
+            this.getReservaciones();
+        }
     }
     
     settings: MbscDatepickerOptions;
@@ -72,7 +89,7 @@ export class ReservarEspacioComponent {
             this.hora_inicio = this.reqData.data[0].apertura;
             this.hora_fin = this.reqData.data[0].cierre;
             this.nombreEspacio = this.reqData.data[0].nombre;
-
+            
             this.settings = {
                 display: 'inline',
                 controls: ['calendar', 'timegrid'],
@@ -82,6 +99,13 @@ export class ReservarEspacioComponent {
                 maxTime: `${this.hora_fin}:00`,
                 selectMultiple: true,
             };
+        });
+    }
+
+    getReservaciones() {
+        this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`).subscribe(res => {
+            this.reqData = res;
+            this.reservaciones = this.reqData.data;
         });
     }
 
