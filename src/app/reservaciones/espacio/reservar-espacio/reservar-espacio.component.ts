@@ -12,13 +12,10 @@ interface Bloqueo {
 }
 
 interface Reservacion {
-    matricula?: string;
-    num_nomina?: string;
-    id_espacio: number;
-    hora_entrada: string;
-    hora_salida: string;
-    prioridad: number;
-    estatus: number;
+    id: number;
+    matricula: string;
+    hora: string;
+    fecha: string;
 }
 
 setOptions({
@@ -52,6 +49,10 @@ export class ReservarEspacioComponent {
     reqData: any;
     bloqueos: Bloqueo[];
     reservaciones: Reservacion[];
+
+    horaReserva: string;
+    fecha: string;
+    id: string;
 
     constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
@@ -106,6 +107,7 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.reservaciones = this.reqData.data;
+            console.log(this.reservaciones)
         });
     }
 
@@ -142,5 +144,10 @@ export class ReservarEspacioComponent {
             }
         });
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
+    }
+    cancelarReservacion(id: number) {
+        console.log(`${API_URI}/reservacion/delete/${id}`)
+        this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
+        window.location.replace(this.location.path());
     }
 }

@@ -82,7 +82,7 @@ server.post('/api/generar/aviso', (req, res) => {
 });
 server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
     let id = req.params.id;
-    let sql = `SELECT * FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1`;
+    let sql = `SELECT id_reservacion as id, matricula, CONCAT(HOUR(hora_entrada), ':', MINUTE(hora_entrada), ' - ',HOUR(hora_salida), ':', MINUTE(hora_salida)) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -92,10 +92,12 @@ server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
 server.delete('/api/reservacion/delete/:id', (req, res) => {
     let id = req.params.id;
     let sql = `DELETE FROM Reservacion WHERE id_reservacion=${id}`;
-
+    
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: true });
+        else{
+            res.send({ data: true });
+        } 
     });
 }); 
 

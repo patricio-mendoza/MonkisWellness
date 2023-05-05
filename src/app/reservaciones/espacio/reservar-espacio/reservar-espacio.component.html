@@ -16,7 +16,6 @@
         </div>
         <div class = "container-right-down">
             <div class = "container-right-down-left">
-                <div *ngIf="isAdmin" class="reservaciones">  </div>
                 <div class="container">
                     <div class="mbsc-form-group">
                         <mbsc-datepicker [(ngModel)]="selectedDate"
@@ -34,12 +33,17 @@
                     <button *ngIf="clicked" class="boton-reserva">Reservar</button>
                 </div>
             </div>
-            <div class = "container-right-down-right">
-                <div class = "reservaciones-actuales-left">
+            <div *ngIf="isAdmin" class = "container-right-down-right">
                 
-                </div>
-                <div class = "reservaciones-actuales-right">
-                
+                <div *ngFor="let reservacion of reservaciones" class = "reservacion">
+                    <div class = "reservaciones-actuales-left">
+                        <div>{{reservacion.matricula}}</div>
+                        <div>{{reservacion.fecha}}</div>
+                        <div>{{reservacion.hora}}</div>
+                    </div>
+                    <div (click)="cancelarReservacion(reservacion.id)" class = "reservaciones-actuales-right">
+                     X
+                    </div>
                 </div>
             </div>
         </div>
