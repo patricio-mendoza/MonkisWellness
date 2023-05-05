@@ -7,13 +7,9 @@
     flex-direction: column;
     // background-color: #fe883e;
     .mbsc-form-group {
-        width: 600px;
+        width: 37vw;
     }
     .boton-reserva{
-        //width: 20vw;
-        //height: 75vh;
-        //background-color: pink;
-
         background-color: #413bff;
         border-radius: 8px;
         border-style: none;
@@ -53,16 +49,17 @@
 .big-container-left{
     width: 20vw;
     height: 75vh;
-    // background-color: pink;
+   //  background-color: pink;
     padding: 2vh;
 
     .container-left{
         display: flex;
         justify-content: right;
+        //align-items:flex-end;
         position: relative;
         width: 100%;
         height: 100%;
-       //  background-color: rgb(223, 233, 150);
+        // background-color: rgb(223, 233, 150);
         
         .sport-imagen{
             border-radius: 15px;
@@ -77,19 +74,32 @@
             position:absolute;
             border-radius: 15px;
         }
-        .sport-texto{
-            font-family: 'Poppins', sans-serif;
-            font-size: 55px;
-            
-            margin-right: 0.5vw;
-            margin-top: 55vh;
-            letter-spacing: 00.03em;
-            color: #ffffff;
+        .sport-texto-container{
+            display: flex;
+            justify-content: right;
+            //background-color: #e1a950;
+            height: 5vh;
+            width: 80%;
             position: absolute;
+            margin-right: 0.5vw;
+            margin-top: 53vh;
+            text-align: right;
+            
+            //font-size-adjust: 0.8;
+            .sport-texto{
+                font-family: 'Poppins', sans-serif;
+                font-size: 5vh;
+                
+                line-height: 5vh;
+                
+                letter-spacing: 00.03em;
+                color: #ffffff;
+                position: absolute;
+            }
         }
+        
         .sport-barra-up{
             margin-top: 7vh;  
-            //margin-left: 15.3vw;
             margin-right: -0.5vw;
             width: 10vw;
             height: auto;
@@ -113,7 +123,6 @@
     flex-direction: column;
     width: 70vw;
     height: 75vh;
-   // background-color: rgb(137, 223, 161);
     padding: 2vh;
     gap: 2vh;
 }
@@ -123,8 +132,6 @@
     height: 15%;
     // background-color: rgb(100, 185, 219);
 
-
-    
     .texto-area{
         font-family: 'Poppins', sans-serif;
         font-size: 35px;
@@ -147,13 +154,72 @@
     // background-color: rgb(188, 148, 233);
     //flex-wrap: wrap;
     justify-content: center;
-    padding-left: 10%;
-    padding-right: 10%;
+    flex-direction: row;
+    padding-left: 2%;
+    padding-right: 2%;
     padding-top: 1vh;
     padding-bottom: 3vh;
     //flex-direction: row;
     //row-gap: 1vh;
-    gap: 1.5vw 3vw;
+    gap: 0.5vw 1.5vw;
     //align-items: center;
+    .container-right-down-left{
+        //position:absolute;
+        display: flex;
+        justify-content: center;
+        gap: 1.5vw 3vw;
+        //height: 100%;
+        //width: 50%;
+        //background-color: #4bffc6;
+    }
+    .container-right-down-right{
+       // position:absolute;
+        height: 100%;
+        width: 50%;
+        background-color: #0f0072;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 3vh;
+        padding-left: 2%;
+        padding-right: 2%;
+        padding-top: 2%;
+        padding-bottom: 1%;
+        overflow-y: auto;
+        .reservacion{
+            height: 7vh;
+            width: 100%;
+            display: flex;
+            gap: 1.5vw;
+            .reservaciones-actuales-left{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                height: 7vh;
+                width: 85%;
+                gap: 1vw;
+                background-color: #FFFFFF;
+                border-radius: 10px;
+                align-items: center;
+                font-family: 'Poppins', sans-serif;
+                font-size: 0.8vw;
+                
+
+            }
+            .reservaciones-actuales-right{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: #FFFFFF;
+                font-family: 'Poppins', sans-serif;
+                font-size: 2vw;
+                height: 7vh;
+                width: 15%;
+                background-color: red;
+                border-radius: 10px;
+            }
+        }
+        
+    }
     
 }

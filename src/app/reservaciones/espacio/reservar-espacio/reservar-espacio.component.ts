@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
 
 const API_URI = 'http://localhost:8888/api';
 
 interface Bloqueo {
     start: Date;
     end: Date;
+}
+
+interface Reservacion {
+    id: number;
+    matricula: string;
+    hora: string;
+    fecha: string;
 }
 
 setOptions({
@@ -25,6 +31,8 @@ setOptions({
   styleUrls: ['./reservar-espacio.component.scss']
 })
 export class ReservarEspacioComponent {
+    isAdmin = localStorage.getItem('isAdmin') === "true"
+
     today = new Date();
     tomorrow = new Date();
     selectedDate: any = []
@@ -34,21 +42,32 @@ export class ReservarEspacioComponent {
 
     id_espacio: number;
     nombreEspacio: string;
-    
+
     hora_inicio: number = 6;
     hora_fin: number = 23;
 
     reqData: any;
     bloqueos: Bloqueo[];
+    reservaciones: Reservacion[];
+
+    horaReserva: string;
+    fecha: string;
+    id: string;
 
     constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
+
+      if(this.today.getHours() > 22) this.today.setHours(24);
     }
 
     ngOnInit() {
         this.getBloqueosActivos();
         this.getHorarioInstalacion();
+
+        if (this.isAdmin) {
+            this.getReservaciones();
+        }
     }
     
     settings: MbscDatepickerOptions;
@@ -70,7 +89,8 @@ export class ReservarEspacioComponent {
             this.reqData = res
             this.hora_inicio = this.reqData.data[0].apertura;
             this.hora_fin = this.reqData.data[0].cierre;
-
+            this.nombreEspacio = this.reqData.data[0].nombre;
+            
             this.settings = {
                 display: 'inline',
                 controls: ['calendar', 'timegrid'],
@@ -80,6 +100,14 @@ export class ReservarEspacioComponent {
                 maxTime: `${this.hora_fin}:00`,
                 selectMultiple: true,
             };
+        });
+    }
+
+    getReservaciones() {
+        this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`).subscribe(res => {
+            this.reqData = res;
+            this.reservaciones = this.reqData.data;
+            console.log(this.reservaciones)
         });
     }
 
@@ -116,5 +144,10 @@ export class ReservarEspacioComponent {
             }
         });
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
+    }
+    cancelarReservacion(id: number) {
+        console.log(`${API_URI}/reservacion/delete/${id}`)
+        this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
+        window.location.replace(this.location.path());
     }
 }

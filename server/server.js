@@ -80,6 +80,26 @@ server.post('/api/generar/aviso', (req, res) => {
         if (error) console.log("Error retrieving the data")
     });
 });
+server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT id_reservacion as id, matricula, CONCAT(HOUR(hora_entrada), ':', MINUTE(hora_entrada), ' - ',HOUR(hora_salida), ':', MINUTE(hora_salida)) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });
+    });
+});
+server.delete('/api/reservacion/delete/:id', (req, res) => {
+    let id = req.params.id;
+    let sql = `DELETE FROM Reservacion WHERE id_reservacion=${id}`;
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else{
+            res.send({ data: true });
+        } 
+    });
+}); 
 
 // GYM
 server.get("/api/gym/estado", (req, res) => {    
@@ -166,7 +186,9 @@ server.get("/api/reservaciones/espacio/:id", (req, res) => {
     });
 });
 server.post('/api/reservar/espacio', (req, res) => {
-    let sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
+    let sql = "";
+    if (req.body.matricula) sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
+    else  sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${req.body.matricula}, "${req.body.num_nomina}", ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
     
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
@@ -178,7 +200,7 @@ server.get('/api/instalacion/horario/:id', (req, res) => {
     let dia = new Date();
     numDia = dia.getDate() === 0 ? 7 : dia.getDate();
 
-    let sql = `SELECT HOUR(ho.hora_apertura) as apertura, HOUR(ho.hora_cierre) as cierre FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
+    let sql = `SELECT es.nombre as nombre, HOUR(ho.hora_apertura) as apertura, HOUR(ho.hora_cierre) as cierre FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
