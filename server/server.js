@@ -57,7 +57,7 @@ server.get("/api/user/:id", (req, res) => {
 });
 server.get("/api/user/reservaciones/:id", (req, res) => {   
     let id = req.params.id;
-    sql = `SELECT * FROM Reservacion WHERE "${id}" = matricula OR "${id}" = num_nomina`;
+    sql = `SELECT * FROM Reservacion WHERE ("${id}" = matricula OR "${id}" = num_nomina) AND estatus = 1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
