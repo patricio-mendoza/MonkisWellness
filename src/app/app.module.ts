@@ -57,7 +57,7 @@ registerLocaleData(localeEs, 'es');
     EspacioComponent,
     ReservarEspacioComponent,
     ProgramarCierreComponent,
-    ModifAforoComponent
+    ModifAforoComponent,
   ],
   imports: [  
     MbscModule, 

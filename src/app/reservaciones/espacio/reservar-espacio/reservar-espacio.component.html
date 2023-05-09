@@ -17,18 +17,8 @@
         <div class = "container-right-down">
             <div class = "container-right-down-left">
                 <div class="container">
-                    <div class="mbsc-form-group">
-                        <mbsc-datepicker [(ngModel)]="selectedDate"
-                            [options]="settings" 
-                            [invalid]="bloqueos"
-                            select="range"
-                            [showRangeLabels]="true"
-                            [minRange]="1"
-                            [maxRange]="5400000"
-                            [touchUi]="true"
-                            >
-                        </mbsc-datepicker>
-                    </div>
+                    <!--COMPONENTE DE RESERVAS-->
+                    <div class="reservarComponent"></div>
                     <button *ngIf="!clicked" (click)="reservar()" class="boton-reserva">Reservar</button>
                     <button *ngIf="clicked" class="boton-reserva">Reservar</button>
                 </div>
