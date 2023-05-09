@@ -60,7 +60,7 @@ registerLocaleData(localeEs, 'es');
     ModifAforoComponent,
   ],
   imports: [  
-    MbscModule, 
+    MbscModule,   
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
