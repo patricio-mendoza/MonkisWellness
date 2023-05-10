@@ -44,6 +44,7 @@ export class AuthService {
          return promise;
    }
 
+   // Función para cerrar sesión
    logout(): void {
       this.isUserLoggedIn = false;
       localStorage.clear(); 

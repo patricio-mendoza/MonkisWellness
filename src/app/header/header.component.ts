@@ -10,6 +10,7 @@ import { filter } from 'rxjs/operators';
 export class HeaderComponent {
   title: string;
 
+  // Al iniciar obtiene el nómbre de la página
   constructor(private router: Router) {
     router.events
       .pipe(filter(e => e instanceof NavigationEnd))
