@@ -4,30 +4,25 @@
     height:400px;
     width: 400px;
     margin-top: 7vh;
-    margin-right: 44px;
+    margin-left: 2vw;
     z-index: 1;
     place-items: center;
     background-color:rgba(0, 0, 255, 0);
     display: grid;
     font-family: "M PLUS 1p", sans-serif;
+
+    .grafica {
+        margin-left: auto;
+    }
+
+    .personas-container{
+        position: absolute;
+        top: 30vh;
+        font-family: "M PLUS 1p", sans-serif;
+        font-size: 15px;
+        color: #ffffff;
+        font-weight: bold;
+    
+    }
 }
 
-.personas-container{
-    position: absolute;
-    top: 30vh;
-    font-family: "M PLUS 1p", sans-serif;
-    font-size: 15px;
-    color: #ffffff;
-    font-weight: bold;
-    
-    
-}
-.empty-container{
-    position: absolute;
-    top: 250px;
-}
-
-.porcentaje_actual{
-    color: #ffffff;
-    
-}

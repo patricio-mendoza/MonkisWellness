@@ -1,4 +1,5 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, Input, SimpleChanges, HostListener } from '@angular/core';
+
 
 @Component({
   selector: 'app-graf-porcentaje',
@@ -17,8 +18,17 @@ export class GrafPorcentajeComponent {
   porcentaje_redondeado: string;
   porcentaje_actual: string;
 
-  ngOnInit() {
+  radio: any;
 
+  ngOnInit() {
+    this.radio = window.innerWidth * 0.09;
+
+  }
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize() {
+    this.radio = window.innerWidth * 0.09;
+    console.log('a');
   }
 
   // Cuando haya cambios actualiza la gráfica
