@@ -22,7 +22,6 @@ export class GrafPorcentajeComponent {
 
   ngOnInit() {
     this.radio = window.innerWidth * 0.09;
-
   }
   
   @HostListener('window:resize', ['$event'])

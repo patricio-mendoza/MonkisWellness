@@ -33,8 +33,7 @@
                     <button *ngIf="clicked" class="boton-reserva">Reservar</button>
                 </div>
             </div>
-            <div *ngIf="isAdmin" class = "container-right-down-right">
-                
+            <div *ngIf="isAdmin" class = "container-right-down-right"> 
                 <div *ngFor="let reservacion of reservaciones" class = "reservacion">
                     <div class = "reservaciones-actuales-left">
                         <div>{{reservacion.matricula}}</div>

@@ -132,17 +132,16 @@
 .container-right-up{
     width: 100%;
     height: 15%;
-    // background-color: rgb(100, 185, 219);
 
     .texto-area{
         font-family: 'Poppins', sans-serif;
         font-size: 35px;
-        letter-spacing: 00.07em;
+        letter-spacing: 0.07rem;
         color: #004891;
     }
     .barra-texto{
         margin-top: -2vh;
-        width: 30vw;
+        width: 20vw;
         height: auto;
     }
 
@@ -177,7 +176,7 @@
     .container-right-down-right{
        // position:absolute;
         height: 100%;
-        width: 50%;
+        width: 30%;
         background-color: #0f0072;
         border-radius: 15px;
         display: flex;
@@ -192,7 +191,7 @@
             height: 7vh;
             width: 100%;
             display: flex;
-            gap: 1.5vw;
+            gap: 1vw;
             .reservaciones-actuales-left{
                 display: flex;
                 flex-direction: row;
@@ -205,8 +204,6 @@
                 align-items: center;
                 font-family: 'Poppins', sans-serif;
                 font-size: 0.8vw;
-                
-
             }
             .reservaciones-actuales-right{
                 display: flex;
