@@ -38,6 +38,14 @@ export class EstadoGymComponent extends HomeComponent {
   ngOnDestroy(){
     clearInterval(this.intervalId);
   }
+  
+  getEstadoGym() {
+    let apiURL = `${API_URI}/gym/estado`;
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.estado = this.reqData.estado;
+    });
+  }
   getAforo() {
     let apiURL = `${API_URI}/gym/aforo`;
     this.http.get(apiURL).subscribe(res => {
