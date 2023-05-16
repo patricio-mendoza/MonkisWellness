@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { CompartidovarService } from '../compartidovar.service.js';
 import { HttpClient } from '@angular/common/http';
-import { API_URI } from '../../../../server/server.js'
+import { API_URI } from '../../../../server/server.js';
 import { HomeComponent } from '../home.component';
 
 const API_URI = 'http://localhost:8888/api';
@@ -12,6 +13,7 @@ const API_URI = 'http://localhost:8888/api';
 })
 
 export class EstadoGymComponent extends HomeComponent {
+
   intervalId;
   
   administrador:string;
@@ -23,7 +25,6 @@ export class EstadoGymComponent extends HomeComponent {
   aforo_actual: number = 0;
 
   reqData: any;
-
 
   ngOnInit() {
     this.getEstadoGym();

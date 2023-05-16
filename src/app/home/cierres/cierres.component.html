@@ -5,7 +5,9 @@
 
     <!-- Caja, contiene los textos e inputs -->
     <div id="cierre-box" class="d-flex flex-column rounded bg-primary border border-white border-5">
-
+        <div class="d-flex flex-row-reverse">
+            <div (click)="cierresTab()" class="btn bg-transparent text-white">x</div>
+        </div>
         <!-- Sección cierre manual -->
         <div id="cierre-manual" class="d-flex flex-column mr-5">
 
@@ -14,11 +16,11 @@
             <!-- Inputs del usuario -->
             <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-0 pt-0 p-5">
                 <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 ms-5 m-1 mr-5">
-                    <div class="shadow-lg btn btn-danger fw-bold border border-white border-1">Cerrar</div>
+                    <div class="shadow-lg btn btn-danger fw-bold border border-white border-1 text-white">Cerrar</div>
                     <br>
                 </div>
                 <div id="input-cierre" class="d-flex flex-column col-sm-4 mr-5">
-                    <p class="h6">Indique la hora de cierre:</p>
+                    <p class="h6">Indique la hora de {{estado? 'cierre': 'apertura'}}:</p>
                     <input type="time" class="input-group-text" name="tiempo">
                 </div>
             </div>

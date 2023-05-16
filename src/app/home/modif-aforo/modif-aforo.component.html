@@ -1,16 +1,15 @@
-<div *ngIf="miServicio.isModifyingAforo" class="blur">
-    <div class="container">
-        <div class="ModificarAforoTitulo"><h1 class="tituloModificarA">Modificar Aforo del Gimnasio</h1></div>
-        <div class="aforoMaximoTitulo"><h2 class="subtitulos">Aforo máximo actual:</h2></div>
-        <img src="../../../../assets/Line 26.png" class="linea" alt="..." />
-        <div class="ingresarNuevoAf"><h2 class="subtitulos"> Ingresa el nuevo aforo máximo de personas: </h2></div>
-        
-        <div class="fondoblanco"></div>
-        <div class="aforo"></div>
-        <div class="contenedor"><input [(ngModel)]="newAforo" type="text" id="cantidad" placeholder= "Ej.240">
-        <div class="botones mt-3">
-            <button (click)="ocultar()" class=" btn btn-light cancelar col-md-4 ms-2 " >Cancelar</button> 
-            <button (click)="saveNewAforo()" class="guardar btn btn-light col-md-4 ms-5">Guardar</button></div>
+<div class="d-flex align-items-center justify-content-center blur">
+    <div id="caja-aforo" class="d-flex flex-column border border-5 align-items-center border-white rounded bg-primary">
+        <div class="d-flex flex-column mr-5">
+            <p class="text-white ms-3 h1">Modificar Aforo del Gimnasio</p>
+            <p class="text-white ms-3 h2">Aforo máximo actual:</p>
+            <img src="../../../../assets/Line 26.png" class="" alt="..." />
+            <p class="text-white ms-3 h2">Ingresa el nuevo aforo máximo de personas: </p>
+            <input [(ngModel)]="newAforo" type="text" id="cantidad" placeholder="Ej.240">
+            <div class="d-flex flex-row mt-3">
+                <button (click)="ocultar()" class=" btn btn-light cancelar col-md-4 ms-2 ">Cancelar</button>
+                <button (click)="saveNewAforo()" class="guardar btn btn-light col-md-4 ms-5">Guardar</button>
+            </div>
         </div>
     </div>
 </div>

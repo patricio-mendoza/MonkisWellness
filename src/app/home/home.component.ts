@@ -25,6 +25,10 @@ export class HomeComponent {
     this.miServicio.isModifyingAforo = !this.miServicio.isModifyingAforo;
   }
 
+  cierresTab(){
+    this.miServicio.isClosing = !this.miServicio.isClosing;
+  }
+
   openEstaSemanaTab() {
     this.miServicio.isCheckingEstaSemana = true;
   }
