@@ -1,42 +1,35 @@
-<div class="blur">
-    <div class="d-flex justify-content-center container">
-        <div class="rounded bg-white p-1">
-            <div class="d-flex flex-column rounded bg-primary">
-                <p class=" text-white m-1 h1">Programación de cierres</p>
-                <div class="d-flex flex-column">
-                    <p class="text-white h2"> Cierre manual </p>
-                    <div class="d-flex flex-row text-white">
-                        <p class="col-md-4 h6">Indique la hora de cierre:</p>
-                        <p class="col-md-8 h6">Indique la razón de cierre:</p>
-                    </div>
-                    <div class="d-flex flex-row">
-                        <input type="time" class="col-md-4 input-group-text" name="tiempo">
-                        <select class="form-select col-md-8 ">
-                            <option selected>Selccione una razón de cierre</option>
-                            <option value="Mantenimiento">Mantenimiento</option>
-                            <option value="Limpieza">Limpieza</option>
-                            <option value="Evento">Evento</option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                        <div class="btn btn-primary col-md-12">'Cerrar'</div>
-                    </div>
+<!-- 15/05/2023 Daniel Evaristo Escalera Bonilla Tarjeta de cierre -->
+
+<!-- Contenedor, define el fondo de la tarjeta -->
+<div id="fondo-tarjeta" class="d-flex align-items-center justify-content-center blur">
+
+    <!-- Caja, contiene los textos e inputs -->
+    <div id="cierre-box" class="d-flex flex-column rounded bg-primary border border-white border-5">
+
+        <!-- Sección cierre manual -->
+        <div id="cierre-manual" class="d-flex flex-column">
+
+            <p id="titulo-cierre-manual" class="text-white ms-3 h1"> Cierre manual </p>
+
+            <!-- Inputs del usuario -->
+            <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white">
+                <div id="boton-cambio" class="d-flex flex-column-reverse m-1">
+                    <div class="shadow-lg btn btn-danger fw-bold border border-white border-1">Cerrar</div>
+                    <br>
                 </div>
-                <div class="d-flex flex-row">
-                    Placeholder
+                <div id="input-cierre" class="d-flex flex-column mr-5">
+                    <p class="h6">Indique la hora de cierre:</p>
+                    <input type="time" class="input-group-text" name="tiempo">
                 </div>
-                <div class="d-flex flex-row">
-                    Placeholder
-                </div>
-                <!--
-                <div class="aforoMaximoTitulo">
-                    <h2 class="subtitulos">Aforo máximo actual:</h2>
-                </div>
-                <img src="../../../../assets/Line 26.png" class="linea" alt="..." />
-                <div class="ingresarNuevoAf">
-                    <h2 class="subtitulos"> Ingresa el nuevo aforo máximo de personas: </h2>
-                </div>
-                -->
             </div>
+        </div>
+
+
+        <div class="d-flex flex-row">
+            Placeholder
+        </div>
+        <div class="d-flex flex-row">
+            Placeholder
         </div>
     </div>
 </div>

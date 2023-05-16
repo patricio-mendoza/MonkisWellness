@@ -1,9 +1,3 @@
-
-.container{
-    padding-top: 40vh;
-    position: relative;
-}
-
 .blur{
     background-color: rgba(212, 202, 202, 0.615);
     width: 100%;
@@ -11,4 +5,9 @@
     margin-top: -75vh;
     z-index: 3;
     border-radius: 12px;
+}
+
+#cierre-box{
+    height: 60vh;
+    width: 60vw;
 }
