@@ -5,4 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export class CompartidovarService {
   isModifyingAforo: boolean = false;
+  isCheckingEstaSemana: boolean = false;
 }

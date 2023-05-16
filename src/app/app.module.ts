@@ -32,6 +32,7 @@ import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
 import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/programar-cierre.component';
 import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
+import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -58,6 +59,7 @@ registerLocaleData(localeEs, 'es');
     ReservarEspacioComponent,
     ProgramarCierreComponent,
     ModifAforoComponent,
+    EstaSemanaPopUpComponent,
   ],
   imports: [  
     MbscModule,   

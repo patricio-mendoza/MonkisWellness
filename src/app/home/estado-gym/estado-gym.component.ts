@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { API_URI } from '../../../../server/server.js'
+import { HomeComponent } from '../home.component';
 
 const API_URI = 'http://localhost:8888/api';
-const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 
 @Component({
   selector: 'app-estado-gym',
@@ -11,12 +11,7 @@ const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', '
   styleUrls: ['./estado-gym.component.scss']
 })
 
-export class EstadoGymComponent {
-  
-  isAdmin = localStorage.getItem("isAdmin")
-
-  time = new Date();
-  dia: string = dias[this.time.getDay()];
+export class EstadoGymComponent extends HomeComponent {
   intervalId;
   
   administrador:string;
@@ -29,7 +24,6 @@ export class EstadoGymComponent {
 
   reqData: any;
 
-  constructor(private http: HttpClient) { }
 
   ngOnInit() {
     this.getEstadoGym();
