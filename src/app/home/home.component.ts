@@ -11,6 +11,7 @@ const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', '
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
 export class HomeComponent {
   isAdmin = localStorage.getItem("isAdmin") === "true";
   newAforo: string;
