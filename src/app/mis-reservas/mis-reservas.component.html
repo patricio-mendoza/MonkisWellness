@@ -6,7 +6,16 @@
 </div> -->
 
 <div class="big-container">
-    <div class="reserva">
+    <div *ngFor = "let reserva of reservaciones"  class="reserva">
+        <div class="reserva-left">
+            <div class="reserva-left-top">{{reserva.nombre_espacio}}</div>
+            <div class="reserva-left-middle">{{reserva.nombre_deporte}}</div>
+            <div class="reserva-left-bottom">Hora: 15:00 - 16:00</div>
+            
+        </div>
+        <div class="reserva-right"></div>
+    </div>
+    <!-- <div class="reserva">
 
     </div>
     <div class="reserva">
@@ -17,8 +26,5 @@
     </div>
     <div class="reserva">
 
-    </div>
-    <div class="reserva">
-
-    </div>
+    </div> -->
 </div>

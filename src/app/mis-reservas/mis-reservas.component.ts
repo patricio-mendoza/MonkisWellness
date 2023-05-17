@@ -4,13 +4,16 @@ import { HttpClient } from '@angular/common/http';
 const API_URI = 'http://localhost:8888/api';
 
 interface Reserva {
+  //matricula?: string;
+  //num_nomina?: string;
+  //id_espacio: number;
   id_reservacion: number;
-  matricula?: string;
-  num_nomina?: string;
-  id_espacio: number;
-  hora_entrada: string;
-  hora_salida: string;
-  prioridad: number;
+  nombre_espacio: string;
+  hora_entrada: Date;
+  hora_salida: Date;
+  nombre_deporte: string;
+  nombre_instalacion: string;
+  //prioridad: number;
   estatus: number;
 }
 
@@ -20,7 +23,47 @@ interface Reserva {
   styleUrls: ['./mis-reservas.component.scss']
 })
 export class MisReservasComponent implements OnInit {
-  reservaciones: Reserva[];
+  reservaciones: Reserva[] = [{
+    id_reservacion: 1,
+    nombre_espacio : "Cancha Grande",
+    hora_entrada: new Date(2023, 4, 17, 13, 0, 0, 0),
+    hora_salida: new Date(2023, 4, 17, 14, 0, 0, 0),
+    nombre_deporte: "Fútbol",
+    nombre_instalacion: "CDB1",
+    estatus: 1
+  },{
+    id_reservacion: 2,
+    nombre_espacio : "Cancha Grande",
+    hora_entrada: new Date(2023, 4, 17, 15, 0, 0, 0),
+    hora_salida: new Date(2023, 4, 17, 16, 0, 0, 0),
+    nombre_deporte: "Volley de Playa",
+    nombre_instalacion: "CDB1",
+    estatus: 2
+  },{
+    id_reservacion: 3,
+    nombre_espacio : "Cancha Grande",
+    hora_entrada: new Date(2023, 4, 17, 13, 0, 0, 0),
+    hora_salida: new Date(2023, 4, 17, 14, 0, 0, 0),
+    nombre_deporte: "Basquetbol",
+    nombre_instalacion: "CDB1",
+    estatus: 3
+  },{
+    id_reservacion: 4,
+    nombre_espacio : "Cancha Grande",
+    hora_entrada: new Date(2023, 4, 17, 13, 0, 0, 0),
+    hora_salida: new Date(2023, 4, 17, 14, 0, 0, 0),
+    nombre_deporte: "Tenis",
+    nombre_instalacion: "CDB1",
+    estatus: 4
+  },{
+    id_reservacion: 5,
+    nombre_espacio : "Cancha Grande",
+    hora_entrada: new Date(2023, 4, 17, 13, 0, 0, 0),
+    hora_salida: new Date(2023, 4, 17, 14, 0, 0, 0),
+    nombre_deporte: "Fútbol 7",
+    nombre_instalacion: "CDB1",
+    estatus: 5
+  }];
   reqData: any;
 
   constructor(private http: HttpClient) { }
