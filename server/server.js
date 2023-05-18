@@ -129,6 +129,9 @@ server.get("/api/gym/aforo", (req, res) => {
         else res.send({ data: result[0] });    
     });
 });
+
+
+
 server.get('/api/gym/estimaciones', (req, res) => {
     let fecha = new Date();
     var offset = -(new Date().getTimezoneOffset() / 60);
@@ -142,6 +145,8 @@ server.get('/api/gym/estimaciones', (req, res) => {
         else res.send({ data: result });
     });
 })
+
+
 
 //DEPORTES
 server.get(`/api/deporte/:id`, (req, res) => {
