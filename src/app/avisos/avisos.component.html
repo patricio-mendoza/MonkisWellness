@@ -1,41 +1,15 @@
 <div class="container">
-    <div *ngFor="let anuncio of anuncios" class="anuncioCancelada">
-        <div class="tituloNotif">{{anuncio.encabezadoAmericano}}</div>
-        <div class="encabezado"> {{anuncio.tituloNotif2}}</div>
+    <div *ngFor="let anuncio of anuncios" [ngClass]="anuncio.tituloNotif == 'Reservación Cancelada' ? 'Cancelada' : 'Guardada'">
+        <div class="tituloNotif">{{anuncio.cancha}}</div>
+        <div class="encabezado"> {{anuncio.tituloNotif}}</div>
         <div class="horaNotif">
-            <div class="tiempoNotif">{{anuncio.tiempo}}</div>
+            <div class="tiempoNotif">{{anuncio.tiempoNotif}}</div>
             <div class="fechaNotif">{{anuncio.fechaNotif}}</div>
         </div>
-        <div class="msjNotif">{{anuncio.texto2}}</div>
+        <div class="msjNotif">{{anuncio.textoAnuncio}}</div>
         <div class="imgContainer">
             <img class="image" src="../../assets/campoAmericano.png"/> 
         </div>
-        <div class="tiempoRsv">{{anuncio.tiempo_reserva2}}</div>
-    </div>
-    <div *ngFor="let anuncio of anuncios" class="anuncioGuardada">
-        <div class="tituloNotif">{{anuncio.encabezadoAmericano}}</div>
-        <div class="encabezado"> {{anuncio.tituloNotif}}</div>
-        <div class="horaNotif">
-            <div class="tiempoNotif">{{anuncio.tiempo}}</div>
-            <div class="fechaNotif">{{anuncio.fechaNotif}}</div>
-        </div>
-        <div class="msjNotif">{{anuncio.texto}}</div>
-        <div class="imgContainer">
-            <img class="image" src="../../assets/campoAmericano.png"/> 
-        </div>
-        <div class="tiempoRsv">{{anuncio.tiempo_reserva1}}</div>
-    </div>
-    <div *ngFor="let anuncio of anuncios" class="anuncioGuardada">
-        <div class="tituloNotif">{{anuncio.encabezadoTenis}}</div>
-        <div class="encabezado"> {{anuncio.tituloNotif}}</div>
-        <div class="horaNotif">
-            <div class="tiempoNotif">{{anuncio.tiempo}}</div>
-            <div class="fechaNotif">{{anuncio.fechaNotif}}</div>
-        </div>
-        <div class="msjNotif">{{anuncio.texto3}}</div>
-        <div class="imgContainer">
-            <img class="image" src="../../assets/campoTenis.png"/> 
-        </div>
-        <div class="tiempoRsv">{{anuncio.tiempo_reserva2}}</div>
+        <div class="tiempoRsv">{{anuncio.tiempoReserva}}</div>
     </div>
 </div>
