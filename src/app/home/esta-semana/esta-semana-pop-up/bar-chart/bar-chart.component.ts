@@ -10,12 +10,10 @@ export class BarChartComponent {
   @Input() data: number[];
   public chart: any;
 
-  ngOnInit(): void {
-    this.createChart();
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-    this.chart.destroy();
+    if (this.chart) {
+      this.chart.destroy();
+    };
     this.createChart();
   }
 
