@@ -142,7 +142,7 @@ server.get('/api/gym/estimaciones', (req, res) => {
     });
 })
 server.get('/api/gym/estaSemana', (req, res) => {
-    let sql = `SELECT DAYNAME(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE DAY(tiempo) > DAY(NOW() - INTERVAL 7 day) AND tiempo < now() GROUP BY DAYNAME(tiempo)`;
+    let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE DAY(tiempo) > DAY(NOW() - INTERVAL 7 day) AND tiempo < now() GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
