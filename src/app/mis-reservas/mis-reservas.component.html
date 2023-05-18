@@ -7,38 +7,47 @@
 
 <div class="big-container">
     <div *ngFor = "let reserva of reservaciones"  class="reserva">
-        <div class="reserva-left">
-            <div class="reserva-left-top">{{reserva.nombre_espacio}}</div>
-            <div class="reserva-left-middle">{{reserva.nombre_deporte}}</div>
-            <div class="reserva-left-bottom">Lugar: {{reserva.nombre_instalacion}} <br> Hora: <br>{{reserva.hora_entrada.toLocaleString()}} - {{reserva.hora_salida.toLocaleString()}}</div>
-            
-        </div>
-        <div class="reserva-right">
-            <div class="reserva-right-top">
-                <div class="reserva-right-up-up">Estado:</div>  
-                <div class="reserva-right-up-middle">
-                    <div class="semaforo-left">
-                        <div *ngIf = "reserva.estatus === 1" class="semaforo-circle-1"></div>
-                        <div *ngIf = "reserva.estatus === 2" class="semaforo-circle-2"></div>
-                        <div *ngIf = "reserva.estatus === 3" class="semaforo-circle-3"></div>
-                        <div *ngIf = "reserva.estatus === 4" class="semaforo-circle-4"></div>
-                        <div *ngIf = "reserva.estatus === 5" class="semaforo-circle-5"></div>
+        <img class = "back-foto" src = "../../assets/foto_deporte/futbol.jpeg">
+        <div class = "color-foto"></div>
+        <div class = "gradient"></div>
+        <div class = "content">
+
+            <div class="reserva-left">
+                <div class="reserva-left-top">{{reserva.nombre_espacio}}</div>
+                <div class="reserva-left-middle">{{reserva.nombre_deporte}}</div>
+                <div class="reserva-left-bottom">Lugar: {{reserva.nombre_instalacion}} <br> Hora: <br>{{reserva.hora_entrada.toLocaleString()}} - {{reserva.hora_salida.toLocaleString()}}</div>
+                
+            </div>
+            <div class="reserva-right">
+                <div class="reserva-right-top">
+                    <div class="reserva-right-up-up">Estado:</div>  
+                    <div class="reserva-right-up-middle">
+                        <div class="semaforo-left">
+                            <div *ngIf = "reserva.estatus === 1" class="semaforo-circle-1"></div>
+                            <div *ngIf = "reserva.estatus === 2" class="semaforo-circle-2"></div>
+                            <div *ngIf = "reserva.estatus === 3" class="semaforo-circle-3"></div>
+                            <div *ngIf = "reserva.estatus === 4" class="semaforo-circle-4"></div>
+                            <div *ngIf = "reserva.estatus === 5" class="semaforo-circle-5"></div>
+                        </div>
+                        <div *ngIf = "reserva.estatus === 1" class="semaforo-right">Cancelada</div>
+                        <div *ngIf = "reserva.estatus === 2" class="semaforo-right">Activa</div>
+                        <div *ngIf = "reserva.estatus === 3" class="semaforo-right">En progreso</div>
+                        <div *ngIf = "reserva.estatus === 4" class="semaforo-right">Próxima</div>
+                        <div *ngIf = "reserva.estatus === 5" class="semaforo-right">Finalizada</div>
                     </div>
-                    <div *ngIf = "reserva.estatus === 1" class="semaforo-right">Cancelada</div>
-                    <div *ngIf = "reserva.estatus === 2" class="semaforo-right">Activa</div>
-                    <div *ngIf = "reserva.estatus === 3" class="semaforo-right">En progreso</div>
-                    <div *ngIf = "reserva.estatus === 4" class="semaforo-right">Próxima</div>
-                    <div *ngIf = "reserva.estatus === 5" class="semaforo-right">Finalizada</div>
+                    <div class="reserva-right-up-down">Prorroga hasta: 15:20</div> 
                 </div>
-                <div class="reserva-right-up-down">Prorroga hasta: 15:20</div> 
+                <div class="reserva-right-down">
+                    <div class="reserva-right-down-up">
+                        <div (click)="confirmar()" class="boton-confirmar">Ya llegué</div>
+                    </div>  
+                    <div class="reserva-right-down-down">Cancelar reservación</div> 
+                </div>
             </div>
-            <div class="reserva-right-down">
-                <div class="reserva-right-down-up">
-                    <div (click)="confirmar()" class="boton-confirmar">Ya llegué</div>
-                </div>  
-                <div class="reserva-right-down-down">Cancelar reservación</div> 
-            </div>
+
         </div>
+
+        
     </div>
     <!-- <div class="reserva">
 
