@@ -57,7 +57,7 @@ export class ReservarEspacioComponent {
     constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
-
+    
       if(this.today.getHours() > 22) this.today.setHours(24);
     }
 

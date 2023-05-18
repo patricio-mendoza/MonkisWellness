@@ -8,7 +8,7 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  title: string = 'gimansio';
+  title: string = 'gimnasio';
 
   // Al iniciar obtiene el nómbre de la página
   constructor(private router: Router) {
