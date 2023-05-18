@@ -10,10 +10,25 @@
         <div class="reserva-left">
             <div class="reserva-left-top">{{reserva.nombre_espacio}}</div>
             <div class="reserva-left-middle">{{reserva.nombre_deporte}}</div>
-            <div class="reserva-left-bottom">Hora: 15:00 - 16:00</div>
+            <div class="reserva-left-bottom">Lugar: CDB1 <br> Hora: 15:00 - 16:00</div>
             
         </div>
-        <div class="reserva-right"></div>
+        <div class="reserva-right">
+            <div class="reserva-right-top">
+                <div class="reserva-right-up-up">Estado:</div>  
+                <div class="reserva-right-up-middle">
+                    <div class="semaforo-left"></div>
+                    <div class="semaforo-right">En progreso</div>
+                </div>
+                <div class="reserva-right-up-down">Prorroga hasta: 15:20</div> 
+            </div>
+            <div class="reserva-right-down">
+                <div class="reserva-right-down-up">
+                    <div (click)="confirmar()" class="boton-confirmar">Ya llegué</div>
+                </div>  
+                <div class="reserva-right-down-down">Cancelar reservación</div> 
+            </div>
+        </div>
     </div>
     <!-- <div class="reserva">
 

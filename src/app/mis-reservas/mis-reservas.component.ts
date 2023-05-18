@@ -41,7 +41,7 @@ export class MisReservasComponent implements OnInit {
     estatus: 2
   },{
     id_reservacion: 3,
-    nombre_espacio : "Cancha Grande",
+    nombre_espacio : "Cancha Fútbol Rápido",
     hora_entrada: new Date(2023, 4, 17, 13, 0, 0, 0),
     hora_salida: new Date(2023, 4, 17, 14, 0, 0, 0),
     nombre_deporte: "Basquetbol",
@@ -81,5 +81,8 @@ export class MisReservasComponent implements OnInit {
     });
 
     
+  }
+  confirmar(){
+    console.log("A");
   }
 }

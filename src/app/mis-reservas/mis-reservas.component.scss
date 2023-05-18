@@ -25,45 +25,50 @@
         height: 45%;
         background-color: rgb(57, 217, 228); 
         border-radius: 20px; 
-        padding: 1vw;
+        padding: 1.2vw;
         .reserva-left{
-            width: 30%;
+            width: 50%;
             height: 100%;
             background-color: rgb(172, 95, 172);
             border-radius: 20px; 
             display: flex;
             flex-direction: column;
-            .reserva-left-top{
+            color: white;
+            .reserva-left-top{ //NombreCancha
                 display: flex;
-                align-items: center;
+                align-items:center;
                 font-family: 'Poppins', sans-serif;
                 line-height: 3.4vh;
                 font-size: 4vh;
                 width:100%;
-                height: 33%;
+                height: 35%;
                 background-color: coral;
                 border-radius: 20px; 
             }
-            .reserva-left-middle{
+            .reserva-left-middle{ //NombreDeporte
                 display: flex;
                 align-items: center;
-                font-family: 'Poppins', sans-serif;
-                font-size: 2.3vh;
+                font-size: 1.2vw;
+                font-family: 'Bebas Neue';
+                color: white;
+                letter-spacing: 0.05em;
                 width:100%;
-                height: 33%;
+                height: auto;
                 background-color: rgb(163, 83, 55);
                 border-radius: 20px; 
             }
-            .reserva-left-bottom{
+            .reserva-left-bottom{ //Lugar&Hora
                 font-family: 'Poppins', sans-serif;
                 font-size: 2vh;
                 display: flex;
-                align-items: center;
+                align-items: flex-end;
                 width:100%;
-                height: 33%;
+                height: 50%;
                 background-color: rgb(74, 33, 18);
                 border-radius: 20px; 
-                color: antiquewhite;
+                letter-spacing: 0.1em;
+                
+                
             }
         }
         .reserva-right{
@@ -73,14 +78,114 @@
             border-radius: 20px; 
             display: flex;
             flex-direction: column;
+            
             .reserva-right-top{
-
+                width: 100%;
+                height: 50%;
+                background-color: chartreuse;
+                border-radius: 20px; 
+                display: flex;
+                flex-direction: column;
+                //justify-content: flex-start;
+                align-items: flex-end;
+                .reserva-right-up-up{ //Estado
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 4vh;
+                    display: flex;
+                    //justify-content: flex-start;
+                    align-items: flex-start;
+                    color: white;
+                    height: 40%;
+                    background-color: aquamarine;
+                }
+                .reserva-right-up-middle{ //Semaforo
+                    display: flex;
+                    //flex-direction: row;
+                    justify-content: flex-end;
+                    width: 100%;
+                    height: 30%;
+                    
+                    .semaforo-left{ //Circulo
+                        background-color: red;
+                        height:100%;
+                        margin-top: 3px;
+                        width: 30%;
+                        height: 25px;
+                        width: 25px;
+                        //background-color: #bbb;
+                        border-radius: 50%;
+                        display: inline-block;
+                    }
+                    .semaforo-right{ //Texto
+                        display: flex;
+                        justify-content: flex-end;
+                        text-align: right;
+                        background-color: red;
+                        height:100%;
+                        width: 40%;
+                        //font-weight: bold;
+                        font-size: 1.4vw;
+                        
+                        font-family: 'Bebas Neue';
+                        color: white;
+                        letter-spacing: 0.05em;
+                    }
+                }
+                .reserva-right-up-down{ //prorroga
+                    display: flex;
+                    justify-content: center;
+                    height: 30%;
+                    width: 40%;
+                    background-color: green;
+                    font-style: italic;
+                    //font-family: 'Poppins', sans-serif;
+                    
+                    color: white;
+                    font-size: 1.5vh;
+                }
             }
             .reserva-right-down{
-                .reserva-right-down-up{
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+                width: 100%;
+                height: 50%;
+                //justify-content:end;
+                .reserva-right-down-up{ //boton
+                    height:70%;
+                    width: 50%;
+                    background-color: purple;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .boton-confirmar{
+                        width: 100%;
+                        height: 60%;
+                        background-color: brown;
+                        border: 2px solid white;
+                        border-radius: 5px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        color: white;
+                        font-family: 'Poppins', sans-serif;
+                        color: white;
+                        font-size: 1.8vh;
+                        box-shadow: 0px 1px 2px black;
+                    }
 
                 }
-                .reserva-right-down-down{
+                .reserva-right-down-down{ //cancelar
+                    display: flex;
+                    height:30%;
+                    width: 50%;
+                    background-color: red;
+                    align-items: center;
+                    justify-content: center;
+                    font-family: 'Poppins', sans-serif;
+                    color: white;
+                    font-size: 1.5vh;
+                    text-decoration: underline;
                     
                 }
             }
