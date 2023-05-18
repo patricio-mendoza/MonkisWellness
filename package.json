@@ -5,7 +5,7 @@
         "client": "ng serve --proxy-config server.conf.json",
         "server": "nodemon server/server.js",
         "start": "npm-run-all -p client server"
-      },
+    },
     "private": true,
     "dependencies": {
         "@angular/animations": "^15.2.0",
@@ -20,6 +20,7 @@
         "body-parser": "^1.20.2",
         "bootstrap": "^5.2.3",
         "bootstrap-icons": "^1.10.4",
+        "chart.js": "^4.3.0",
         "cors": "^2.8.5",
         "express": "^4.18.2",
         "mysql": "^2.18.1",
