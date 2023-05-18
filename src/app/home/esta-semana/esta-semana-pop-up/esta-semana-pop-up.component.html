@@ -6,7 +6,7 @@
             <p class="today">Hoy, {{dia.charAt(0).toUpperCase() + dia.slice(1)}}</p>
         </div>
         <div class="chart-container">
-            <app-bar-chart></app-bar-chart>
+            <app-bar-chart [data]="historial"></app-bar-chart>
       </div>
     </div>
 </div>

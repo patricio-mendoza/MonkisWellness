@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -7,6 +7,7 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./bar-chart.component.scss']
 })
 export class BarChartComponent {
+  @Input() data: any;
   public chart: any;
 
   ngOnInit(): void {
@@ -22,7 +23,7 @@ export class BarChartComponent {
 	       datasets: [
           {
             label: "Personas Promedio Por Dia",
-            data: [54, 125, 40, 192, 187, 101, 79],
+            data: [this.data.Monday, this.data.Tuesday, this.data.Wednesday, this.data.Thursday, this.data.Friday, this.data.Saturday, this.data.Sunday],
             backgroundColor: 'white'
           }
         ]

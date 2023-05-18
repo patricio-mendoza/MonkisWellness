@@ -120,7 +120,6 @@ server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
         else res.send({ data: true });    
     });
 });
-
 server.get("/api/gym/aforo", (req, res) => {
     let sql = `SELECT aforo_max, aforo_actual FROM Wellness WHERE id = 1`;
 
@@ -142,6 +141,14 @@ server.get('/api/gym/estimaciones', (req, res) => {
         else res.send({ data: result });
     });
 })
+server.get('/api/gym/estaSemana', (req, res) => {
+    let sql = `SELECT DAYNAME(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE DAY(tiempo) > DAY(NOW() - INTERVAL 7 day) AND tiempo < now() GROUP BY DAYNAME(tiempo)`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
 
 //DEPORTES
 server.get(`/api/deporte/:id`, (req, res) => {
