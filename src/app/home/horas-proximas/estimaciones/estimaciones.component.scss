@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@700&display=swap');
+
+
+.container{
+    height: 120px;
+    width: 140px;
+    margin-top: 30px;
+    margin-right: 12px;
+    background-color: rgba(0, 255, 255, 0);
+    place-items: center;
+    display: grid;
+}
+
+.empty-container{
+    position: absolute;
+    top: 250px;
+    background-color: rgba(0, 255, 255, 0);
+}
+
+.porcentaje_actual{
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    margin-top: -80px;
+    right: 100px; 
+    background-color: rgba(0, 255, 255, 0);
+}
+
+   

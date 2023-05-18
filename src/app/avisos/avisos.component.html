@@ -1,3 +1,6 @@
-<h1>Avisos</h1>    
-
-<p>hola me llamo pato</p>
+<!-- Despliega todos los avisos disponibles -->
+<div class="container">
+    <div *ngFor="let anuncio of anuncios" class="anuncio">
+        {{anuncio.encabezado}}
+    </div>
+</div>

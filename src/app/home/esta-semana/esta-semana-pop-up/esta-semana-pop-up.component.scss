@@ -1,0 +1,26 @@
+.blur{
+    background-color: rgba(212, 202, 202, 0.615);
+    width: 100%;
+    height:100%;
+    margin-top: -75vh;
+    z-index: 3;
+    border-radius: 12px;
+    padding-top: 3rem;
+}
+.container{
+    width: 70%;
+    height: 70%;
+    border: 1em solid;
+    border-radius: 1rem;
+    border-color: white;
+    background-color: #E94F37;
+
+    .close-btn {
+        float: right;
+        border: white;
+        background-color: #E94F37;
+        color: white;
+        font-size: 30px;
+        font-weight: bolder;
+    }
+}

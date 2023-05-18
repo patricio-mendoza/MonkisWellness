@@ -5,12 +5,17 @@ import { Component, Input } from '@angular/core';
   templateUrl: './body.component.html',
   styleUrls: ['./body.component.scss']
 })
-export class BodyComponent {
-  
-  @Input() isLogged: boolean = false;
+
+export class BodyComponent{
+
+  // La página tiene estos parámetros
   @Input() collapsed: boolean = false;
   @Input() screenWidth: number = 0;
+  @Input() isLogged: boolean = false;
 
+  title = "gimnasio"
+  
+  // Cambia su apariencia dependiendo de las variables del sistema
   getBodyClass(): string {
     let styleClass = '';
     if (!this.isLogged) {

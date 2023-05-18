@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
+import { CompartidovarService } from './home/compartidovar.service';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -13,10 +14,15 @@ interface SideNavToggle {
 export class AppComponent {
   title = 'WellnessApp';
   
-  isLogged: boolean = false;
-  
+  isLogged: boolean = this.miservicio.isLogged;
   isSideNavCollapsed: boolean = false;
   screenWidth: number = 0;
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.isLogged = this.miservicio.isLogged;
+  }
+
+  constructor(public miservicio: CompartidovarService) {}
 
   onToggleSideNav(data: SideNavToggle): void {
     this.screenWidth = data.screenWidth;
