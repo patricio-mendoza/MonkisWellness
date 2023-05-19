@@ -36,5 +36,7 @@ export class MisReservasComponent implements OnInit {
       this.reqData = res;
       this.reservaciones = this.reqData.data;
     });
+
+    
   }
 }

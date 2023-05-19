@@ -1,10 +1,11 @@
+import { MbscModule } from '@mobiscroll/angular';
 import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-
+import localeEs from '@angular/common/locales/es';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,22 +21,20 @@ import { HeaderComponent } from './header/header.component';
 import { HorasProximasComponent } from './home/horas-proximas/horas-proximas.component';
 import { EstaSemanaComponent } from './home/esta-semana/esta-semana.component';
 import { HistorialComponent } from './home/historial/historial.component';
-import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
-
-import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { SublevelMenuComponent } from './sidenav/sublevel-menu.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
-import { bufferToggle } from 'rxjs';
+import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
 import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estimaciones.component';
-import { EstimacionesDosComponent } from './home/horas-proximas/estimaciones-dos/estimaciones-dos.component';
-import { EstimacionesTresComponent } from './home/horas-proximas/estimaciones-tres/estimaciones-tres.component';
 import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
-import { HoraMinutoDosComponent } from './home/horas-proximas/estimaciones-dos/hora-minuto-dos/hora-minuto-dos.component';
-import { HoraMinutoTresComponent } from './home/horas-proximas/estimaciones-tres/hora-minuto-tres/hora-minuto-tres.component';
-
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
+import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
+import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/programar-cierre.component';
+import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
+import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
+import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
+
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -55,15 +54,17 @@ registerLocaleData(localeEs, 'es');
     SublevelMenuComponent,
     GrafPorcentajeComponent,
     EstimacionesComponent,
-    EstimacionesDosComponent,
-    EstimacionesTresComponent,
     HoraMinutoComponent,
-    HoraMinutoDosComponent,
-    HoraMinutoTresComponent,
     MisReservasComponent,
     EspacioComponent,
+    ReservarEspacioComponent,
+    ProgramarCierreComponent,
+    ModifAforoComponent,
+    EstaSemanaPopUpComponent,
+    BarChartComponent,
   ],
-  imports: [
+  imports: [  
+    MbscModule,   
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

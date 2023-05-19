@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { CompartidovarService } from '../home/compartidovar.service';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -12,17 +13,17 @@ export class AuthService {
    
    reqData: any;
 
-   constructor(private http: HttpClient) { }
+   constructor(private miservicio: CompartidovarService, private http: HttpClient) { }
 
    login(matricula: string) {
       // obtener desde la API
       let promise = new Promise((resolve, reject) => {         
-         let apiURL = `${API_URI}/user/${matricula}`;
+         let apiURL = `${API_URI}/user/${matricula.toUpperCase()}`;
          this.http.get(apiURL)
            .toPromise()
            .then( res => {
                   this.reqData = res;
-                  if (!this.reqData.status) {
+                  if (!this.reqData.status || this.reqData.data.length === 0) {
                      this.isUserLoggedIn = false;
                      this.isAdmin = false;
                   } else {
@@ -33,7 +34,6 @@ export class AuthService {
 
                      localStorage.setItem('id', id);
                   }
-
                   localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
                   localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false");  
 
@@ -44,6 +44,7 @@ export class AuthService {
          return promise;
    }
 
+   // Función para cerrar sesión
    logout(): void {
       this.isUserLoggedIn = false;
       localStorage.clear(); 

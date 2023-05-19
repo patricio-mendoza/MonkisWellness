@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
+// Estructura de un aviso a llenar
 interface Aviso {
   id_anuncio: number,
   matricula: string,
@@ -42,6 +43,7 @@ export class AvisosComponent implements OnInit {
 
   constructor(private http: HttpClient) { }
 
+  // Al cargar la página obtiene todos los avisos
   ngOnInit() {
     this.getAnuncios();
   }

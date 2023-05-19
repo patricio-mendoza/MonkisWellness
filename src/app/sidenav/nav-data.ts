@@ -37,11 +37,21 @@ export const navbarDataAdmin: INavbarData[] = [
     {
         routeLink: "reservaciones",
         icon: "fal fa-bookmark",
-        label: "Reservaciones"
+        label: "Reservaciones",
+        items: [
+            {
+                routeLink: "reservaciones",
+                label: "Reservar"
+            },
+            {
+                routeLink: "misreservas",
+                label: "Mis Reservaciones"
+            }
+        ]
     },
     {
         routeLink: "avisos",
         icon: "fal fa-bell",
         label: "Avisos"
-    }
+    },
 ];

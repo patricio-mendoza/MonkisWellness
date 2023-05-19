@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { API_URI } from '../../../../server/server.js'
+import { HomeComponent } from '../home.component';
 
 const API_URI = 'http://localhost:8888/api';
-const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 
 @Component({
   selector: 'app-estado-gym',
@@ -11,9 +10,7 @@ const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', '
   styleUrls: ['./estado-gym.component.scss']
 })
 
-export class EstadoGymComponent {
-  time = new Date();
-  dia: string = dias[this.time.getDay()];
+export class EstadoGymComponent extends HomeComponent {
   intervalId;
   
   administrador:string;
@@ -21,19 +18,20 @@ export class EstadoGymComponent {
   razon: string = "Mantenimiento";
   hora_cambio: string = "3:00 pm";
 
+  aforo_max: number = 280;
+  aforo_actual: number = 0;
+
   reqData: any;
 
-  constructor(private http: HttpClient) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getEstadoGym();
+    this.getAforo();
     this.administrador = localStorage.getItem('isAdmin');
 
     this.intervalId = setInterval(()=>{
       this.time = new Date();
     }, 1000);
-    
-    console.log(this.time);
   }
 
   ngOnDestroy(){
@@ -45,6 +43,14 @@ export class EstadoGymComponent {
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
       this.estado = this.reqData.estado;
+    });
+  }
+  getAforo() {
+    let apiURL = `${API_URI}/gym/aforo`;
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.aforo_max = this.reqData.data.aforo_max;
+      this.aforo_actual = this.reqData.data.aforo_actual;
     });
   }
 }

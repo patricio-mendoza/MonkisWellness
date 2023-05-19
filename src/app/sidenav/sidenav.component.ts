@@ -3,7 +3,7 @@ import { animate, keyframes, style, transition, trigger } from '@angular/animati
 import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeInOut, INavbarData } from './helper';
-import { navbarData } from './nav-data';
+import { navbarData, navbarDataAdmin } from './nav-data';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -29,11 +29,10 @@ interface SideNavToggle {
   ]
 })
 export class SidenavComponent implements OnInit {
-
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
   screenWidth = 0;
-  navData = navbarData;
+  navData = localStorage.getItem('isAdmin') === 'true' ? navbarDataAdmin : navbarData;
   multiple: boolean = false;
 
   @HostListener('window:resize', ['$event'])
