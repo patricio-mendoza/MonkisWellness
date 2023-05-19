@@ -40,7 +40,7 @@
 
         <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-0 pt-0 p-5">
             <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 ms-5 m-1 mr-5">
-                <div class="shadow-lg btn btn-danger fw-bold border border-white border-1">Cerrar</div>
+                <div (click)="bloquear()" class="shadow-lg btn btn-danger fw-bold border border-white border-1">Cerrar</div>
                 <br>
             </div>
              
@@ -58,22 +58,16 @@
                         <p class="h6 fw-bold">Indique la hora de apertura:</p>
                         <input type="time" class="input-group-text fw-bold" name="tiempo">
                     </div>
-                        <div class="d-flex flex-column-reverse ">
-                            <div ngbDropdown id="input-dia" class="d-inline-block">
-                                <button type="button" class="btn bg-white btn-outline-primary text-black fw-bold" id="dropdownBasic1" ngbDropdownToggle>
-                                    Seleccione días
-                                </button>
-                                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                                    <button ngbDropdownItem>Domingo</button>
-                                    <button ngbDropdownItem>Lunes</button>
-                                    <button ngbDropdownItem>Martes</button>
-                                    <button ngbDropdownItem>Miercoles</button>
-                                    <button ngbDropdownItem>Jueves</button>
-                                    <button ngbDropdownItem>Viernes</button>
-                                    <button ngbDropdownItem>Sabado</button>
-                                </div>
-                            </div>
-                            <br>
-                        </div>
-    </div>
+                    <div class="d-flex flex-column-reverse">
+                        <select  class="d-inline-block input-group-text fw-bold" [(ngModel)]="diaSemana">
+                            <option value="" disabled selected hidden>Seleccione día</option>
+                            <option>Domingo</option>
+                            <option>Lunes</option>
+                            <option>Martes</option>
+                            <option>Miércoles</option>
+                            <option>Jueves</option>
+                            <option>Viernes</option>
+                            <option>Sábado</option>
+                        </select>
+                    </div>
 </div>

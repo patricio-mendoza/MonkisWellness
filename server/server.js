@@ -130,6 +130,16 @@ server.get("/api/gym/aforo", (req, res) => {
     });
 });
 
+// Programar nuevos cierres
+
+server.post('/api/bloqueo/', (req, res) => {
+    let sql = "";
+    sql = `INSERT INTO Bloqueo(id_espacio, id_wellness, dia, hora_inicio, hora_fin, repetible) VALUES (${req.body.id_espacio}, "${req.body.id_wellness}", "${req.body.dia}", ${req.body.hora_inicio}, ${req.body.hora_fin}, ${req.body.repetible})` // Esto es una query
+    db.query(sql, function (error, result) {
+        if (error) console.log(sql)
+        else res.send({ status: true });
+    });
+});
 
 
 server.get('/api/gym/estimaciones', (req, res) => {
