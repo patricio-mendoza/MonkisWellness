@@ -75,7 +75,7 @@ server.get("/api/avisos/:id", (req, res) => {
                 avi.id_anuncio as id_anuncio
             FROM Reservacion res JOIN Anuncio avi ON avi.matricula = res.matricula JOIN Espacio esp ON esp.id_espacio = res.id_espacio
             WHERE res.matricula="${id}"`;
-    console.log(sql)
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
