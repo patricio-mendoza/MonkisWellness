@@ -1,7 +1,7 @@
 <div class="container">
-    <div *ngFor="let anuncio of anuncios" [ngClass]="anuncio.tituloNotif == 'Reservación Cancelada' ? 'Cancelada' : 'Guardada'">
+    <div *ngFor="let anuncio of anuncios" [ngClass]="anuncio.tituloNofif == 'Reservación Cancelada' ? 'Cancelada' : 'Guardada'">
         <div class="tituloNotif">{{anuncio.cancha}}</div>
-        <div class="encabezado"> {{anuncio.tituloNotif}}</div>
+        <div class="encabezado"> {{anuncio.tituloNofif}}</div>
         <div class="horaNotif">
             <div class="tiempoNotif">{{anuncio.tiempoNotif}}</div>
             <div class="fechaNotif">{{anuncio.fechaNotif}}</div>

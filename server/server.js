@@ -84,8 +84,16 @@ server.get("/api/deportes", (req, res) => {
 
 server.get("/api/avisos/:id", (req, res) => {
     let id = req.params.id;
-    sql = `SELECT * FROM Anuncio WHERE matricula = "${id}"`;
-
+    sql = `SELECT CONCAT(HOUR(res.hora_entrada), ':', MINUTE(res.hora_entrada), ' - ', HOUR(res.hora_salida), ':', MINUTE(res.hora_salida)) AS tiempoReserva,
+                CONCAT(HOUR(avi.tiempo), ':', MINUTE(avi.tiempo)) AS tiempoNotif,
+                avi.texto AS textoAnuncio,
+                avi.encabezado AS tituloNofif,
+                esp.nombre as cancha,
+                DATE_FORMAT(avi.tiempo, '%Y/%m/%d') AS fechaNotif,
+                avi.id_anuncio as id_anuncio
+            FROM Reservacion res JOIN Anuncio avi ON avi.matricula = res.matricula JOIN Espacio esp ON esp.id_espacio = res.id_espacio
+            WHERE res.matricula="${id}"`;
+    console.log(sql)
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
