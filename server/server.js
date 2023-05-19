@@ -111,6 +111,25 @@ server.get("/api/gym/estado", (req, res) => {
     });
 });
 
+server.put("/api/gym/estado/abrir", (req,res) => {
+    let sql = "UPDATE Wellness SET estado = 1";
+
+    db.query(sql, function (error) {
+        if (error) console.log("Error abriendo el gimnasio")
+        else res.send({ data: true });
+    });
+});
+
+server.put("/api/gym/estado/cerrar", (req,res) => {
+    let sql = "UPDATE Wellness SET estado = 0"
+
+    db.query(sql, function (error) {
+        if (error) console.log("Error cerrando el gimnasio")
+        else res.send({ data: true });
+    });
+
+});
+
 server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
     let newAforo = req.params.newAforo;
     let sql = `UPDATE Wellness SET aforo_max = ${newAforo} WHERE id=1;`
@@ -137,6 +156,22 @@ server.get('/api/gym/estimaciones', (req, res) => {
     fecha = fecha.toISOString().slice(0, 19).replace('T', ' ');
 
     let sql = `SELECT aforo FROM Historial WHERE tiempo > '${fecha}' LIMIT 3`;
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+})
+
+server.get('/api/gym/siguienteAp', (req,res) => {
+    sql = "select hora_inicio from bloqueo where ((dia =  dayofweek(localtimestamp) AND hora_inicio > localtime()) or dia > dayofweek(localtimestamp)+1) AND repetible < 2 order by dia, hora_inicio limit 1"
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+})
+
+server.get('/api/gym/siguienteCi', (req,res) => {
+    sql = "select hora_fin from bloqueo where ((dia =  dayofweek(localtimestamp) AND hora_fin > localtime()) or dia > dayofweek(localtimestamp)+1) AND repetible < 2 order by dia, hora_fin limit 1"
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });

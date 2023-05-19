@@ -13,9 +13,10 @@ export class CierresComponent extends HomeComponent{
 
   estado:boolean;
   reqData: any;
+  selectedOption:string;
   
   ngOnInit(){
-    this.getEstadoGym;
+    this.getEstadoGym();
   }
   
   getEstadoGym() {
@@ -24,6 +25,22 @@ export class CierresComponent extends HomeComponent{
       this.reqData = res;
       this.estado = this.reqData.estado;
     });
+  }
+
+  abrir(){
+    let apiURL = `${API_URI}/gym/estado/abrir`;
+    this.http.put(apiURL,{}).subscribe();
+    this.getEstadoGym();
+    this.miServicio.cambiarEstado(this.estado);
+    this.miServicio.isClosing= !this.miServicio.isClosing;
+  }
+
+  cerrar(){
+    let apiURL = `${API_URI}/gym/estado/cerrar`;
+    this.http.put(apiURL,{}).subscribe();
+    this.getEstadoGym();
+    this.miServicio.cambiarEstado(this.estado);
+    this.miServicio.isClosing= !this.miServicio.isClosing;
   }
 
 }

@@ -18,8 +18,8 @@
                 </div>
                 
                 <div class="hora-apertura">
-                    <span class="tipo-text"> Hora de {{estado ? 'Cierre' : 'Apertura'}} </span>
-                    <span class="valor-text">{{hora_cambio}}</span>
+                    <span class="tipo-text"> Hora de {{estado ? 'Cierre' : 'Apertura'}}: </span>
+                    <span class="valor-text">{{estado? hora_cierre : hora_apertura }} </span>
                 </div>
             </div>
             <app-programar-cierre *ngIf="isAdmin"></app-programar-cierre>

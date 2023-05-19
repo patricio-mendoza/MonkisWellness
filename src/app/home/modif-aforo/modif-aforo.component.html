@@ -1,14 +1,16 @@
 <div class="d-flex align-items-center justify-content-center blur">
-    <div id="caja-aforo" class="d-flex flex-column border border-5 align-items-center border-white rounded bg-primary">
-        <div class="d-flex flex-column mr-5">
-            <p class="text-white ms-3 h1">Modificar Aforo del Gimnasio</p>
+    <div id="caja-aforo" class="d-flex flex-column border border-5 border-white rounded bg-primary p-3">
+        <p class="text-white ms-3 h1">Modificar Aforo del Gimnasio</p>
+        <div class="d-flex flex-column mr-5 p-5">
             <p class="text-white ms-3 h2">Aforo máximo actual:</p>
             <img src="../../../../assets/Line 26.png" class="" alt="..." />
             <p class="text-white ms-3 h2">Ingresa el nuevo aforo máximo de personas: </p>
-            <input [(ngModel)]="newAforo" type="text" id="cantidad" placeholder="Ej.240">
-            <div class="d-flex flex-row mt-3">
-                <button (click)="ocultar()" class=" btn btn-light cancelar col-md-4 ms-2 ">Cancelar</button>
-                <button (click)="saveNewAforo()" class="guardar btn btn-light col-md-4 ms-5">Guardar</button>
+            <div class="d-flex flex-column align-items-center">
+                <input [(ngModel)]="newAforo" type="text" id="cantidad" class="form-label rounded-pill border border-white" placeholder="Ej.240">
+                <div class="d-flex flex-row mt-3">
+                    <button (click)="ocultar()" class="btn btn-light fw-bold btn-outline-dark text-center ms-2">Cancelar</button>
+                    <button (click)="saveNewAforo()" class="btn btn-light fw-bold btn-outline-dark text-center ms-5">Guardar</button>
+                </div>
             </div>
         </div>
     </div>

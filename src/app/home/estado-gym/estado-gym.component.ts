@@ -19,7 +19,8 @@ export class EstadoGymComponent extends HomeComponent {
   administrador:string;
   estado: boolean;
   razon: string = "Mantenimiento";
-  hora_cambio: string = "3:00 pm";
+  hora_apertura: string = "3:00 pm";
+  hora_cierre: string = "10:00 pm"
 
   aforo_max: number = 280;
   aforo_actual: number = 0;
@@ -29,11 +30,18 @@ export class EstadoGymComponent extends HomeComponent {
   ngOnInit() {
     this.getEstadoGym();
     this.getAforo();
+    this.getHoraA();
+    this.getHoraC();
     this.administrador = localStorage.getItem('isAdmin');
 
     this.intervalId = setInterval(()=>{
       this.time = new Date();
     }, 1000);
+
+    this.miServicio.cambiarEstado(this.estado);
+    this.miServicio.estado$.subscribe((value:boolean) => {
+      this.getEstadoGym();
+    });
   }
 
   ngOnDestroy(){
@@ -53,6 +61,23 @@ export class EstadoGymComponent extends HomeComponent {
       this.reqData = res;
       this.aforo_max = this.reqData.data.aforo_max;
       this.aforo_actual = this.reqData.data.aforo_actual;
+    });
+  }
+  getHoraA() {
+    let apiURL = `${API_URI}/gym/siguienteAp`;
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.hora_apertura = this.reqData.data[0].hora_inicio;
+      
+    });
+  }
+
+  getHoraC() {
+    let apiURL = `${API_URI}/gym/siguienteCi`;
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.hora_cierre = this.reqData.data[0].hora_fin;
+      console.log(res)
     });
   }
 }
