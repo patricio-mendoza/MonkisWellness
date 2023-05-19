@@ -7,7 +7,7 @@
 
 <div class="big-container">
     <div *ngFor = "let reserva of reservaciones"  class="reserva">
-        <img class = "back-foto" src = "../../assets/foto_deporte/futbol.jpeg">
+        <img class="back-foto" src="{{backgroundURL(reserva.nombre_deporte)}}">
         <div class = "color-foto"></div>
         <div class = "gradient"></div>
         <div class = "content">
@@ -41,7 +41,7 @@
                     <div class="reserva-right-down-up">
                         <div (click)="confirmar()" class="boton-confirmar">Ya llegué</div>
                     </div>  
-                    <div class="reserva-right-down-down">Cancelar reservación</div> 
+                    <div (click)="cancelar()" class="reserva-right-down-down">Cancelar reservación</div> 
                 </div>
             </div>
 

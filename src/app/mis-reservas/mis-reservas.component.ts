@@ -28,7 +28,7 @@ export class MisReservasComponent implements OnInit {
     nombre_espacio : "Cancha Grande",
     hora_entrada: new Date(2023, 4, 17, 13, 0, 0, 0),
     hora_salida: new Date(2023, 4, 17, 14, 0, 0, 0),
-    nombre_deporte: "Fútbol",
+    nombre_deporte: "Futbol",
     nombre_instalacion: "CDB1",
     estatus: 1
   },{
@@ -60,7 +60,7 @@ export class MisReservasComponent implements OnInit {
     nombre_espacio : "Cancha Grande",
     hora_entrada: new Date(2023, 4, 17, 13, 0, 0, 0),
     hora_salida: new Date(2023, 4, 17, 14, 0, 0, 0),
-    nombre_deporte: "Fútbol 7",
+    nombre_deporte: "Futbol 7",
     nombre_instalacion: "CDB1",
     estatus: 5
   }];
@@ -84,5 +84,16 @@ export class MisReservasComponent implements OnInit {
   }
   confirmar(){
     console.log("A");
+  }
+  cancelar(){
+    console.log("B");
+  }
+
+  backgroundURL(nombre_deporte: string): string {
+    let img_url = nombre_deporte.toLocaleLowerCase();
+    img_url = img_url.replaceAll(' ', '_') + '.jpeg';
+    img_url = '../../assets/foto_deporte/' + img_url;
+
+    return img_url; 
   }
 }
