@@ -66,8 +66,8 @@ server.get("/api/user/reservaciones/:id", (req, res) => {
 });
 server.get("/api/avisos/:id", (req, res) => {
     let id = req.params.id;
-    sql = `SELECT CONCAT(HOUR(res.hora_entrada), ':', MINUTE(res.hora_entrada), ' - ', HOUR(res.hora_salida), ':', MINUTE(res.hora_salida)) AS tiempoReserva,
-                CONCAT(HOUR(avi.tiempo), ':', MINUTE(avi.tiempo)) AS tiempoNotif,
+    sql = `SELECT CONCAT(DATE_FORMAT(res.hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(res.hora_salida, '%H:%i')) AS tiempoReserva,
+                DATE_FORMAT(avi.tiempo, '%H:%i') AS tiempoNotif,
                 avi.texto AS textoAnuncio,
                 avi.encabezado AS tituloNofif,
                 esp.nombre as cancha,
@@ -90,7 +90,7 @@ server.post('/api/generar/aviso', (req, res) => {
 });
 server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
     let id = req.params.id;
-    let sql = `SELECT id_reservacion as id, matricula, CONCAT(HOUR(hora_entrada), ':', MINUTE(hora_entrada), ' - ',HOUR(hora_salida), ':', MINUTE(hora_salida)) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1`;
+    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")

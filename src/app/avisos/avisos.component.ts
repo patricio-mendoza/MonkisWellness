@@ -36,7 +36,6 @@ export class AvisosComponent implements OnInit {
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
       this.anuncios = this.reqData.data;
-      console.log(this.anuncios)
     });
   }
 
