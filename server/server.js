@@ -120,7 +120,6 @@ server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
         else res.send({ data: true });    
     });
 });
-
 server.get("/api/gym/aforo", (req, res) => {
     let sql = `SELECT aforo_max, aforo_actual FROM Wellness WHERE id = 1`;
 
@@ -142,6 +141,14 @@ server.get('/api/gym/estimaciones', (req, res) => {
         else res.send({ data: result });
     });
 })
+server.get('/api/gym/estaSemana', (req, res) => {
+    let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE DAY(tiempo) > DAY(NOW() - INTERVAL 7 day) AND tiempo < now() GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
 
 //DEPORTES
 server.get(`/api/deporte/:id`, (req, res) => {
@@ -189,7 +196,7 @@ server.post('/api/reservar/espacio', (req, res) => {
     let sql = "";
     if (req.body.matricula) sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
     else  sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${req.body.matricula}, "${req.body.num_nomina}", ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
-    console.log(sql)
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ status: true });
