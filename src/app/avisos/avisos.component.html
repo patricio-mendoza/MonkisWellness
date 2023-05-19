@@ -1,16 +1,6 @@
 <!-- Despliega todos los avisos disponibles -->
 <div class="container">
-    <div *ngFor="let anuncio of anuncios" [ngClass]="anuncio.tituloNofif == 'Reservación Cancelada' ? 'Cancelada' : 'Guardada'">
-        <div class="tituloNotif">{{anuncio.cancha}}</div>
-        <div class="encabezado"> {{anuncio.tituloNofif}}</div>
-        <div class="horaNotif">
-            <div class="tiempoNotif">{{anuncio.tiempoNotif}}</div>
-            <div class="fechaNotif">{{anuncio.fechaNotif}}</div>
-        </div>
-        <div class="msjNotif">{{anuncio.textoAnuncio}}</div>
-        <div class="imgContainer">
-            <img class="image" src="../../assets/campoAmericano.png"/> 
-        </div>
-        <div class="tiempoRsv">{{anuncio.tiempoReserva}}</div>
+    <div *ngFor="let anuncio of anuncios" class="anuncio">
+        {{anuncio.encabezado}}
     </div>
 </div>
