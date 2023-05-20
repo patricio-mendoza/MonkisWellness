@@ -2,6 +2,9 @@
 
 <!-- 14/05/2023 Creación del componente 2 horas -->
 <!-- 15/05/2023 Función cierre manual 3.5 horas -->
+<!-- 19/05/2023 Back-end 4 horas -->
+<!-- 20/05/2023 Validaciones 1.5 horas -->
+<!-- Total version 1.0 11 horas -->
 
 <!-- Contenedor, define el fondo de la tarjeta -->
 <div class="d-flex align-items-center justify-content-center ps-5 blur">
@@ -29,8 +32,11 @@
                     <br>
                 </div>
                 <div id="input-cierre" class="d-flex flex-column col-sm-4 mr-5 text-center">
-                    <p class="h6">Indique la hora de {{estado? 'cierre': 'apertura'}}:</p>
-                    <input type="time" class="input-group-text" name="tiempo">
+                    <p class="h6">Indique la hora de {{!estado? 'cierre': 'apertura'}}:</p>
+                    <input [(ngModel)]="hora" type="time" [ngClass]="{'bg-danger': warning}" class="input-group-text" name="tiempo">
+                </div>
+                <div *ngIf="warning" class="d-flex flex-column">
+                    <p class="h6 text-danger"> Ingresa un tiempo válido (El cambio no puede tener menos de 1 minuto de duración).</p>
                 </div>
             </div>
         </div>
