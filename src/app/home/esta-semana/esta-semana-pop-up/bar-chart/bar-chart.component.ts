@@ -22,7 +22,7 @@ export class BarChartComponent {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
+        labels: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
 	       datasets: [
           {
             label: "Personas Promedio Por Dia",

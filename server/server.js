@@ -73,8 +73,9 @@ server.get("/api/avisos/:id", (req, res) => {
                 esp.nombre as cancha,
                 DATE_FORMAT(avi.tiempo, '%Y/%m/%d') AS fechaNotif,
                 avi.id_anuncio as id_anuncio
-            FROM Reservacion res JOIN Anuncio avi ON avi.matricula = res.matricula JOIN Espacio esp ON esp.id_espacio = res.id_espacio
-            WHERE res.matricula="${id}"`;
+            FROM Reservacion res JOIN Anuncio avi ON avi.id_reservacion = res.id_reservacion JOIN Espacio esp ON esp.id_espacio = res.id_espacio
+            WHERE avi.matricula="${id}"
+            ORDER BY avi.tiempo DESC`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -82,8 +83,8 @@ server.get("/api/avisos/:id", (req, res) => {
     });
 });
 server.post('/api/generar/aviso', (req, res) => {
-    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo) VALUES ('${req.body.matricula}', 'Reservacion Confirmada', 'Tu reservacion en la ${req.body.id_espacio} en el CBD2 ha sido guardada', now())`;
-    
+    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo, id_reservacion) VALUES ('${req.body.matricula}', 'Reservacion Confirmada', 'Tu reservacion en la ${req.body.id_espacio} en el CBD2 ha sido guardada', now(), ${req.body.id_reservacion})`;
+    console.log(sql);
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
     });
@@ -144,6 +145,7 @@ server.get('/api/gym/estimaciones', (req, res) => {
     fecha = fecha.toISOString().slice(0, 19).replace('T', ' ');
 
     let sql = `SELECT aforo FROM Historial WHERE tiempo > '${fecha}' LIMIT 3`;
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });

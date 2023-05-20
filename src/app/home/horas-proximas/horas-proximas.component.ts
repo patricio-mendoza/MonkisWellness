@@ -27,7 +27,6 @@ export class HorasProximasComponent {
       this.estimacionEn1Horas = this.reqData.data[0].aforo;
       this.estimacionEn2Horas = this.reqData.data[1].aforo;
       this.estimacionEn3Horas = this.reqData.data[2].aforo;
-      console.log(this.reqData)
     });
   }
 }
