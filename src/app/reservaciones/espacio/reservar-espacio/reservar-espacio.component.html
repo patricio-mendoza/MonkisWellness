@@ -34,9 +34,13 @@
                 </div>
             </div>
             <div *ngIf="isAdmin" class = "container-right-down-right">
-                
+                <div class="headers">
+                    <div class="header">Id</div>
+                    <div class="header">Fecha</div>
+                    <div class="header">Hora</div>
+                </div>
                 <div *ngFor="let reservacion of reservaciones" class = "reservacion">
-                    <div class = "reservaciones-actuales-left">
+                    <div class="reservaciones-actuales-left">
                         <div>{{reservacion.dueno}}</div>
                         <div>{{reservacion.fecha}}</div>
                         <div>{{reservacion.hora}}</div>
