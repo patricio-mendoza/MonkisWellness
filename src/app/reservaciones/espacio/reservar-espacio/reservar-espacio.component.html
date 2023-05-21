@@ -40,7 +40,7 @@
                     <div class="header">Hora</div>
                 </div>
                 <div *ngFor="let reservacion of reservaciones" class = "reservacion">
-                    <div class="reservaciones-actuales-left">
+                    <div *ngIf="reservaciones.length > 0" class="reservaciones-actuales-left">
                         <div>{{reservacion.dueno}}</div>
                         <div>{{reservacion.fecha}}</div>
                         <div>{{reservacion.hora}}</div>
@@ -48,6 +48,9 @@
                     <div (click)="cancelarReservacion(reservacion.id)" class = "reservaciones-actuales-right">
                      X
                     </div>
+                </div>
+                <div *ngIf="reservaciones.length === 0" class="no-reservations">
+                    <div>NO HAY RESERVACIONES POR EL MOMENTO</div> 
                 </div>
             </div>
         </div>

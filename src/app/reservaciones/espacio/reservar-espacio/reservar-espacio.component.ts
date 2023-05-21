@@ -48,7 +48,7 @@ export class ReservarEspacioComponent {
 
     reqData: any;
     bloqueos: Bloqueo[];
-    reservaciones: Reservacion[];
+    reservaciones: Reservacion[] = [];
 
     horaReserva: string;
     fecha: string;
@@ -68,6 +68,7 @@ export class ReservarEspacioComponent {
         if (this.isAdmin) {
             this.getReservaciones();
         }
+        console.log(this.reservaciones.length)
     }
     
     settings: MbscDatepickerOptions;
