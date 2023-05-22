@@ -2,10 +2,12 @@ import { MbscModule } from '@mobiscroll/angular';
 import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -34,6 +36,7 @@ import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/pro
 import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
 import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
 import { CierresComponent } from './home/cierres/cierres.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 registerLocaleData(localeEs, 'es');
@@ -71,6 +74,7 @@ registerLocaleData(localeEs, 'es');
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbDropdownModule,
     NgCircleProgressModule.forRoot({
       "radius": 100,
       "space": -10,
@@ -90,7 +94,8 @@ registerLocaleData(localeEs, 'es');
       "backgroundColor": "#004891",
       "clockwise": true,
       "startFromZero": false,
-      "lazy": true})
+      "lazy": true}),
+         NgbModule
   ],
   providers: 
   [DatePipe, {provide: LOCALE_ID, useValue: 'es'}

@@ -1,5 +1,7 @@
 <!-- 15/05/2023 Daniel Evaristo Escalera Bonilla Tarjeta de cierre -->
 
+<!-- 16/05/2023 Omar Cota Rodríguez Secció programar nuevo cierre -->
+
 <!-- 14/05/2023 Creación del componente 2 horas -->
 <!-- 15/05/2023 Función cierre manual 3.5 horas -->
 <!-- 19/05/2023 Back-end 4 horas -->
@@ -45,11 +47,46 @@
         <img src="../../../assets/Line 26.png" class="img-fluid m-1">
 
 
-        <div class="d-flex flex-row">
-            Placeholder
+        <!-- Sección programar nuevo cierre -->
+        <div id="cierre-programado" class="d-flex flex-column mr-5">
+            <p id="titulo-cierre-programado" class="text-white ms-3 h1"> Programar Nuevo Cierre </p>
         </div>
-        <div class="d-flex flex-row">
-            Placeholder
+        <!-- subtitulo Programar un cierre que se repetirá de ahora en adelante en la hora y fecha indicada -->
+
+        <div id="subtituloProgramarCierre" class="d-flex flex-column mr-5">
+            <p id="subtitulo-programarCierre" class="text-white ms-3"> Programar un cierre que se repetirá de ahora en adelante en la hora y fecha indicada. </p>
         </div>
-    </div>
+
+        <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-0 pt-0 p-5">
+            <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 ms-5 m-1 mr-5">
+                <div (click)="bloquear()" class="shadow-lg btn btn-danger fw-bold border border-white border-1">Cerrar</div>
+                <br>
+            </div>
+             
+           
+
+                    <div class="d-flex flex-row " >
+                                <!-- caja donde se selecciona una hora de cierre -->
+                    <div id="input-cierre-prog" class="d-flex flex-column mr-5 ">
+                        <p class="h6 fw-bold">Indique la hora de cierre:</p>
+                        <input type="time" class="input-group-text fw-bold" name="horaInicio" [(ngModel)]="hora_inicio">
+                    </div>
+
+                    <!-- caja donde se selecciona una hora de apertura -->
+                    <div id="input-apertura-prog" class="d-flex flex-column mr-5">
+                        <p class="h6 fw-bold">Indique la hora de apertura:</p>
+                        <input type="time" class="input-group-text fw-bold"  name="horaFin" [(ngModel)]="hora_fin">
+                    </div>
+                    <div class="d-flex flex-column-reverse">
+                        <select [(ngModel)]="diaSemana" class="d-inline-block input-group-text fw-bold">
+                            <option>Seleccione día</option>
+                            <option value="Domingo">Domingo</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles" >Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
+                        </select>
+                    </div>
 </div>
