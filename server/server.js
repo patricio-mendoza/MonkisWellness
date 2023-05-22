@@ -12,10 +12,10 @@ server.use(cors());
 
 // Conexion con base de datos
 var config = {
-    host: "wellness-monkis-server.mysql.database.azure.com",
+    host: "monkisserverdb.mysql.database.azure.com",
     user: "pato",
     password: "supercontra123!",
-    database: "Monkis_DB",
+    database: "monkis_db",
     ssl: true
 };
 

@@ -1,6 +1,6 @@
 <div class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed': ''">
     <div class="logo-container">
-        <button class="logo" (click)="toggleCollapse()">
+        <button id="logo" class="logo" (click)="toggleCollapse()">
             <img class="logo-img" src="../../assets/borrego-white.svg" alt="logo"/>        
         </button>
         <div class="logo-text" *ngIf="collapsed">Wellness</div>
@@ -10,8 +10,8 @@
     </div>
     <div class="scrollwrap scrollwrap_delayed">
         <ul class="sidenav-nav">
-            <li class="sidenav-nav-item" *ngFor="let data of navData">
-                <a class="sidenav-nav-link" (click)="handleClick(data)"
+            <li id="nav" class="sidenav-nav-item" *ngFor="let data of navData; let i = index">
+                <a id="{{'nav' + i}}" class="sidenav-nav-link" (click)="handleClick(data)"
                     [routerLink]="[data.routeLink]" 
                     routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact: true}"

@@ -4,7 +4,7 @@
             [innerStrokeWidth]="10" [outerStrokeColor]="'#D9D9D9'"[backgroundColor]="'#5adc58'"[backgroundStrokeWidth]="10" [innerStrokeColor]="'rgba(231, 231, 231, 0.13)'" [animation]="true"
             [animationDuration]="1000" class="grafica">
         </circle-progress>
-        <span class="porcentaje_actual" style="position:absolute;   transform:translate(70%, 170%);">{{ porcentaje_actual }}</span>
+        <span id="porcentaje_actual" class="porcentaje_actual" style="position:absolute;   transform:translate(70%, 170%);">{{ porcentaje_actual }}</span>
     </div>
-    <app-hora-minuto class="hora" [tiempo]="currentDateTime.getHours()"></app-hora-minuto>
+    <app-hora-minuto class="hora" [tiempo]="currentDateTime.getHours()" [lugar]="this.lugar" ></app-hora-minuto>
 </div> 
