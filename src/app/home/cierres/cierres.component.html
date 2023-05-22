@@ -50,24 +50,24 @@
                                 <!-- caja donde se selecciona una hora de cierre -->
                     <div id="input-cierre-prog" class="d-flex flex-column mr-5 ">
                         <p class="h6 fw-bold">Indique la hora de cierre:</p>
-                        <input type="time" class="input-group-text fw-bold" name="tiempo">
+                        <input type="time" class="input-group-text fw-bold" name="horaInicio" [(ngModel)]="hora_inicio">
                     </div>
 
                     <!-- caja donde se selecciona una hora de apertura -->
                     <div id="input-apertura-prog" class="d-flex flex-column mr-5">
                         <p class="h6 fw-bold">Indique la hora de apertura:</p>
-                        <input type="time" class="input-group-text fw-bold" name="tiempo">
+                        <input type="time" class="input-group-text fw-bold"  name="horaFin" [(ngModel)]="hora_fin">
                     </div>
                     <div class="d-flex flex-column-reverse">
-                        <select  class="d-inline-block input-group-text fw-bold" [(ngModel)]="diaSemana">
-                            <option value="" disabled selected hidden>Seleccione día</option>
-                            <option>Domingo</option>
-                            <option>Lunes</option>
-                            <option>Martes</option>
-                            <option>Miércoles</option>
-                            <option>Jueves</option>
-                            <option>Viernes</option>
-                            <option>Sábado</option>
+                        <select [(ngModel)]="diaSemana" class="d-inline-block input-group-text fw-bold">
+                            <option>Seleccione día</option>
+                            <option value="Domingo">Domingo</option>
+                            <option value="Lunes">Lunes</option>
+                            <option value="Martes">Martes</option>
+                            <option value="Miércoles" >Miércoles</option>
+                            <option value="Jueves">Jueves</option>
+                            <option value="Viernes">Viernes</option>
+                            <option value="Sábado">Sábado</option>
                         </select>
                     </div>
 </div>

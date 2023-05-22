@@ -19,10 +19,13 @@ interface bloqueo {
   styleUrls: ['./cierres.component.scss']
 })
 export class CierresComponent extends HomeComponent{ 
+  hora_inicio: string;
+  hora_fin: string;
   form:FormGroup;
   diaSemana: string = "lunes";
   reqData: any;
   diaNumero(diaSemana:string):number{
+    console.log(diaSemana)
     switch(diaSemana){
       case "Lunes":
         return 2;
@@ -30,7 +33,7 @@ export class CierresComponent extends HomeComponent{
         case "Martes":
           return 3;
           break;
-        case "Miercoles":
+        case "Miércoles":
           return 4;
           break;
         case "Jueves":
@@ -39,7 +42,7 @@ export class CierresComponent extends HomeComponent{
         case "Viernes":
           return 6;
           break;
-        case "Sabado":
+        case "Sábado":
           return 7;
           break;
         case "Domingo":
@@ -52,7 +55,8 @@ export class CierresComponent extends HomeComponent{
   }
   }
   bloquear(): void {
-   
+    const horaInicio = this.hora_inicio;
+    const horaFin = this.hora_fin;
      
 
     const headers = { 'Content-Type': 'application/json' };
@@ -62,8 +66,8 @@ export class CierresComponent extends HomeComponent{
         id_espacio : null,
         id_wellness: 1,
         dia :this.diaNumero(this.diaSemana) ,
-        hora_inicio : "1",
-        hora_fin : "2",
+        hora_inicio: horaInicio,
+        hora_fin: horaFin,
         repetible: 1,
     };
 
