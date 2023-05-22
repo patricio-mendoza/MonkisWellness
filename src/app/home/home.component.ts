@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CompartidovarService } from './compartidovar.service';
+import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
@@ -19,10 +20,14 @@ export class HomeComponent {
   time = new Date();
   dia: string = dias[this.time.getDay()];
 
-  constructor(public http: HttpClient, public miServicio : CompartidovarService){}
+  constructor(public location: Location, public http: HttpClient, public miServicio : CompartidovarService){}
 
   ocultar(){
     this.miServicio.isModifyingAforo = !this.miServicio.isModifyingAforo;
+  }
+
+  cierresTab(){
+    this.miServicio.isClosing = !this.miServicio.isClosing;
   }
 
   openEstaSemanaTab() {

@@ -1,31 +1,50 @@
 <!-- 15/05/2023 Daniel Evaristo Escalera Bonilla Tarjeta de cierre -->
+
 <!-- 16/05/2023 Omar Cota Rodríguez Secció programar nuevo cierre -->
+
+<!-- 14/05/2023 Creación del componente 2 horas -->
+<!-- 15/05/2023 Función cierre manual 3.5 horas -->
+<!-- 19/05/2023 Back-end 4 horas -->
+<!-- 20/05/2023 Validaciones 1.5 horas -->
+<!-- Total version 1.0 11 horas -->
+
 <!-- Contenedor, define el fondo de la tarjeta -->
-<div id="fondo-tarjeta" class="d-flex align-items-center justify-content-center blur">
+<div class="d-flex align-items-center justify-content-center ps-5 blur">
 
     <!-- Caja, contiene los textos e inputs -->
-    <div id="cierre-box" class="d-flex flex-column rounded bg-primary border border-white border-5">
-
+    <div id="cierre-box" class="d-flex flex-column rounded bg-primary border border-white border-5 ms-5 pt-1 p-3">
+        
         <!-- Sección cierre manual -->
         <div id="cierre-manual" class="d-flex flex-column mr-5">
+            
+            <div class="d-flex flex-row justify-content-between">
+                <p id="titulo-cierre-manual" class="text-white h1"> Cierre manual </p>
+                <div (click)="cierresTab()" class="btn bg-transparent text-white">x</div>
+            </div>
 
-            <p id="titulo-cierre-manual" class="text-white ms-3 h1"> Cierre manual </p>
+            <p id="instrucciones-cierre-manual" class="text-white"> Cerrar el gimnasio en este momento de manera manual </p>
 
             <!-- Inputs del usuario -->
-            <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-0 pt-0 p-5">
-                <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 ms-5 m-1 mr-5">
-                    <div class="shadow-lg btn btn-danger fw-bold border border-white border-1">Cerrar</div>
+            <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-0 pt-0">
+                <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 ms-5 m-1">
+                    <div *ngIf="estado" (click)="cerrar()" class="btn btn-danger fw-bold border border-white border-1 text-white shadow-lg">Cerrar
+                    </div>
+                    <div *ngIf="!estado" (click)="abrir()" class="btn btn-success fw-bold border border-white border-1 text-white shadow-lg">Abrir
+                    </div>
                     <br>
                 </div>
-                <div id="input-cierre" class="d-flex flex-column col-sm-4 mr-5">
-                    <p class="h6">Indique la hora de cierre:</p>
-                    <input type="time" class="input-group-text" name="tiempo">
+                <div id="input-cierre" class="d-flex flex-column col-sm-4 mr-5 text-center">
+                    <p class="h6">Indique la hora de {{!estado? 'cierre': 'apertura'}}:</p>
+                    <input [(ngModel)]="hora" type="time" [ngClass]="{'bg-danger': warning}" class="input-group-text" name="tiempo">
+                </div>
+                <div *ngIf="warning" class="d-flex flex-column">
+                    <p class="h6 text-danger"> Ingresa un tiempo válido (El cambio no puede tener menos de 1 minuto de duración).</p>
                 </div>
             </div>
         </div>
 
         <!-- Separador -->
-        <div class="text-white fw-bold ms-5"> - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+        <img src="../../../assets/Line 26.png" class="img-fluid m-1">
 
 
         <!-- Sección programar nuevo cierre -->
