@@ -57,7 +57,9 @@ server.get("/api/user/:id", (req, res) => {
 });
 server.get("/api/user/reservaciones/:id", (req, res) => {   
     let id = req.params.id;
-    sql = `SELECT * FROM Reservacion WHERE ("${id}" = matricula OR "${id}" = num_nomina) AND estatus = 1`;
+    sql = `SELECT res.id_reservacion, res.hora_entrada, res.hora_salida, res.estatus, esp.nombre as nombre_espacio, dep.nombre as nombre_deporte, ins.nombre AS nombre_instalacion 
+    FROM Reservacion res JOIN Espacio esp ON res.id_espacio = esp.id_espacio JOIN EspacioDeporte espdep ON espdep.id_espacio = esp.id_espacio JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte JOIN Instalacion ins ON ins.id_instalacion = esp.id_instalacion
+    WHERE ("A00830337" = matricula OR "A00830337" = num_nomina)`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -99,7 +101,7 @@ server.delete('/api/reservacion/delete/:id', (req, res) => {
             res.send({ data: true });
         } 
     });
-}); 
+});
 
 // GYM
 server.get("/api/gym/estado", (req, res) => {    
