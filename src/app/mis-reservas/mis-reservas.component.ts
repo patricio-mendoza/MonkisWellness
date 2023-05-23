@@ -10,7 +10,7 @@ interface Reserva {
   id_reservacion: number;
   nombre_espacio: string;
   hora_entrada: Date;
-  gi: Date;
+  hora_salida: Date;
   nombre_deporte: string;
   nombre_instalacion: string;
   //prioridad: number;
@@ -62,10 +62,9 @@ export class MisReservasComponent implements OnInit {
 
   isProrrogaActiva(reserva: Reserva): boolean {
     let now = new Date();
-    let prorrogaTimeLimit = reserva.hora_entrada;
+    let prorrogaTimeLimit = new Date(reserva.hora_entrada);
     prorrogaTimeLimit.setMinutes(prorrogaTimeLimit.getMinutes() + this.prorroga);
-
-    return now > reserva.hora_entrada && now < prorrogaTimeLimit;
+    
+    return now > new Date(reserva.hora_entrada) && now.getTime() < prorrogaTimeLimit.getTime();
   }
-
 }

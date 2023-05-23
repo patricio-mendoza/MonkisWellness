@@ -1,10 +1,3 @@
-
-<!-- <div class="container">
-    <div *ngFor="let reserva of reservaciones" class="reserva">
-        {{reserva.hora_entrada}}
-    </div>
-</div> -->
-
 <div class="big-container">
     <div *ngFor = "let reserva of reservaciones"  class="reserva">
         <img class="back-foto" src="{{backgroundURL(reserva.nombre_deporte)}}">
@@ -37,7 +30,7 @@
                 </div>
                 <div class="reserva-right-down">
                     <div class="reserva-right-down-up">
-                        <div (click)="confirmar()" class="boton-confirmar">Ya llegué</div>
+                        <div [ngClass]="isProrrogaActiva(reserva) ? 'activo' : 'desactivado'" (click)="confirmar()" class="boton-confirmar">Ya llegué</div>
                     </div>  
                     <div (click)="cancelar()" class="reserva-right-down-down">Cancelar reservación</div> 
                 </div>
