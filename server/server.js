@@ -84,7 +84,6 @@ server.get("/api/avisos/:id", (req, res) => {
 });
 server.post('/api/generar/aviso', (req, res) => {
     let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo, id_reservacion) VALUES ('${req.body.matricula}', '${req.body.id_espacio ? 'Reservacion Confirmada' : 'Reservacion Cancelada'}', 'Tu reservacion en la ${req.body.nombreEspacio} en el ${req.body.nombreInstalacion} ha sido ${req.body.id_espacio ? 'guardada' : 'cancelada'}.', now(), ${req.body.id_reservacion ? `${req.body.id_reservacion}` : 'LAST_INSERT_ID()'})`;
-    console.log(sql);
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -114,7 +113,7 @@ server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
 server.delete('/api/reservacion/delete/:id', (req, res) => {
     let id = req.params.id;
     let sql = `UPDATE Reservacion SET estatus=3 WHERE id_reservacion=${id}`;
-    console.log(sql);
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else{
