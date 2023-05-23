@@ -42,6 +42,7 @@ export class MisReservasComponent implements OnInit {
 
     
   }
+  
   confirmar(){
     console.log("A");
   }

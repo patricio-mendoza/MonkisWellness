@@ -87,7 +87,7 @@
                     color: white;
                     letter-spacing: 0.05em;
                     width:100%;
-                    height: auto;
+                    height: 100%;
                     //background-color: rgb(163, 83, 55);
                     border-radius: 20px; 
                 }
@@ -149,7 +149,7 @@
                             justify-content: flex-end;
                             align-items: center;
                             
-                            .semaforo-circle-1{
+                            .semaforo-circle-3{
                                 background-color: red;
                                 height: 25px;
                                 width: 25px;
@@ -157,7 +157,7 @@
                                 border-radius: 50%;
                                 display: inline-block;
                             }
-                            .semaforo-circle-2{
+                            .semaforo-circle-1{
                                 background-color: #7BFF65;
                                 height: 25px;
                                 width: 25px;
@@ -165,23 +165,7 @@
                                 border-radius: 50%;
                                 display: inline-block;
                             }
-                            .semaforo-circle-3{
-                                background-color: #65FFE3;
-                                height: 25px;
-                                width: 25px;
-                                //background-color: #bbb;
-                                border-radius: 50%;
-                                display: inline-block;
-                            }
-                            .semaforo-circle-4{
-                                background-color: #FFD465;
-                                height: 25px;
-                                width: 25px;
-                                //background-color: #bbb;
-                                border-radius: 50%;
-                                display: inline-block;
-                            }
-                            .semaforo-circle-5{
+                            .semaforo-circle-2{
                                 background-color: lightgray;
                                 height: 25px;
                                 width: 25px;
