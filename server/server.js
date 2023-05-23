@@ -59,7 +59,7 @@ server.get("/api/user/reservaciones/:id", (req, res) => {
     let id = req.params.id;
     sql = `SELECT sub.id_reservacion, sub.hora_entrada, sub.hora_salida, sub.estatus, sub.nombre_espacio, sub.nombre_deporte, sub.nombre_instalacion
     FROM (
-        SELECT res.id_reservacion, DATE_FORMAT(res.hora_entrada, '%H:%i') as hora_entrada, DATE_FORMAT(res.hora_salida, '%H:%i') as hora_salida, res.estatus, esp.nombre as nombre_espacio, dep.nombre as nombre_deporte, ins.nombre AS nombre_instalacion,
+        SELECT res.id_reservacion, DATE_FORMAT(res.hora_entrada, '%Y/%m/%d %H:%i') as hora_entrada, DATE_FORMAT(res.hora_salida, '%Y/%m/%d %H:%i') as hora_salida, res.estatus, esp.nombre as nombre_espacio, dep.nombre as nombre_deporte, ins.nombre AS nombre_instalacion,
                ROW_NUMBER() OVER (PARTITION BY res.id_reservacion ORDER BY res.id_reservacion) AS row_num
         FROM Reservacion res
         JOIN Espacio esp ON res.id_espacio = esp.id_espacio

@@ -10,7 +10,7 @@ interface Reserva {
   id_reservacion: number;
   nombre_espacio: string;
   hora_entrada: Date;
-  hora_salida: Date;
+  gi: Date;
   nombre_deporte: string;
   nombre_instalacion: string;
   //prioridad: number;
@@ -25,6 +25,8 @@ interface Reserva {
 export class MisReservasComponent implements OnInit {
   reservaciones: Reserva[] = [];
   reqData: any;
+
+  prorroga = 20 // 20 minutos para confirmar
 
   constructor(private http: HttpClient) { }
 
@@ -57,4 +59,13 @@ export class MisReservasComponent implements OnInit {
 
     return img_url; 
   }
+
+  isProrrogaActiva(reserva: Reserva): boolean {
+    let now = new Date();
+    let prorrogaTimeLimit = reserva.hora_entrada;
+    prorrogaTimeLimit.setMinutes(prorrogaTimeLimit.getMinutes() + this.prorroga);
+
+    return now > reserva.hora_entrada && now < prorrogaTimeLimit;
+  }
+
 }
