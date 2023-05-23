@@ -51,7 +51,7 @@ server.get("/api/user/:id", (req, res) => {
     }
 
     db.query(sql, function (error, result) {
-        if (error) console.log("Error retrieving the data")
+        if (error) res.send({ status: false, data: [] })
         else res.send({ status: true, data: result });    
     });
 });

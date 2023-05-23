@@ -23,7 +23,7 @@ export class AuthService {
            .toPromise()
            .then( res => {
                   this.reqData = res;
-                  if (!this.reqData.status) {
+                  if (!this.reqData.status || this.reqData.data.length === 0) {
                      this.isUserLoggedIn = false;
                      this.isAdmin = false;
                   } else {
