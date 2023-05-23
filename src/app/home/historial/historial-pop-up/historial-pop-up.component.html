@@ -1,11 +1,13 @@
 <div *ngIf="miServicio.isCheckingHistorial" class="blur">
     <div class="container">
+        <div id="cuadroA"></div> 
         <button (click)="closeEstaSemanaTab()" class="close-btn">X</button>
         <div class="header">
             <p class="title">Historial</p>
         </div>
+       
         <div class="chart-container">
-            <app-bar-chart [data]="historial"></app-bar-chart>
+            <app-graf-barras [data]="historial"> </app-graf-barras>
       </div>
     </div>
 </div>
