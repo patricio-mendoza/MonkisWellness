@@ -12,11 +12,10 @@
 </div>
 <div class="lower-container">
     <div (click)="openEstaSemanaTab()" class="flex-box3"><app-esta-semana></app-esta-semana></div>
-    <div  class="flex-box4"><app-historial></app-historial></div>
-    
-    
+    <div (click)="openHistorialTab()" class="flex-box4"><app-historial></app-historial></div>
 </div>
 
 
 <app-modif-aforo *ngIf="miServicio.isModifyingAforo" ></app-modif-aforo>
 <app-esta-semana-pop-up *ngIf="miServicio.isCheckingEstaSemana"></app-esta-semana-pop-up>
+<app-historial-pop-up *ngIf="miServicio.isCheckingHistorial"></app-historial-pop-up>

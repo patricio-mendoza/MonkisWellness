@@ -27,4 +27,9 @@ export class HomeComponent {
   openEstaSemanaTab() {
     this.miServicio.isCheckingEstaSemana = true;
   }
+
+  openHistorialTab(){
+    this.miServicio.isCheckingHistorial = true;
+  }
+
 }

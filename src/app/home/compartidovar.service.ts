@@ -8,6 +8,7 @@ import { filter } from 'rxjs/operators';
 export class CompartidovarService {
   isModifyingAforo: boolean = false;
   isCheckingEstaSemana: boolean = false;
+  isCheckingHistorial: boolean = false;
   isLogged: boolean = false;
 
   constructor(private router: Router) {
