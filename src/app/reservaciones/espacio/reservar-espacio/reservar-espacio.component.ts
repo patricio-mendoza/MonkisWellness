@@ -13,7 +13,7 @@ interface Bloqueo {
 
 interface Reservacion {
     id: number;
-    matricula: string;
+    dueno: string;
     hora: string;
     fecha: string;
 }
@@ -42,13 +42,14 @@ export class ReservarEspacioComponent {
 
     id_espacio: number;
     nombreEspacio: string;
+    nombreInstalacion: string;
 
     hora_inicio: number = 6;
     hora_fin: number = 23;
 
     reqData: any;
     bloqueos: Bloqueo[];
-    reservaciones: Reservacion[];
+    reservaciones: Reservacion[] = [];
 
     horaReserva: string;
     fecha: string;
@@ -68,6 +69,7 @@ export class ReservarEspacioComponent {
         if (this.isAdmin) {
             this.getReservaciones();
         }
+        console.log(this.reservaciones.length)
     }
     
     settings: MbscDatepickerOptions;
@@ -90,6 +92,7 @@ export class ReservarEspacioComponent {
             this.hora_inicio = this.reqData.data[0].apertura;
             this.hora_fin = this.reqData.data[0].cierre;
             this.nombreEspacio = this.reqData.data[0].nombre;
+            this.nombreInstalacion = this.reqData.data[0].nombreInstalacion
             
             this.settings = {
                 display: 'inline',
@@ -107,7 +110,6 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`).subscribe(res => {
             this.reqData = res;
             this.reservaciones = this.reqData.data;
-            console.log(this.reservaciones)
         });
     }
 
@@ -125,7 +127,6 @@ export class ReservarEspacioComponent {
 
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };
-        
         const body = {
             matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
             num_nomina : localStorage.getItem('isAdmin') === 'true' ? localStorage.getItem('id') : null,
@@ -133,7 +134,9 @@ export class ReservarEspacioComponent {
             hora_entrada : formattedStartDate,
             hora_salida : formattedFinishDate,
             prioridad : localStorage.getItem('isAdmin') === 'true' ? 1 : 2,
-            estatus : 1
+            estatus : 1,
+            nombreEspacio: this.nombreEspacio,
+            nombreInstalacion: this.nombreInstalacion
         };
 
         this.http.post(`${API_URI}/reservar/espacio`, JSON.stringify(body), options).subscribe(res => {
@@ -145,9 +148,18 @@ export class ReservarEspacioComponent {
         });
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
     }
-    cancelarReservacion(id: number) {
-        console.log(`${API_URI}/reservacion/delete/${id}`)
+    cancelarReservacion(id: number, dueno: string) {
+        const headers = { 'Content-Type': 'application/json' };
+        const options = { headers: headers };
+        const body = {
+            matricula: dueno,
+            nombreEspacio: this.nombreEspacio,
+            nombreInstalacion: this.nombreInstalacion,
+            id_reservacion: id
+        };
+        console.log(body);
         this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
+        this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
         window.location.replace(this.location.path());
     }
 }

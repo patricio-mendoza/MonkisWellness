@@ -177,23 +177,34 @@
     .container-right-down-right{
        // position:absolute;
         height: 100%;
-        width: 50%;
+        width: 30%;
         background-color: #0f0072;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
         gap: 3vh;
-        padding-left: 2%;
-        padding-right: 2%;
+        padding-left: 1%;
+        padding-right: 1%;
         padding-top: 2%;
         padding-bottom: 1%;
         overflow-y: auto;
+        .headers{
+            display: flex;
+            margin-left: 1rem;
+            .header{
+                flex-grow: 1;
+                color: white;
+                font-weight: bold;
+                font-size: medium;
+            }
+        }
         .reservacion{
             height: 7vh;
             width: 100%;
             display: flex;
-            gap: 1.5vw;
+            gap: 0.5vw;
             .reservaciones-actuales-left{
+                padding: 0.5rem;
                 display: flex;
                 flex-direction: row;
                 justify-content: space-around;
@@ -205,9 +216,9 @@
                 align-items: center;
                 font-family: 'Poppins', sans-serif;
                 font-size: 0.8vw;
-                
-
+                text-align: center;
             }
+            
             .reservaciones-actuales-right{
                 display: flex;
                 justify-content: center;
@@ -221,7 +232,21 @@
                 border-radius: 10px;
             }
         }
-        
+        .no-reservations {
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            height: 7vh;
+            width: 85%;
+            gap: 1vw;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.8vw;
+            text-align: center;
+        }
     }
     
 }
