@@ -10,12 +10,11 @@ interface bloqueo {
   wellness: number;
   dia: number;
   horaI: string;
-  horaF:string;
-  repetible:number;
+  horaF: string;
+  repetible: number;
 }
 import { DatePipe, Time } from '@angular/common';
 
-const API_URI = 'http://localhost:8888/api';
 
 @Component({
   selector: 'app-cierres',
@@ -23,45 +22,42 @@ const API_URI = 'http://localhost:8888/api';
   styleUrls: ['./cierres.component.scss']
 })
 
-export class CierresComponent extends HomeComponent{ 
+export class CierresComponent extends HomeComponent {
   hora_inicio: string;
   hora_fin: string;
-  form:FormGroup;
+  form: FormGroup;
   diaSemana: string = "lunes";
-  diaNumero(diaSemana:string):number{
+  diaNumero(diaSemana: string): number {
     console.log(diaSemana)
-    switch(diaSemana){
+    switch (diaSemana) {
       case "Lunes":
         return 2;
         break;
-        case "Martes":
-          return 3;
-          break;
-        case "Miércoles":
-          return 4;
-          break;
-        case "Jueves":
-          return 5;
-          break;
-        case "Viernes":
-          return 6;
-          break;
-        case "Sábado":
-          return 7;
-          break;
-        case "Domingo":
-          return 1;
-          break;
-        default:
-          return 0;
-          break;
+      case "Martes":
+        return 3;
+        break;
+      case "Miércoles":
+        return 4;
+        break;
+      case "Jueves":
+        return 5;
+        break;
+      case "Viernes":
+        return 6;
+        break;
+      case "Sábado":
+        return 7;
+        break;
+      case "Domingo":
+        return 1;
+        break;
+      default:
+        return 0;
+        break;
 
+    }
   }
-  }
-  bloquear(): void {
-    const horaInicio = this.hora_inicio;
-    const horaFin = this.hora_fin;
-    
+
   datePipe = new DatePipe("en-US");
 
   estado: boolean;
@@ -93,10 +89,10 @@ export class CierresComponent extends HomeComponent{
     // Dependiendo del estado actual del gimnasio se define si es un cierre o una apertura
     let horaInicio: string = !this.estado ? this.hora : ahora;
     let horaFin: string = this.estado ? this.hora : ahora;
-    
+
     // Validaciones para evitar que el usuario ponga un cierre o apertura sin final
-    let horaIniNum = parseInt(horaInicio[0]+horaInicio[1]+horaInicio[3]+horaInicio[4]);
-    let horaFinNum = parseInt(horaFin[0]+horaFin[1]+horaFin[3]+horaFin[4]);
+    let horaIniNum = parseInt(horaInicio[0] + horaInicio[1] + horaInicio[3] + horaInicio[4]);
+    let horaFinNum = parseInt(horaFin[0] + horaFin[1] + horaFin[3] + horaFin[4]);
 
     if (horaInicio == horaFin || (this.estado && horaFinNum < horaIniNum) || (!this.estado && horaFinNum > horaIniNum)) {
       this.warning = true;
@@ -105,9 +101,9 @@ export class CierresComponent extends HomeComponent{
     else {
       this.warning = false;
     }
-    
+
     // Mensaje de confirmación del cambio manual
-    let mensaje_confirmacion = "¿Seguro que desea " + (this.estado ? "cerrar" : "abrir") + " el gimnasio hasta las " + (this.estado ? horaFin : horaInicio) +"?"
+    let mensaje_confirmacion = "¿Seguro que desea " + (this.estado ? "cerrar" : "abrir") + " el gimnasio hasta las " + (this.estado ? horaFin : horaInicio) + "?"
 
     let confirmar = window.confirm(mensaje_confirmacion)
     if (!confirmar) {
@@ -124,7 +120,6 @@ export class CierresComponent extends HomeComponent{
       hora_fin: horaFin
     };
 
-    console.log(this.hora);
 
     this.http.post(`${API_URI}/gym/cambioManual`, JSON.stringify(body), options).subscribe();
 
@@ -153,20 +148,25 @@ export class CierresComponent extends HomeComponent{
     }
   }
 
+  bloquear(): void {
+    const horaInicio = this.hora_inicio;
+    const horaFin = this.hora_fin;
 
     const headers = { 'Content-Type': 'application/json' };
     const options = { headers: headers };
-    
+
     const body = {
-        id_espacio : null,
-        id_wellness: 1,
-        dia :this.diaNumero(this.diaSemana) ,
-        hora_inicio: horaInicio,
-        hora_fin: horaFin,
-        repetible: 1,
+      id_espacio: null,
+      id_wellness: 1,
+      dia: this.diaNumero(this.diaSemana),
+      hora_inicio: horaInicio,
+      hora_fin: horaFin,
+      repetible: 1,
     };
 
     console.log(body);
     this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
-}
+
+    this.miServicio.isClosing = !this.miServicio.isClosing;
+  }
 }
