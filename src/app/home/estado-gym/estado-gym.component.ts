@@ -47,7 +47,9 @@ export class EstadoGymComponent extends HomeComponent {
       this.getEstadoGym();
       this.getHoraA();
       this.getHoraC();
+      this.getAforo();
     });
+
   }
 
   ngOnDestroy(){

@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 
 export class CompartidovarService {
+  
   isModifyingAforo: boolean = false;
   isCheckingEstaSemana: boolean = false;
   isClosing: boolean = false;

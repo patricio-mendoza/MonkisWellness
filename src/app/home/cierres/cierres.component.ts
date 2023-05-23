@@ -167,6 +167,7 @@ export class CierresComponent extends HomeComponent {
     console.log(body);
     this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
 
+    this.miServicio.cambiarEstado(true);
     this.miServicio.isClosing = !this.miServicio.isClosing;
   }
 }
