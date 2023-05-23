@@ -6,13 +6,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 const API_URI = 'http://localhost:8888/api';
 
 interface bloqueo {
-  espacio: null;
-  wellness: number;
+  id_bloqueo: number;
   dia: number;
-  horaI: string;
-  horaF: string;
-  repetible: number;
+  hora_inicio: string;
+  hora_fin: string;
 }
+
 import { DatePipe, Time } from '@angular/common';
 
 
@@ -26,9 +25,11 @@ export class CierresComponent extends HomeComponent {
   hora_inicio: string;
   hora_fin: string;
   form: FormGroup;
-  diaSemana: string = "lunes";
+  diaSemana: string = "";
+  cierres: bloqueo[];
+  cierresByDay: bloqueo[];
+
   diaNumero(diaSemana: string): number {
-    console.log(diaSemana)
     switch (diaSemana) {
       case "Lunes":
         return 2;
@@ -70,6 +71,7 @@ export class CierresComponent extends HomeComponent {
   ngOnInit() {
     // Se obtiene el estado del gimnasio
     this.getEstadoGym();
+    this.getCierres();
   }
 
   getEstadoGym() {
@@ -80,8 +82,15 @@ export class CierresComponent extends HomeComponent {
     });
   }
 
+  cancelarCierresM(){
+    let apiURL = `${API_URI}/gym/cancelarCierresM`
+    this.http.put(apiURL,"").subscribe();
+  }
+
   // Función para registrar el cierre en la base de datos
   registrarCambio(): boolean {
+
+    this.cancelarCierresM();
 
     // Hora a la que se aplicó el cierre
     let ahora: string = this.datePipe.transform(new Date(), 'HH:mm')
@@ -120,7 +129,7 @@ export class CierresComponent extends HomeComponent {
       hora_fin: horaFin
     };
 
-
+    
     this.http.post(`${API_URI}/gym/cambioManual`, JSON.stringify(body), options).subscribe();
 
     return true;
@@ -164,10 +173,31 @@ export class CierresComponent extends HomeComponent {
       repetible: 1,
     };
 
-    console.log(body);
     this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
 
     this.miServicio.cambiarEstado(true);
     this.miServicio.isClosing = !this.miServicio.isClosing;
+  }
+
+  getCierres(){
+    let apiURL = `${API_URI}/gym/cierresR`;
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.cierres = this.reqData.data;
+      console.log(this.cierres[0]);
+    });
+  }
+
+  generarLista(){
+    
+    this.cierresByDay = [];
+
+    for(let cierre of this.cierres){
+      if(cierre.dia == this.diaNumero(this.diaSemana)){
+        this.cierresByDay.push(cierre);
+      }
+    }
+
+    console.log(this.cierresByDay);
   }
 }

@@ -180,6 +180,17 @@ server.get('/api/gym/estimaciones', (req, res) => {
 })
 
 // Daniel
+// Obtener todos los cierres repetibles
+server.get('/api/gym/cierresR', (req,res) => {
+    // Ordena por dia y hora las siguientes aperturas aplicables, obtiene el primer resultado aplicable
+    sql = "select id_bloqueo, dia, hora_inicio, hora_fin from bloqueo where repetible = 1 order by dia, hora_inicio, hora_fin"
+    db.query(sql, function (error, result) {
+        if (error) console.log(error)
+        else res.send({ data: result });
+    });
+})
+
+// Daniel
 // Ver la siguiente apertura
 server.get('/api/gym/siguienteAp', (req,res) => {
     // Ordena por dia y hora las siguientes aperturas aplicables, obtiene el primer resultado aplicable
@@ -214,6 +225,16 @@ server.post('/api/gym/cambioManual', (req,res) => {
     });
 })
 
+// Daniel
+// Cancela todos los cierres manuales, ya que solo puede haber uno activo a la vez
+server.put("/api/gym/cancelarCierresM", (req, res) => {
+    let sql = `UPDATE bloqueo SET repetible = 2 WHERE repetible = 0;`
+    
+    db.query(sql, function (error) {
+        if (error) console.log("Error Updating the Data")
+        else res.send({ data: true });    
+    });
+});
 
 //DEPORTES
 server.get(`/api/deporte/:id`, (req, res) => {
