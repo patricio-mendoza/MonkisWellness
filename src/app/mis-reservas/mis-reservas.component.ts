@@ -95,6 +95,11 @@ export class MisReservasComponent implements OnInit {
     return now > new Date(reserva.hora_entrada) && now.getTime() < prorrogaTimeLimit.getTime();
   }
 
+  isReservacionEnProgreso(reserva: Reserva): boolean {
+    let now = new Date();
+    return now > new Date(reserva.hora_entrada) && now < new Date(reserva.hora_salida);
+  }
+
   getProrroga(hora: Date) {
     let horaDate = new Date(hora)
     return `${horaDate.getHours()}:${horaDate.getMinutes() + this.prorroga}`;
