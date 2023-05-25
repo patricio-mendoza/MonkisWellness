@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@300&display=swap');
+
 .blur{
     background-color: rgba(212, 202, 202, 0.615);
     width: 100%;
@@ -15,6 +18,20 @@
     border-color: white;
     background-color: #E94F37;
 
+    .header {
+        .title {
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            font-size: 30px;
+        }
+        .today {
+            font-size: 20px;
+            font-family: 'M PLUS 1p';
+            color: white;
+            margin-top: -20px;
+        }
+    }
+
     .close-btn {
         float: right;
         border: white;
@@ -22,5 +39,12 @@
         color: white;
         font-size: 30px;
         font-weight: bolder;
+    }
+
+    .chart-container {
+        width: 85%;
+        align-self: center;
+        color: white;
+        margin: auto
     }
 }

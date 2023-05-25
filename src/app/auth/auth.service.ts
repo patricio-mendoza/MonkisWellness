@@ -34,7 +34,6 @@ export class AuthService {
 
                      localStorage.setItem('id', id);
                   }
-                  
                   localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 
                   localStorage.setItem('isAdmin', this.isAdmin ? "true" : "false");  
 
