@@ -1,8 +1,261 @@
-.container {
+/*.container {
     .reserva {
         width: 400px;
         height: 50px;
         background-color: rgb(162, 162, 162);
         margin: 10px;
     }
+}*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+
+.big-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+    width: 100%;
+    height: 80%;
+    //background-color: lightcoral;
+    padding: 2vw;
+    gap: 3vw;
+    overflow-y: auto;
+    .reserva{
+        position: relative;
+       /* display: flex;
+        width: 45%;
+        height: 45%;
+        background-color: rgb(57, 217, 228); 
+        border-radius: 20px; 
+        padding: 1.2vw;
+        background-image: url("../../assets/foto_deporte/futbol.jpeg");*/
+        width: 45%;
+        height: 45%;
+        .back-foto{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            //background-color: rgb(94, 228, 57);
+            border-radius: 20px; 
+        }
+        .color-foto{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 255, 132, 0.092);
+            border-radius: 20px;
+        }
+        .gradient{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgba(255, 0, 0, 0),#004891);
+            border-radius: 20px; 
+        }
+        .content{
+            position: absolute;
+            display: flex;
+            width: 100%;
+            height: 100%;
+            //background-color: rgb(57, 217, 228); 
+            border-radius: 20px; 
+            padding: 1.2vw;
+            //background-image: url("../../assets/foto_deporte/futbol.jpeg");
+            .reserva-left{
+                width: 50%;
+                height: 100%;
+               // background-color: rgb(172, 95, 172);
+                border-radius: 20px; 
+                display: flex;
+                flex-direction: column;
+                color: white;
+                .reserva-left-top{ //NombreCancha
+                    display: flex;
+                    align-items:center;
+                    font-family: 'Poppins', sans-serif;
+                    line-height: 3.4vh;
+                    font-size: 4vh;
+                    width:100%;
+                    height: 35%;
+                   // background-color: coral;
+                    border-radius: 20px; 
+                }
+                .reserva-left-middle{ //NombreDeporte
+                    display: flex;
+                    align-items: center;
+                    font-size: 1.2vw;
+                    font-family: 'Bebas Neue';
+                    color: white;
+                    letter-spacing: 0.05em;
+                    width:100%;
+                    height: 100%;
+                    //background-color: rgb(163, 83, 55);
+                    border-radius: 20px; 
+                }
+                .reserva-left-bottom{ //Lugar&Hora
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 2vh;
+                    display: flex;
+                    align-items: flex-end;
+                    width:100%;
+                    height: 50%;
+                   // background-color: rgb(74, 33, 18);
+                    border-radius: 20px; 
+                    letter-spacing: 0.1em;
+                    
+                    
+                }
+            }
+            .reserva-right{
+                width: 70%;
+                height: 100%;
+                //background-color: rgb(95, 172, 137);
+                border-radius: 20px; 
+                display: flex;
+                flex-direction: column;
+                
+                .reserva-right-top{
+                    width: 100%;
+                    height: 50%;
+                   // background-color: chartreuse;
+                    border-radius: 20px; 
+                    display: flex;
+                    flex-direction: column;
+                    //justify-content: flex-start;
+                    align-items: flex-end;
+                    .reserva-right-up-up{ //Estado
+                        font-family: 'Poppins', sans-serif;
+                        font-size: 4vh;
+                        display: flex;
+                        //justify-content: flex-start;
+                        align-items: flex-start;
+                        color: white;
+                        height: 40%;
+                        //background-color: aquamarine;
+                    }
+                    
+                    .reserva-right-up-middle{ //Semaforo
+                        display: flex;
+                        //flex-direction: row;
+                        justify-content: flex-end;
+                        width: 100%;
+                        height: 30%;
+                        
+                        .semaforo-left{ //Circulo
+                            
+                            height:100%;
+                            margin-top: 3px;
+                            width: 30%;
+                            //background-color: white;
+                            display: flex;
+                            justify-content: flex-end;
+                            align-items: center;
+                            
+                            .semaforo-circle-3{
+                                background-color: red;
+                                height: 25px;
+                                width: 25px;
+                                //background-color: #bbb;
+                                border-radius: 50%;
+                                display: inline-block;
+                            }
+                            .semaforo-circle-1{
+                                background-color: #7BFF65;
+                                height: 25px;
+                                width: 25px;
+                                //background-color: #bbb;
+                                border-radius: 50%;
+                                display: inline-block;
+                            }
+                            .semaforo-circle-2{
+                                background-color: lightgray;
+                                height: 25px;
+                                width: 25px;
+                                //background-color: #bbb;
+                                border-radius: 50%;
+                                display: inline-block;
+                            }
+                        }
+                        .semaforo-right{ //Texto
+                            display: flex;
+                            justify-content: flex-end;
+                            text-align: right;
+                           // background-color: red;
+                            height:100%;
+                            width: 40%;
+                            //font-weight: bold;
+                            font-size: 1.4vw;
+                            
+                            font-family: 'Bebas Neue';
+                            color: white;
+                            letter-spacing: 0.05em;
+    
+                        }
+                    }
+                    .reserva-right-up-down{ //prorroga
+                        display: flex;
+                        justify-content: center;
+                        height: 30%;
+                        width: 40%;
+                        //background-color: green;
+                        font-style: italic;
+                        //font-family: 'Poppins', sans-serif;
+                        
+                        color: white;
+                        font-size: 1.5vh;
+                    }
+                }
+                .reserva-right-down{
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-end;
+                    width: 100%;
+                    height: 50%;
+                    //justify-content:end;
+                    .reserva-right-down-up{ //boton
+                        height:70%;
+                        width: 50%;
+                        //background-color: purple;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        .boton-confirmar{
+                            width: 100%;
+                            height: 60%;
+                            border: 2px solid white;
+                            border-radius: 5px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            color: white;
+                            font-family: 'Poppins', sans-serif;
+                            color: white;
+                            font-size: 1.8vh;
+                            box-shadow: 0px 1px 2px black;
+                        }
+                        .activo {
+                            background-color: #006FDF;
+                        }
+                        .desactivado {
+                            background-color: #A3A3A3;
+                        }
+                    }
+                    .reserva-right-down-down{ //cancelar
+                        display: flex;
+                        height:30%;
+                        width: 50%;
+                        //background-color: red;
+                        align-items: center;
+                        justify-content: center;
+                        font-family: 'Poppins', sans-serif;
+                        color: white;
+                        font-size: 1.5vh;
+                        text-decoration: underline;
+                        
+                    }
+                }
+            }
+        }
+        }
+        
+        
 }

@@ -152,6 +152,7 @@ export class ReservarEspacioComponent {
         }
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(bodyAviso), options).subscribe();
     }
+
     cancelarReservacion(id: number, dueno: string) {
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };
@@ -161,6 +162,7 @@ export class ReservarEspacioComponent {
             texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido cancelada por un administrador.`,
             id_reservacion: id
         };
+      
         this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
         window.location.replace(this.location.path());
