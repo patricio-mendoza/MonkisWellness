@@ -34,7 +34,8 @@ import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/pro
 import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
 import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
 import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
-import { GrafEstanciaPromComponent } from './graf-estancia-prom/graf-estancia-prom.component';
+import { GrafEstanciaPromComponent } from './home/graf-estancia-prom/graf-estancia-prom.component';
+import { GrafEstPromComponent } from './graf-est-prom/graf-est-prom.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -64,6 +65,7 @@ registerLocaleData(localeEs, 'es');
     EstaSemanaPopUpComponent,
     BarChartComponent,
     GrafEstanciaPromComponent,
+    GrafEstPromComponent,
   ],
   imports: [  
     MbscModule,   
