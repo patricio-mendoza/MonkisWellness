@@ -45,11 +45,24 @@ export class MisReservasComponent implements OnInit {
     
   }
   
-  confirmar(){
-    console.log("A");
+  confirmar(reserva: Reserva){
+    if (!this.isProrrogaActiva(reserva)) {return;}
+    
   }
-  cancelar(){
-    console.log("B");
+  cancelar(reserva: Reserva){
+    let wantsToDelete = confirm('¿Seguro que quieres borrar esta reservación?')
+    alert ( wantsToDelete );
+    if(!wantsToDelete) { return; }
+
+    let apiURL = `${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`
+
+    // borrar del array local
+    let index = this.reservaciones.indexOf(reserva);
+    this.reservaciones.splice(index, 1);
+
+    // borrar de la base de datos
+    this.http.delete(apiURL).subscribe();
+    
   }
 
   backgroundURL(nombre_deporte: string): string {

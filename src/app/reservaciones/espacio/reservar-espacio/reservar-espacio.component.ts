@@ -146,7 +146,6 @@ export class ReservarEspacioComponent {
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
     }
     cancelarReservacion(id: number) {
-        console.log(`${API_URI}/reservacion/delete/${id}`)
         this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
         window.location.replace(this.location.path());
     }

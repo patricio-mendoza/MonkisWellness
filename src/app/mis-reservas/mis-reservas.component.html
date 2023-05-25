@@ -30,9 +30,9 @@
                 </div>
                 <div class="reserva-right-down">
                     <div class="reserva-right-down-up">
-                        <div [ngClass]="isProrrogaActiva(reserva) ? 'activo' : 'desactivado'" (click)="confirmar()" class="boton-confirmar">Ya llegué</div>
+                        <div [ngClass]="isProrrogaActiva(reserva) ? 'activo' : 'desactivado'" (click)="confirmar(reserva)" class="boton-confirmar">Ya llegué</div>
                     </div>  
-                    <div (click)="cancelar()" class="reserva-right-down-down">Cancelar reservación</div> 
+                    <div (click)="cancelar(reserva)" class="reserva-right-down-down">Cancelar reservación</div> 
                 </div>
             </div>
 

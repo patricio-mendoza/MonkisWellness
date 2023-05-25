@@ -111,6 +111,10 @@ server.delete('/api/reservacion/delete/:id', (req, res) => {
         } 
     });
 });
+server.post('/api/generar/avisoCancelacion', (req, res) => {
+    let id = localStorage.getItem("id")
+    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo) VALUES ('${id}, 'Reservacion Cancelada', ''')`
+});
 
 // GYM
 server.get("/api/gym/estado", (req, res) => {    
@@ -217,3 +221,14 @@ server.get('/api/instalacion/horario/:id', (req, res) => {
         else res.send({ data: result });
     });
 })
+server.delete('/api/cancelar/mireserva/:id', (req, res) => {
+    let id = req.params.id;
+    let sql = `DELETE FROM Reservacion WHERE id_reservacion = ${id}`
+
+    db.query(sql, function (error) {
+        if (error) console.log("Error retrieving the data")
+        else{
+            res.send({ data: true });
+        } 
+    });
+});
