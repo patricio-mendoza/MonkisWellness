@@ -85,8 +85,8 @@ server.get("/api/avisos/:id", (req, res) => {
     });
 });
 server.post('/api/generar/aviso', (req, res) => {
-    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo) VALUES ('${req.body.matricula}', 'Reservacion Confirmada', 'Tu reservacion en la ${req.body.id_espacio} en el CBD2 ha sido guardada', now())`;
-    
+    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo, id_reservacion) VALUES ('${req.body.matricula}', '${req.body.encabezado}', '${req.body.texto}', now(), ${req.body.id_reservacion})`;
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
     });
