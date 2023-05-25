@@ -69,7 +69,6 @@ export class ReservarEspacioComponent {
         if (this.isAdmin) {
             this.getReservaciones();
         }
-        console.log(this.reservaciones.length)
     }
     
     settings: MbscDatepickerOptions;
@@ -116,7 +115,6 @@ export class ReservarEspacioComponent {
     reservar(): void {
         if (this.selectedDate === null || this.selectedDate[0] === null || this.selectedDate[1] === null) {
             this.invalidRequest = true;
-            console.log('Invalid Request')
             return;
         }
         
@@ -150,7 +148,7 @@ export class ReservarEspacioComponent {
             matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
             encabezado: 'Reservacion Confirmada',
             texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido confirmada.`,
-            id_espacio: this.id_espacio
+            id_reservacion: 'LAST_INSERT_ID()'
         }
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(bodyAviso), options).subscribe();
     }
@@ -163,7 +161,6 @@ export class ReservarEspacioComponent {
             nombreInstalacion: this.nombreInstalacion,
             id_reservacion: id
         };
-        console.log(body);
         this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
         window.location.replace(this.location.path());
