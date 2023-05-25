@@ -59,11 +59,17 @@ export class MisReservasComponent implements OnInit {
     // borrar del array local
     let index = this.reservaciones.indexOf(reserva);
     this.reservaciones.splice(index, 1);
-
     // borrar de la base de datos
     this.http.delete(apiURL).subscribe();
     
-  }
+    const body = {
+      matricula: localStorage.getItem('id'),
+      encabezado: 'Reservacion Cancelada',
+      texto: `Has cancelado tu reservacion de las ${reserva.hora_entrada}.`,
+      id_reservacion: reserva.id_reservacion
+    };
+    this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
+    }
 
   backgroundURL(nombre_deporte: string): string {
     let img_url = nombre_deporte.toLocaleLowerCase();
