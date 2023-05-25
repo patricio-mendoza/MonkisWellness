@@ -50,17 +50,18 @@ export class MisReservasComponent implements OnInit {
     
   }
   cancelar(reserva: Reserva){
-    let wantsToDelete = confirm('¿Seguro que quieres borrar esta reservación?')
-    alert ( wantsToDelete );
+    let index = this.reservaciones.indexOf(reserva);
+    if (this.reservaciones[index].estatus === 3 ) {
+      alert ("Esta reservacion ya está cancelada");
+      return;
+    }
+
+    let wantsToDelete = confirm('¿Seguro que quieres cancelar esta reservación?')
     if(!wantsToDelete) { return; }
 
-    let apiURL = `${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`
+    alert ("Reservacion Cancelada")
 
-    // borrar del array local
-    let index = this.reservaciones.indexOf(reserva);
-    this.reservaciones.splice(index, 1);
-    // borrar de la base de datos
-    this.http.delete(apiURL).subscribe();
+    let apiURL = `${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`
     
     const headers = { 'Content-Type': 'application/json' };
     const options = { headers: headers };
@@ -70,7 +71,9 @@ export class MisReservasComponent implements OnInit {
       texto: `Has cancelado tu reservacion de las ${reserva.hora_entrada}.`,
       id_reservacion: reserva.id_reservacion
     };
-    
+    this.reservaciones[index].estatus = 3;
+
+    this.http.put(apiURL, JSON.stringify(body)).subscribe();
     this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
   }
 
@@ -83,10 +86,17 @@ export class MisReservasComponent implements OnInit {
   }
 
   isProrrogaActiva(reserva: Reserva): boolean {
+    if (reserva.estatus !== 1) {return false;}
+
     let now = new Date();
     let prorrogaTimeLimit = new Date(reserva.hora_entrada);
     prorrogaTimeLimit.setMinutes(prorrogaTimeLimit.getMinutes() + this.prorroga);
     
     return now > new Date(reserva.hora_entrada) && now.getTime() < prorrogaTimeLimit.getTime();
+  }
+
+  getProrroga(hora: Date) {
+    let horaDate = new Date(hora)
+    return `${horaDate.getHours()}:${horaDate.getMinutes() + this.prorroga}`;
   }
 }

@@ -24,9 +24,8 @@
                         <div *ngIf = "reserva.estatus === 1" class="semaforo-right">Activa</div>
                         <div *ngIf = "reserva.estatus === 2" class="semaforo-right">Finalizada</div>
                         <div *ngIf = "reserva.estatus === 3" class="semaforo-right">Cancelada</div>
-                        
                     </div>
-                    <div *ngIf="isProrrogaActiva(reserva)" class="reserva-right-up-down">Prorroga hasta: {{reserva.hora_entrada}}</div> 
+                    <div *ngIf="isProrrogaActiva(reserva)" class="reserva-right-up-down">Prorroga hasta: {{getProrroga(reserva.hora_entrada)}}</div> 
                 </div>
                 <div class="reserva-right-down">
                     <div class="reserva-right-down-up">
@@ -37,19 +36,5 @@
             </div>
 
         </div>
-
-        
     </div>
-    <!-- <div class="reserva">
-
-    </div>
-    <div class="reserva">
-
-    </div>
-    <div class="reserva">
-
-    </div>
-    <div class="reserva">
-
-    </div> -->
 </div>

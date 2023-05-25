@@ -68,7 +68,8 @@ server.get("/api/user/reservaciones/:id", (req, res) => {
         JOIN Instalacion ins ON ins.id_instalacion = esp.id_instalacion
         WHERE ("${id}" = matricula OR "${id}" = num_nomina)
     ) sub
-    WHERE sub.row_num = 1;`;
+    WHERE sub.row_num = 1
+    ORDER BY sub.estatus, sub.hora_entrada`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -250,9 +251,9 @@ server.get('/api/instalacion/horario/:id', (req, res) => {
         else res.send({ data: result });
     });
 })
-server.delete('/api/cancelar/mireserva/:id', (req, res) => {
+server.put('/api/cancelar/mireserva/:id', (req, res) => {
     let id = req.params.id;
-    let sql = `DELETE FROM Reservacion WHERE id_reservacion = ${id}`
+    let sql = `UPDATE Reservacion SET estatus = 3 WHERE id_reservacion = ${id}`
 
     db.query(sql, function (error) {
         if (error) console.log("Error retrieving the data")
