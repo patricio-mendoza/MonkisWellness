@@ -146,7 +146,13 @@ export class ReservarEspacioComponent {
                 window.location.replace(this.location.path());
             }
         });
-        this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
+        const bodyAviso = {
+            matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
+            encabezado: 'Reservacion Confirmada',
+            texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido confirmada.`,
+            id_espacio: this.id_espacio
+        }
+        this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(bodyAviso), options).subscribe();
     }
     cancelarReservacion(id: number, dueno: string) {
         const headers = { 'Content-Type': 'application/json' };
