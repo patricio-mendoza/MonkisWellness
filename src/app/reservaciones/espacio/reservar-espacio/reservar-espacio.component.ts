@@ -157,8 +157,8 @@ export class ReservarEspacioComponent {
         const options = { headers: headers };
         const body = {
             matricula: dueno,
-            nombreEspacio: this.nombreEspacio,
-            nombreInstalacion: this.nombreInstalacion,
+            encabezado: 'Reservacion Cancelada',
+            texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido cancelada por un administrador.`,
             id_reservacion: id
         };
         this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
