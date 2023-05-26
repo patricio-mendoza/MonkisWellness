@@ -180,17 +180,17 @@ server.get('/api/gym/estimaciones', (req, res) => {
     });
 })
 server.get('/api/gym/estaSemana', (req, res) => {
-    let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE DAY(tiempo) > DAY(NOW() - INTERVAL 7 day) AND tiempo < now() GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
+    let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE tiempo > DATE_FORMAT(NOW() - INTERVAL 7 day, '%Y-%m-%d 00:00.000') AND tiempo < now() GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
     });
 });
-server.get('/api/gym/historial/:fecha/:fecha_sem_ant', (req, res) => {
+server.get('/api/gym/historial/:fecha', (req, res) => {
     let fecha = req.params.fecha;
-    let fecha_sem_ant = req.params.fecha_sem_ant;
-    let sql = `Select aforo, tiempo, dayname(tiempo) as dia from historial  WHERE (tiempo < '${fecha}' AND tiempo > '${fecha_sem_ant}') ORDER BY dia desc, tiempo asc`
+
+    let sql = `SELECT HOUR(tiempo) as hora, aforo FROM Historial WHERE tiempo >= DATE_FORMAT("2023-05-26 20:45:05", '%Y-%m-%d 00:00.000') AND tiempo < DATE_ADD(DATE_FORMAT("2023-05-26 20:45:05", '%Y-%m-%d 00:00.000'),INTERVAL 1 DAY) and aforo > 0;`
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
@@ -243,7 +243,7 @@ server.post('/api/reservar/espacio', (req, res) => {
     let sql = "";
     if (req.body.matricula) sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
     else  sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${req.body.matricula}, "${req.body.num_nomina}", ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
-    console.log(sql)
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ status: true });

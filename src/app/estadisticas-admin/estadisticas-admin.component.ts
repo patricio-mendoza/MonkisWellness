@@ -13,6 +13,8 @@ export class EstadisticasAdminComponent {
   dataChartEstancia: number[];
   dataChartHistorial: number[];
 
+  labelsChartHistorial: string[];
+
   reqData: any;
 
   constructor(public http: HttpClient) { }
@@ -22,24 +24,20 @@ export class EstadisticasAdminComponent {
   }
 
   getDataCharts() {    
+    // Esta Semana Fetch
     this.http.get(`${API_URI}/gym/estaSemana`).subscribe(res => {
       this.reqData = res;
       this.dataChartSemanal = this.reqData.data.map(x => x.aforo);
     });
-  }
 
-  getDatosHistorial() {
+    // Esta Historial Fetch
     let fecha = new Date();
-    var offset = -(new Date().getTimezoneOffset() / 60);
-    fecha.setHours(fecha.getHours() + offset - 6); // Restar 6 horas al ajustar la hora local
     let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
-  
-    let fecha_sem_ant = this.formatDateForLastWeek();
-  
-    let apiURL = `${API_URI}/gym/historial/${fechastr}/${fecha_sem_ant}`;
-    this.http.get(apiURL).subscribe(res => {
+
+    this.http.get(`${API_URI}/gym/historial/${fechastr}`).subscribe(res => {
       this.reqData = res;
-      this.dataChartHistorial = this.reqData.data;
+      this.labelsChartHistorial = this.reqData.data.map(x => `${x.hora}:00`)
+      this.dataChartHistorial = this.reqData.data.map(x => x.aforo);
     });
   }
 }
