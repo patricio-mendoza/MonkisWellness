@@ -4,16 +4,12 @@ import { HttpClient } from '@angular/common/http';
 const API_URI = 'http://localhost:8888/api';
 
 interface Reserva {
-  //matricula?: string;
-  //num_nomina?: string;
-  //id_espacio: number;
   id_reservacion: number;
   nombre_espacio: string;
   hora_entrada: Date;
   hora_salida: Date;
   nombre_deporte: string;
   nombre_instalacion: string;
-  //prioridad: number;
   estatus: number;
 }
 
@@ -26,7 +22,7 @@ export class MisReservasComponent implements OnInit {
   reservaciones: Reserva[] = [];
   reqData: any;
 
-  prorroga = 1 // 20 minutos para confirmar
+  prorroga = 20 // 20 minutos para confirmar
 
   constructor(private http: HttpClient) { }
 
