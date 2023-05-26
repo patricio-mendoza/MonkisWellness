@@ -25,39 +25,13 @@ export class CierresComponent extends HomeComponent {
   hora_inicio: string;
   hora_fin: string;
   form: FormGroup;
-  diaSemana: string = "";
+  diaSemana: number = 0;
+  diaSemanaM: number = 0;
   cierres: bloqueo[];
   cierresByDay: bloqueo[];
-
-  diaNumero(diaSemana: string): number {
-    switch (diaSemana) {
-      case "Lunes":
-        return 2;
-        break;
-      case "Martes":
-        return 3;
-        break;
-      case "Miércoles":
-        return 4;
-        break;
-      case "Jueves":
-        return 5;
-        break;
-      case "Viernes":
-        return 6;
-        break;
-      case "Sábado":
-        return 7;
-        break;
-      case "Domingo":
-        return 1;
-        break;
-      default:
-        return 0;
-        break;
-
-    }
-  }
+  cierre_act: number;
+  editarIni: string;
+  editarFin: string;
 
   datePipe = new DatePipe("en-US");
 
@@ -82,9 +56,9 @@ export class CierresComponent extends HomeComponent {
     });
   }
 
-  cancelarCierresM(){
+  cancelarCierresM() {
     let apiURL = `${API_URI}/gym/cancelarCierresM`
-    this.http.put(apiURL,"").subscribe();
+    this.http.put(apiURL, "").subscribe();
   }
 
   // Función para registrar el cierre en la base de datos
@@ -129,7 +103,7 @@ export class CierresComponent extends HomeComponent {
       hora_fin: horaFin
     };
 
-    
+
     this.http.post(`${API_URI}/gym/cambioManual`, JSON.stringify(body), options).subscribe();
 
     return true;
@@ -157,47 +131,121 @@ export class CierresComponent extends HomeComponent {
     }
   }
 
+  reiniciarInputP() {
+    this.cierre_act = null;
+    this.editarFin = "";
+    this.editarIni = "";
+
+    alert("Cierre programado exitosamente");
+    this.getCierres();
+    this.generarLista();
+
+    this.diaSemanaM = 0;
+  }
+
   bloquear(): void {
     const horaInicio = this.hora_inicio;
     const horaFin = this.hora_fin;
+
+    let confirmar = window.confirm("¿Deseas programar el cierre de " + horaInicio + " a " + horaFin + "?")
+    if (confirmar) {
+      const headers = { 'Content-Type': 'application/json' };
+      const options = { headers: headers };
+
+      const body = {
+        id_espacio: null,
+        id_wellness: 1,
+        dia: this.diaSemana,
+        hora_inicio: horaInicio,
+        hora_fin: horaFin,
+        repetible: 1,
+      };
+
+      this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
+
+      this.reiniciarInputP();
+      this.miServicio.cambiarEstado(true);
+    }
+  }
+
+  getCierres() {
+    let apiURL = `${API_URI}/gym/cierresR`;
+
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.cierres = this.reqData.data;
+    });
+
+  }
+
+  generarLista() {
+
+    this.cierresByDay = [];
+
+    for (let cierre of this.cierres) {
+      if (cierre.dia == this.diaSemanaM) {
+        this.cierresByDay.push(cierre);
+      }
+    }
+  }
+
+  findCierre(cierre_act: number): bloqueo {
+
+    for (let cierre of this.cierresByDay) {
+      if (cierre.id_bloqueo == cierre_act) {
+        return cierre;
+      }
+    }
+
+    return this.cierresByDay[0];
+
+  }
+
+  obtenerCierre() {
+
+    this.editarFin = "";
+    this.editarIni = "";
+
+    let cierre_actual = this.findCierre(this.cierre_act)
+
+    this.editarFin = cierre_actual.hora_fin;
+    this.editarIni = cierre_actual.hora_inicio;
+
+  }
+
+  wait(ms: number): Promise<void> {
+    return new Promise<void>((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  reiniciarInput() {
+    this.cierre_act = null;
+    this.editarFin = "";
+    this.editarIni = "";
+
+    alert("Cierre eliminado exitosamente");
+    this.getCierres();
+    this.generarLista();
+    this.miServicio.cambiarEstado(true);
+
+    this.diaSemanaM = 0;
+  }
+
+  borrarCierre() {
+
+    let confirmar = window.confirm("¿Deseas eliminar este cierre?")
 
     const headers = { 'Content-Type': 'application/json' };
     const options = { headers: headers };
 
     const body = {
-      id_espacio: null,
-      id_wellness: 1,
-      dia: this.diaNumero(this.diaSemana),
-      hora_inicio: horaInicio,
-      hora_fin: horaFin,
-      repetible: 1,
+      id_bloqueo: this.cierre_act
     };
 
-    this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
-
-    this.miServicio.cambiarEstado(true);
-    this.miServicio.isClosing = !this.miServicio.isClosing;
+    this.http.put(`${API_URI}/gym/borrar`, JSON.stringify(body), options).subscribe();
+    this.reiniciarInput();
   }
 
-  getCierres(){
-    let apiURL = `${API_URI}/gym/cierresR`;
-    this.http.get(apiURL).subscribe(res => {
-      this.reqData = res;
-      this.cierres = this.reqData.data;
-      console.log(this.cierres[0]);
-    });
-  }
 
-  generarLista(){
-    
-    this.cierresByDay = [];
-
-    for(let cierre of this.cierres){
-      if(cierre.dia == this.diaNumero(this.diaSemana)){
-        this.cierresByDay.push(cierre);
-      }
-    }
-
-    console.log(this.cierresByDay);
-  }
 }

@@ -74,28 +74,28 @@
 
                 <div class="d-flex flex-column-reverse col-sm-3">
                     <select [(ngModel)]="diaSemana" class="d-inline-block input-group-text fw-bold">
-                        <option value="" hidden selected disabled>Seleccione día</option>
-                        <option value="Domingo">Domingo</option>
-                        <option value="Lunes">Lunes</option>
-                        <option value="Martes">Martes</option>
-                        <option value="Miércoles">Miércoles</option>
-                        <option value="Jueves">Jueves</option>
-                        <option value="Viernes">Viernes</option>
-                        <option value="Sábado">Sábado</option>
+                        <option value=0 hidden selected disabled>Seleccione día</option>
+                        <option value=1>Domingo</option>
+                        <option value=2>Lunes</option>
+                        <option value=3>Martes</option>
+                        <option value=4>Miércoles</option>
+                        <option value=5>Jueves</option>
+                        <option value=6>Viernes</option>
+                        <option value=7>Sábado</option>
                     </select>
                     <p class="h6 fw-bold"> Indique el día en el que aplica el cierre: </p>
-                </div>
-
-                <!-- caja donde se selecciona una hora de cierre -->
-                <div id="input-cierre-prog" class="d-flex flex-column-reverse mr-5 col-sm-3">
-                    <input type="time" class="input-group-text fw-bold" name="horaInicio" [(ngModel)]="hora_inicio">
-                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
                 </div>
 
                 <!-- caja donde se selecciona una hora de apertura -->
                 <div id="input-apertura-prog" class="d-flex flex-column-reverse mr-5 col-sm-3">
                     <input type="time" class="input-group-text fw-bold" name="horaFin" [(ngModel)]="hora_fin">
                     <p class="h6 fw-bold">Indique la hora de apertura:</p>
+                </div>
+
+                <!-- caja donde se selecciona una hora de cierre -->
+                <div id="input-cierre-prog" class="d-flex flex-column-reverse mr-5 col-sm-3">
+                    <input type="time" class="input-group-text fw-bold" name="horaInicio" [(ngModel)]="hora_inicio">
+                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
                 </div>
 
             </div>
@@ -119,47 +119,47 @@
 
                 <div id="botones-editar" class="d-flex flex-column-reverse col-sm-2 ms-1">
 
-                    <div class="shadow-lg btn btn-danger fw-bold border border-white border-1">
+                    <div (click)="borrarCierre()" class="shadow-lg btn btn-danger fw-bold border border-white border-1">
                         Borrar 
                     </div>
 
-                    <div class="shadow-lg btn btn-warning fw-bold border border-white border-1 mb-3">
+                    <div *ngIf="false" class="shadow-lg btn btn-warning fw-bold border border-white border-1 mb-3">
                         Editar 
                     </div>
 
                 </div>
 
-                <!-- caja donde se selecciona una hora de cierre -->
-                <div id="input-cierre-prog" class="d-flex flex-column-reverse col-sm-2">
-                    <input type="time" class="input-group-text fw-bold" name="horaInicio" [(ngModel)]="hora_inicio">
-                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
-                </div>
-
                 <!-- caja donde se selecciona una hora de apertura -->
-                <div id="input-apertura-prog" class="d-flex flex-column-reverse ms-3 col-sm-2">
-                    <input type="time" class="input-group-text fw-bold" name="horaFin" [(ngModel)]="hora_fin">
+                <div id="input-apertura-prog" class="d-flex flex-column-reverse col-sm-2">
+                    <input [(ngModel)]="editarFin" type="time" class="input-group-text fw-bold">
                     <p class="h6 fw-bold">Indique la hora de apertura:</p>
                 </div>
-                s
+
+                <!-- caja donde se selecciona una hora de cierre -->
+                <div id="input-cierre-prog" class="d-flex flex-column-reverse ms-3 col-sm-2">
+                    <input [(ngModel)]="editarIni" type="time" class="input-group-text fw-bold">
+                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
+                </div>
+                
                 <!-- Caja donde se seleccionan los cierres-->
                 <div class="d-flex flex-column-reverse ms-3 col-sm-2">
-                    <select type="text" class="input-group-text fw-bold">
-                        <option *ngFor="let cierre of cierresByDay" value="{{cierre.id_bloqueo}}">{{cierre.hora_inicio}}-{{cierre.hora_fin}}
+                    <select [(ngModel)]="cierre_act" (ngModelChange)="obtenerCierre()" type="text" class="input-group-text fw-bold">
+                        <option *ngFor="let cierre of cierresByDay" value="{{cierre.id_bloqueo}}">{{cierre.hora_inicio.substring(0,5)}}-{{cierre.hora_fin.substring(0,5)}}
                         </option>
                     </select>
                     <p class="h6 fw-bold">Seleccione el cierre a modificar</p>
                 </div>
 
                 <div class="d-flex flex-column-reverse col-sm-2">
-                    <select [(ngModel)]="diaSemana" (ngModelChange)="generarLista()" class="d-inline-block input-group-text fw-bold">
-                        <option value="" disabled hidden selected>Seleccione día</option>
-                        <option value="Domingo">Domingo</option>
-                        <option value="Lunes">Lunes</option>
-                        <option value="Martes">Martes</option>
-                        <option value="Miércoles">Miércoles</option>
-                        <option value="Jueves">Jueves</option>
-                        <option value="Viernes">Viernes</option>
-                        <option value="Sábado">Sábado</option>
+                    <select [(ngModel)]="diaSemanaM" (ngModelChange)="generarLista()" class="d-inline-block input-group-text fw-bold">
+                        <option value=0 disabled hidden selected>Seleccione día</option>
+                        <option value=1>Domingo</option>
+                        <option value=2>Lunes</option>
+                        <option value=3>Martes</option>
+                        <option value=4>Miércoles</option>
+                        <option value=5>Jueves</option>
+                        <option value=6>Viernes</option>
+                        <option value=7>Sábado</option>
                     </select>
                     <p class="h6 fw-bold"> Indique el día en el que aplica el cierre: </p>
                 </div>

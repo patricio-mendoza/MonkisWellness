@@ -228,10 +228,21 @@ server.post('/api/gym/cambioManual', (req,res) => {
 // Daniel
 // Cancela todos los cierres manuales, ya que solo puede haber uno activo a la vez
 server.put("/api/gym/cancelarCierresM", (req, res) => {
-    let sql = `UPDATE bloqueo SET repetible = 2 WHERE repetible = 0;`
+    let sql = `Delete from bloqueo WHERE repetible = 0;`
     
     db.query(sql, function (error) {
         if (error) console.log("Error Updating the Data")
+        else res.send({ data: true });    
+    });
+});
+
+// Daniel
+// Borra el cierre repetible seleccionado
+server.put("/api/gym/borrar", (req, res) => {
+    let sql = `Delete from bloqueo WHERE id_bloqueo = ${req.body.id_bloqueo};`
+    
+    db.query(sql, function (error) {
+        if (error) console.log(sql)
         else res.send({ data: true });    
     });
 });
