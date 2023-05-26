@@ -187,6 +187,15 @@ server.get('/api/gym/estaSemana', (req, res) => {
         else res.send({ data: result });
     });
 });
+server.get('/api/gym/historial/:fecha/:fecha_sem_ant', (req, res) => {
+    let fecha = req.params.fecha;
+    let fecha_sem_ant = req.params.fecha_sem_ant;
+    let sql = `Select aforo, tiempo, dayname(tiempo) as dia from historial  WHERE (tiempo < '${fecha}' AND tiempo > '${fecha_sem_ant}') ORDER BY dia desc, tiempo asc`
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
 
 //DEPORTES
 server.get(`/api/deporte/:id`, (req, res) => {

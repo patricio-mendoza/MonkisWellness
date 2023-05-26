@@ -26,6 +26,20 @@ export class EstadisticasAdminComponent {
       this.reqData = res;
       this.dataChartSemanal = this.reqData.data.map(x => x.aforo);
     });
-    
+  }
+
+  getDatosHistorial() {
+    let fecha = new Date();
+    var offset = -(new Date().getTimezoneOffset() / 60);
+    fecha.setHours(fecha.getHours() + offset - 6); // Restar 6 horas al ajustar la hora local
+    let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
+  
+    let fecha_sem_ant = this.formatDateForLastWeek();
+  
+    let apiURL = `${API_URI}/gym/historial/${fechastr}/${fecha_sem_ant}`;
+    this.http.get(apiURL).subscribe(res => {
+      this.reqData = res;
+      this.dataChartHistorial = this.reqData.data;
+    });
   }
 }
