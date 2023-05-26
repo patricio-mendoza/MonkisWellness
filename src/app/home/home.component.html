@@ -18,4 +18,4 @@
 
 <app-modif-aforo *ngIf="miServicio.isModifyingAforo" ></app-modif-aforo>
 <app-esta-semana-pop-up *ngIf="miServicio.isCheckingEstaSemana"></app-esta-semana-pop-up>
-<app-historial-pop-up *ngIf="miServicio.isCheckingHistorial"></app-historial-pop-up>
+<app-historial-pop-up [datos]="historial" *ngIf="miServicio.isCheckingHistorial"></app-historial-pop-up>

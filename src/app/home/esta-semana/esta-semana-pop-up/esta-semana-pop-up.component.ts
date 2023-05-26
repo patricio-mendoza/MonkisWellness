@@ -9,10 +9,9 @@ const API_URI = 'http://localhost:8888/api';
   styleUrls: ['./esta-semana-pop-up.component.scss']
 })
 export class EstaSemanaPopUpComponent extends HomeComponent {
-  historial: number[];
-  reqData: any;
+  historialES: number[];
 
-  ngOnInit() {
+  override ngOnInit() {
     this.getDatosDeEstaSemana();
   }
 
@@ -21,7 +20,7 @@ export class EstaSemanaPopUpComponent extends HomeComponent {
     
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
-      this.historial = this.reqData.data.map(x => x.aforo);
+      this.historialES = this.reqData.data.map(x => x.aforo);
     });
   }
 

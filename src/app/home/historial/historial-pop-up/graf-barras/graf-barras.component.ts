@@ -6,7 +6,7 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./graf-barras.component.scss']
 })
 export class GrafBarrasComponent {
-  @Input() data: number[];
+  @Input() data: number[] ;
   public chart: any;
 
   ngOnChanges(changes: SimpleChanges) {
@@ -17,6 +17,7 @@ export class GrafBarrasComponent {
   }
 
   createChart(){
+    console.log(this.data)
     this.chart = new Chart("MyChart", {
       type: 'bar', //this denotes tha type of chart
 
@@ -24,7 +25,7 @@ export class GrafBarrasComponent {
         labels: ['6:00', '7:00', '8:00', '9:00', '10:00', '11:00', '12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00'],
 	       datasets: [
           {
-            label: "Historial",
+            label: "Personas por hora",
             data: this.data,
             backgroundColor: 'white'
           }

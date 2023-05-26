@@ -17,12 +17,14 @@
     border-radius: 1rem;
     border-color: white;
     background-color: #F6AE2D;
+    padding: 2vw;
 
     .header {
         .title {
             font-family: 'Poppins', sans-serif;
             color: white;
             font-size: 30px;
+            top: 12vw;
         }
         .today {
             font-size: 20px;
@@ -30,6 +32,7 @@
             color: white;
             margin-top: -20px;
         }
+        margin-bottom: 12px;
     }
 
     .close-btn {
@@ -51,12 +54,37 @@
     
 }
 
-#cuadroA{
+/* #cuadroA{
     position: absolute;
     background-color: #F6AE2D;
-    top: 33%;
+    top: 44%;
     left: 26%;
-    height: 4%;
+    height: 3%;
     width: 50%;
     z-index: 2;
+} */
+
+#flechai{
+   
+    width: 6vw;
+    left:30vw;
+    z-index: 2;
+    top: 20vw;
+}
+
+#flechad{
+    width: 6vw;
+    z-index: 2;
+    top: 10vw;
+    right: 14vw;
+}
+
+#textoEntreFlechas{
+    
+    top: 19.5vw;
+    left: 43.5vw;
+    z-index: 2;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-size: 30px;
 }

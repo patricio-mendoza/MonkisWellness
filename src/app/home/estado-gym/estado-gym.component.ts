@@ -21,10 +21,10 @@ export class EstadoGymComponent extends HomeComponent {
   aforo_max: number = 280;
   aforo_actual: number = 0;
 
-  reqData: any;
 
 
-  ngOnInit() {
+
+  override ngOnInit() {
     this.getEstadoGym();
     this.getAforo();
     this.administrador = localStorage.getItem('isAdmin');
