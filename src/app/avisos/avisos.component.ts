@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
-// Estructura de un aviso a llenar
 interface Aviso {
-  id_anunacio: number,
-  matricula: string,
-  encabezado: string,
-  texto: string,
-  timepo: string,
+  id_anuncio: number,
+  tiempoReserva: string,
+  tiempoNotif: string,
+  textoAnuncio: string,
+  tituloNofif: string,
+  cancha: string,
+  fechaNotif: string,
 }
 
 @Component({
@@ -19,11 +20,11 @@ interface Aviso {
 })
 export class AvisosComponent implements OnInit {
   anuncios: Aviso[];
+
   reqData: any;
 
   constructor(private http: HttpClient) { }
 
-  // Al cargar la página obtiene todos los avisos
   ngOnInit() {
     this.getAnuncios();
   }
@@ -31,9 +32,13 @@ export class AvisosComponent implements OnInit {
   getAnuncios(): void {
     let id = localStorage.getItem("id")
     let apiURL = `${API_URI}/avisos/${id}`;
+
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
       this.anuncios = this.reqData.data;
     });
   }
+
+  tituloCancelada: "¡Reservación Cancelada!";
+  tituloGuardada: "¡Reservación Guardada!";
 }

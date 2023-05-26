@@ -35,6 +35,7 @@ import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/pro
 import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
 import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
 import { CierresComponent } from './home/cierres/cierres.component';
+import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -63,6 +64,7 @@ registerLocaleData(localeEs, 'es');
     ModifAforoComponent,
     EstaSemanaPopUpComponent,
     CierresComponent,
+    BarChartComponent
   ],
   imports: [  
     MbscModule,   

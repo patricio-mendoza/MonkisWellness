@@ -17,10 +17,6 @@ export class GrafPorcentajeComponent {
   porcentaje_redondeado: string;
   porcentaje_actual: string;
 
-  ngOnInit() {
-
-  }
-
   // Cuando haya cambios actualiza la gráfica
   ngOnChanges(changes: SimpleChanges) {
     this.porcentaje = this.num_personas < this.aforo_max ? (this.num_personas * 100 / this.aforo_max) : 100;
