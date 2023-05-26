@@ -19,11 +19,11 @@ export class BarChartComponent {
 
   createChart(){
     this.chart = new Chart("MyChart", {
-      type: 'bar', //this denotes tha type of chart
+      type: 'bar',
 
-      data: {// values on X-Axis
+      data: {
         labels: ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'],
-	       datasets: [
+	      datasets: [
           {
             label: "Personas Promedio Por Dia",
             data: this.data,
