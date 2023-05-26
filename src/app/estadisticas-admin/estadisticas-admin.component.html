@@ -2,6 +2,7 @@
     <div class="afluencia-semanal">
         <div class="title">Afluencia Por Semana</div>
         <app-chart 
+            [my_id]="'afluencia-semanal'"
             [type]="'bar'"
             [label]="'Promedio de Personas Por Día de la Semana'"
             [labels]="['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado']"
@@ -10,8 +11,22 @@
     </div>
     <div class="estancia-promedio">
         <div class="title">Estancia Promedio</div>
+        <app-chart 
+            [my_id]="'estancia-promedio'"
+            [type]="'bar'"
+            [label]="'Promedio de Personas Por Día de la Semana'"
+            [labels]="['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado']"
+            [data]="dataChartEstancia"
+        ></app-chart>
     </div>
     <div class="historial-aforo">
         <div class="title">Historial del Aforo</div>
+        <app-chart 
+            [my_id]="'historial-aforo'"
+            [type]="'bar'"
+            [label]="'Historial de Aforo Por Hora'"
+            [labels]="['6:00','7:00','9:00','9:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00']"
+            [data]="dataChartHistorial"
+        ></app-chart>
     </div>
 </div>

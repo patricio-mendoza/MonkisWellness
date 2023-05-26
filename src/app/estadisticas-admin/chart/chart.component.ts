@@ -7,6 +7,7 @@ import Chart, { ChartType } from 'chart.js/auto';
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent {
+  @Input() my_id: string;
   @Input() type: ChartType;
   @Input() label: string;
   @Input() labels: string[];
@@ -22,7 +23,7 @@ export class ChartComponent {
   }
 
   createChart() {
-    this.chart = new Chart("MyChart", {
+    this.chart = new Chart(this.my_id, {
       type: this.type,
       data: {
         labels: this.labels,
