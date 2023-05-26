@@ -1,0 +1,171 @@
+<!-- 15/05/2023 Daniel Evaristo Escalera Bonilla Tarjeta de cierre -->
+
+<!-- 16/05/2023 Omar Cota Rodríguez Secció programar nuevo cierre -->
+
+<!-- 14/05/2023 Creación del componente 2 horas -->
+<!-- 15/05/2023 Función cierre manual 3.5 horas -->
+<!-- 19/05/2023 Back-end 4 horas -->
+<!-- 20/05/2023 Validaciones 1.5 horas -->
+<!-- Total version 1.0 11 horas -->
+
+<!-- Contenedor, define el fondo de la tarjeta -->
+<div class="d-flex align-items-center justify-content-center ps-5 blur">
+
+    <!-- Caja, contiene los textos e inputs -->
+    <div id="cierre-box" class="d-flex flex-column rounded bg-primary border border-white border-5 ms-5 pt-1 p-3">
+
+        <!-- Sección cierre manual -->
+        <div id="cierre-manual" class="d-flex flex-column mr-5">
+
+            <div class="d-flex flex-row justify-content-between">
+                <p id="titulo-cierre-manual" class="text-white h1"> Cierre manual </p>
+                <div (click)="cierresTab()" class="btn bg-transparent text-white">x</div>
+            </div>
+
+            <p id="instrucciones-cierre-manual" class="text-white"> Cerrar el gimnasio en este momento de manera manual
+            </p>
+
+            <!-- Inputs del usuario -->
+            <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-0 pt-0">
+                <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 m-1">
+                    <div *ngIf="estado" (click)="cerrar()"
+                        class="btn btn-danger fw-bold border border-white border-1 text-white shadow-lg">Cerrar
+                    </div>
+                    <div *ngIf="!estado" (click)="abrir()"
+                        class="btn btn-success fw-bold border border-white border-1 text-white shadow-lg">Abrir
+                    </div>
+                    <br>
+                </div>
+                <div id="input-cierre" class="d-flex flex-column col-sm-5 mr-5 text-center">
+                    <p class="h6">Indique la hora de {{!estado? 'cierre': 'apertura'}}:</p>
+                    <input [(ngModel)]="hora" type="time" [ngClass]="{'bg-danger': warning}" class="input-group-text"
+                        name="tiempo">
+                </div>
+                <div *ngIf="warning" class="d-flex flex-column">
+                    <p class="h6 text-danger"> Ingresa un tiempo válido (El cambio no puede tener menos de 1 minuto de
+                        duración).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Separador -->
+        <img src="../../../assets/Line 26.png" class="img-fluid m-1">
+
+        <!-- Sección programar nuevo cierre -->
+        <div id="cierre-programado" class="d-flex flex-column mr-5">
+
+            <p id="titulo-cierre-programado" class="text-white h1"> Programar Nuevo Cierre </p>
+
+            <!-- subtitulo Programar un cierre que se repetirá de ahora en adelante en la hora y fecha indicada -->
+
+            <div id="subtituloProgramarCierre" class="d-flex flex-column mr-5">
+                <p id="subtitulo-programarCierre" class="text-white"> Programar un cierre que se repetirá de ahora en
+                    adelante en la hora y fecha indicada. </p>
+            </div>
+
+            <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-1 pt-0">
+
+                <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 ms-1">
+                    <div (click)="bloquear()" class="shadow-lg btn btn-success bold border border-white border-1">
+                        Programar
+                    </div>
+                    <br>
+                </div>
+
+                <div class="d-flex flex-column-reverse col-sm-3">
+                    <select [(ngModel)]="diaSemana" class="d-inline-block input-group-text fw-bold">
+                        <option value=0 hidden selected disabled>Seleccione día</option>
+                        <option value=1>Domingo</option>
+                        <option value=2>Lunes</option>
+                        <option value=3>Martes</option>
+                        <option value=4>Miércoles</option>
+                        <option value=5>Jueves</option>
+                        <option value=6>Viernes</option>
+                        <option value=7>Sábado</option>
+                    </select>
+                    <p class="h6 fw-bold"> Indique el día en el que aplica el cierre: </p>
+                </div>
+
+                <!-- caja donde se selecciona una hora de apertura -->
+                <div id="input-apertura-prog" class="d-flex flex-column-reverse mr-5 col-sm-3">
+                    <input type="time" class="input-group-text fw-bold" name="horaFin" [(ngModel)]="hora_fin">
+                    <p class="h6 fw-bold">Indique la hora de apertura:</p>
+                </div>
+
+                <!-- caja donde se selecciona una hora de cierre -->
+                <div id="input-cierre-prog" class="d-flex flex-column-reverse mr-5 col-sm-3">
+                    <input type="time" class="input-group-text fw-bold" name="horaInicio" [(ngModel)]="hora_inicio">
+                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Separador -->
+        <img src="../../../assets/Line 26.png" class="img-fluid m-1">
+
+        <!-- Sección programar nuevo cierre -->
+        <div id="cierre-programado" class="d-flex flex-column mr-5">
+
+            <p id="titulo-cierre-programado" class="text-white h1"> Editar cierres </p>
+
+            <!-- subtitulo Programar un cierre que se repetirá de ahora en adelante en la hora y fecha indicada -->
+
+            <div id="subtituloProgramarCierre" class="d-flex flex-column mr-5">
+                <p id="subtitulo-programarCierre" class="text-white"> Modificar los cierres previamente programados</p>
+            </div>
+
+            <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-1 pt-0">
+
+                <div id="botones-editar" class="d-flex flex-column-reverse col-sm-2 ms-1">
+
+                    <div (click)="borrarCierre()" class="shadow-lg btn btn-danger fw-bold border border-white border-1">
+                        Borrar 
+                    </div>
+
+                    <div *ngIf="false" class="shadow-lg btn btn-warning fw-bold border border-white border-1 mb-3">
+                        Editar 
+                    </div>
+
+                </div>
+
+                <!-- caja donde se selecciona una hora de apertura -->
+                <div id="input-apertura-prog" class="d-flex flex-column-reverse col-sm-2">
+                    <input [(ngModel)]="editarFin" type="time" class="input-group-text fw-bold">
+                    <p class="h6 fw-bold">Indique la hora de apertura:</p>
+                </div>
+
+                <!-- caja donde se selecciona una hora de cierre -->
+                <div id="input-cierre-prog" class="d-flex flex-column-reverse ms-3 col-sm-2">
+                    <input [(ngModel)]="editarIni" type="time" class="input-group-text fw-bold">
+                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
+                </div>
+                
+                <!-- Caja donde se seleccionan los cierres-->
+                <div class="d-flex flex-column-reverse ms-3 col-sm-2">
+                    <select [(ngModel)]="cierre_act" (ngModelChange)="obtenerCierre()" type="text" class="input-group-text fw-bold">
+                        <option *ngFor="let cierre of cierresByDay" value="{{cierre.id_bloqueo}}">{{cierre.hora_inicio.substring(0,5)}}-{{cierre.hora_fin.substring(0,5)}}
+                        </option>
+                    </select>
+                    <p class="h6 fw-bold">Seleccione el cierre a modificar</p>
+                </div>
+
+                <div class="d-flex flex-column-reverse col-sm-2">
+                    <select [(ngModel)]="diaSemanaM" (ngModelChange)="generarLista()" class="d-inline-block input-group-text fw-bold">
+                        <option value=0 disabled hidden selected>Seleccione día</option>
+                        <option value=1>Domingo</option>
+                        <option value=2>Lunes</option>
+                        <option value=3>Martes</option>
+                        <option value=4>Miércoles</option>
+                        <option value=5>Jueves</option>
+                        <option value=6>Viernes</option>
+                        <option value=7>Sábado</option>
+                    </select>
+                    <p class="h6 fw-bold"> Indique el día en el que aplica el cierre: </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

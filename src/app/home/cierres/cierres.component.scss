@@ -1,0 +1,26 @@
+.blur{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(212, 202, 202, 0.615);
+    border-radius: 12px;
+}
+
+#cierre-box{
+    height: auto;
+    width: 70vw;
+}
+
+#input-cierre-prog {
+    margin-right: 1vw;
+  }
+
+#input-apertura-prog {
+    margin-right: 1vw;
+}
+
+.warning{
+    background-color: #cc725e;
+}
