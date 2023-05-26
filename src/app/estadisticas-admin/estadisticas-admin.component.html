@@ -1,14 +1,17 @@
 <div class="container">
     <div class="afluencia-semanal">
         <div class="title">Afluencia Por Semana</div>
-        <canvas id="chart-semanal"> {{chartSemanal}} </canvas>
+        <app-chart 
+            [type]="'bar'"
+            [label]="'Promedio de Personas Por Día de la Semana'"
+            [labels]="['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado']"
+            [data]="dataChartSemanal"
+        ></app-chart>
     </div>
     <div class="estancia-promedio">
         <div class="title">Estancia Promedio</div>
-        <canvas id="chart-estancia"> {{chartEstancia}} </canvas>
     </div>
     <div class="historial-aforo">
         <div class="title">Historial del Aforo</div>
-        <canvas id="chart-historial"> {{chartHistorial}} </canvas>
     </div>
 </div>

@@ -35,6 +35,7 @@ import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
 import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
 import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
 import { EstadisticasAdminComponent } from './estadisticas-admin/estadisticas-admin.component';
+import { ChartComponent } from './estadisticas-admin/chart/chart.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -64,6 +65,7 @@ registerLocaleData(localeEs, 'es');
     EstaSemanaPopUpComponent,
     BarChartComponent,
     EstadisticasAdminComponent,
+    ChartComponent,
   ],
   imports: [  
     MbscModule,   
