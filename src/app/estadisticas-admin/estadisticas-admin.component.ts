@@ -46,7 +46,7 @@ export class EstadisticasAdminComponent {
 
   recargarDatos(fechaPorCargar: Date) {
     if (fechaPorCargar === undefined) { 
-      alert("No hay una fecha seleccionada"); 
+      alert("No hay una fecha seleccionada para recargar los datos de la página."); 
       return;
     }
     this.getDataCharts(fechaPorCargar);
@@ -54,8 +54,10 @@ export class EstadisticasAdminComponent {
 
   descargarDatos(fechaInicio: Date, fechaFinal: Date) {
     if (fechaInicio === undefined || fechaFinal === undefined) { 
-      alert("No hay un rango de fecha seleccionado"); 
+      if (fechaInicio === undefined) { alert("Selecciona un rango de fecha para descargar."); }
+      else { alert("Selecciona un final al rango de fecha para descargar."); }
       return;
     }
+    alert("Funcion de Descargar Datos No Implementada :)")
   }
 }

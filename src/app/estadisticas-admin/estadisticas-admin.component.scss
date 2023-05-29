@@ -13,22 +13,16 @@
             font-size: large;
         }        
     }
-    .cuadrante
-    .opciones {
-        .recargar-datos {
-            display: grid;
-            grid-template-columns: repeat(1, 15rem);
 
+    .opciones {
+        .configuracion {
             .date-picker {
-                margin: 1rem;
+                width: 15rem;
+                margin: 0.5rem;
             }
-            .btn-recargar {
-                width: 85%;
-                margin-left: 20px;
+            .btn {
+                margin-left: 1rem;
             }
-        }
-        .descargar-datos {
-            
         }
     }
 }
