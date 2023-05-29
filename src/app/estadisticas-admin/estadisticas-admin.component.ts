@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, ChangeDetectorRef} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
@@ -17,11 +17,15 @@ export class EstadisticasAdminComponent {
 
   reqData: any;
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, private cdRef:ChangeDetectorRef) { }
 
   ngOnInit() {
     this.getDataCharts();
   }
+
+  ngAfterViewChecked() {
+    this.cdRef.detectChanges();
+}
 
   getDataCharts() {    
     // Esta Semana Fetch
