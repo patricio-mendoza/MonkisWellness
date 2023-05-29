@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef} from '@angular/core';
+import { Component, SimpleChanges} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
@@ -14,34 +14,38 @@ export class EstadisticasAdminComponent {
   dataChartHistorial: number[];
 
   labelsChartHistorial: string[];
+  fechaPorCargar: Date | null;
 
   reqData: any;
 
-  constructor(public http: HttpClient, private cdRef:ChangeDetectorRef) { }
+  constructor(public http: HttpClient) { }
 
   ngOnInit() {
-    this.getDataCharts();
+    this.getDataCharts(new Date());
   }
 
-  ngAfterViewChecked() {
-    this.cdRef.detectChanges();
-}
+  getDataCharts(fecha: Date) {    
+    let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
 
-  getDataCharts() {    
     // Esta Semana Fetch
-    this.http.get(`${API_URI}/gym/estaSemana`).subscribe(res => {
+    this.http.get(`${API_URI}/gym/semana/${fechastr}`).subscribe(res => {
       this.reqData = res;
       this.dataChartSemanal = this.reqData.data.map(x => x.aforo);
     });
 
     // Esta Historial Fetch
-    let fecha = new Date();
-    let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
-
     this.http.get(`${API_URI}/gym/historial/${fechastr}`).subscribe(res => {
       this.reqData = res;
       this.labelsChartHistorial = this.reqData.data.map(x => `${x.hora}:00`)
       this.dataChartHistorial = this.reqData.data.map(x => x.aforo);
     });
+  }
+
+  recargarDatos(fechaPorCargar: Date) {
+    if (fechaPorCargar === undefined) { 
+      alert("No hay una fecha seleccionada"); 
+      return;
+    }
+    this.getDataCharts(fechaPorCargar);
   }
 }
