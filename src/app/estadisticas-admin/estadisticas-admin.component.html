@@ -41,5 +41,18 @@
             </mat-form-field>
             <button (click)="recargarDatos(fechaPorCargar)" class="btn btn-primary btn-recargar">Recargar Datos</button>
         </div>
+        <div class="descargar-datos">
+            <mat-form-field>
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate placeholder="Start date" [(ngModel)]="fechaInicio">
+                  <input matEndDate placeholder="End date" [(ngModel)]="fechaFinal">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+            <button (click)="descargarDatos(fechaInicio, fechaFinal)" class="btn btn-primary btn-descargar">Descargar Datos</button>
+        </div>
     </div>
 </div>

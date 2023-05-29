@@ -14,7 +14,10 @@ export class EstadisticasAdminComponent {
   dataChartHistorial: number[];
 
   labelsChartHistorial: string[];
+  
   fechaPorCargar: Date | null;
+  fechaInicio: Date | null;
+  fechaFinal: Date | null;
 
   reqData: any;
 
@@ -47,5 +50,12 @@ export class EstadisticasAdminComponent {
       return;
     }
     this.getDataCharts(fechaPorCargar);
+  }
+
+  descargarDatos(fechaInicio: Date, fechaFinal: Date) {
+    if (fechaInicio === undefined || fechaFinal === undefined) { 
+      alert("No hay un rango de fecha seleccionado"); 
+      return;
+    }
   }
 }

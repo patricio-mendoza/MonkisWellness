@@ -191,7 +191,7 @@ server.get('/api/gym/semana/:fecha', (req, res) => {
     let fecha = req.params.fecha;
 
     let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE tiempo > DATE_FORMAT("${fecha}" - INTERVAL 7 day, '%Y-%m-%d 00:00.000') AND tiempo < "${fecha}" GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
-    console.log(sql)
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
