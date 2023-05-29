@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="afluencia-semanal">
+    <div class="cuadrante afluencia-semanal">
         <div class="title">Afluencia Por Semana</div>
         <app-chart 
             [my_id]="'afluencia-semanal'"
@@ -9,17 +9,17 @@
             [data]="dataChartSemanal"
         ></app-chart>
     </div>
-    <div class="estancia-promedio">
+    <div class="cuadrante estancia-promedio">
         <div class="title">Estancia Promedio</div>
         <app-chart 
             [my_id]="'estancia-promedio'"
             [type]="'bar'"
             [label]="'Promedio de Personas Por Día de la Semana'"
             [labels]="['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado']"
-            [data]="dataChartEstancia"
+            [data]="dataChartSemanal"
         ></app-chart>
     </div>
-    <div class="historial-aforo">
+    <div class="cuadrante historial-aforo">
         <div class="title">Historial del Aforo</div>
         <app-chart 
             [my_id]="'historial-aforo'"

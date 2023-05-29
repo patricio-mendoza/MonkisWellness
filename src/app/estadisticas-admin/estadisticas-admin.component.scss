@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(33rem, 10fr));
+    grid-gap: 10px;
+
+    .cuadrante {
+        .title {
+            font-family: 'Poppins', sans-serif;;
+            font-weight: bold;
+        }        
+
+        .cuadrado {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            float: right
+        }
+
+    }
+}
