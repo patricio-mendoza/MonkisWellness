@@ -29,9 +29,10 @@ export class CierresComponent extends HomeComponent {
   diaSemanaM: number = 0;
   cierres: bloqueo[];
   cierresByDay: bloqueo[];
-  cierre_act: number;
+  cierre_act: number = -1;
   editarIni: string;
   editarFin: string;
+  valCierre: boolean;
 
   datePipe = new DatePipe("en-US");
 
@@ -180,6 +181,7 @@ export class CierresComponent extends HomeComponent {
 
   generarLista() {
 
+    this.cierre_act = -1;
     this.cierresByDay = [];
 
     for (let cierre of this.cierres) {
@@ -220,7 +222,7 @@ export class CierresComponent extends HomeComponent {
   }
 
   reiniciarInput() {
-    this.cierre_act = null;
+    this.cierre_act = -1;
     this.editarFin = "";
     this.editarIni = "";
 
@@ -234,17 +236,23 @@ export class CierresComponent extends HomeComponent {
 
   borrarCierre() {
 
-    let confirmar = window.confirm("¿Deseas eliminar este cierre?")
+    if (this.diaSemanaM == 0 || this.cierre_act == -1) {
+      this.valCierre = true;
+    }
+    else {
+      this.valCierre = false;
+      let confirmar = window.confirm("¿Deseas eliminar este cierre?")
 
-    const headers = { 'Content-Type': 'application/json' };
-    const options = { headers: headers };
+      const headers = { 'Content-Type': 'application/json' };
+      const options = { headers: headers };
 
-    const body = {
-      id_bloqueo: this.cierre_act
-    };
+      const body = {
+        id_bloqueo: this.cierre_act
+      };
 
-    this.http.put(`${API_URI}/gym/borrar`, JSON.stringify(body), options).subscribe();
-    this.reiniciarInput();
+      this.http.put(`${API_URI}/gym/borrar`, JSON.stringify(body), options).subscribe();
+      this.reiniciarInput();
+    }
   }
 
 

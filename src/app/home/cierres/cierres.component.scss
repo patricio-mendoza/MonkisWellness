@@ -11,6 +11,7 @@
 #cierre-box{
     height: auto;
     width: 70vw;
+    background-color: #004891;
 }
 
 #input-cierre-prog {
@@ -23,4 +24,12 @@
 
 .warning{
     background-color: #cc725e;
+}
+
+.validacionFallida{
+    color: #cc725e;
+}
+
+.bton{
+    background-color: #FF2976;
 }
