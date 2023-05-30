@@ -7,6 +7,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -34,6 +40,8 @@ import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/pro
 import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
 import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
 import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
+import { EstadisticasAdminComponent } from './estadisticas-admin/estadisticas-admin.component';
+import { ChartComponent } from './estadisticas-admin/chart/chart.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -62,6 +70,8 @@ registerLocaleData(localeEs, 'es');
     ModifAforoComponent,
     EstaSemanaPopUpComponent,
     BarChartComponent,
+    EstadisticasAdminComponent,
+    ChartComponent,
   ],
   imports: [  
     MbscModule,   
@@ -71,6 +81,10 @@ registerLocaleData(localeEs, 'es');
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatDatepickerModule, 
+    MatNativeDateModule,
     NgCircleProgressModule.forRoot({
       "radius": 100,
       "space": -10,
