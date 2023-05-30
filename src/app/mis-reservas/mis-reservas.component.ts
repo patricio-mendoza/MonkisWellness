@@ -26,7 +26,7 @@ export class MisReservasComponent implements OnInit {
   reservaciones: Reserva[] = [];
   reqData: any;
 
-  prorroga = 20 // 20 minutos para confirmar
+  prorroga = 1 // 20 minutos para confirmar
 
   constructor(private http: HttpClient) { }
 
