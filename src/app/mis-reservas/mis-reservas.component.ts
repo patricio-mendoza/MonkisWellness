@@ -26,7 +26,7 @@ export class MisReservasComponent implements OnInit {
   reservaciones: Reserva[] = [];
   reqData: any;
 
-  prorroga = 1 // 20 minutos para confirmar
+  prorroga = 20 // 20 minutos para confirmar
 
   constructor(private http: HttpClient) { }
 
@@ -47,18 +47,12 @@ export class MisReservasComponent implements OnInit {
   
   confirmar(reserva: Reserva){
     if (!this.isProrrogaActiva(reserva)) {return;}
-
-    // estado de reserva = 4
-    let index = this.reservaciones.indexOf(reserva);
-    this.reservaciones[index].estatus = 0;
-
-    this.http.put(`${API_URI}/reserva/enprogreso/${reserva.id_reservacion}`, {}).subscribe()
     
   }
   cancelar(reserva: Reserva){
     let index = this.reservaciones.indexOf(reserva);
-    if (this.reservaciones[index].estatus != 1) {
-      alert ("Solo puedes cancelar reservaciones activas");
+    if (this.reservaciones[index].estatus === 3 ) {
+      alert ("Esta reservacion ya está cancelada");
       return;
     }
 
@@ -74,30 +68,12 @@ export class MisReservasComponent implements OnInit {
     const body = {
       matricula: localStorage.getItem('id'),
       encabezado: 'Reservacion Cancelada',
-      texto: `Has cancelado tu reservacion de la ${reserva.nombre_espacio} a las ${reserva.hora_entrada}.`,
+      texto: `Has cancelado tu reservacion de las ${reserva.hora_entrada}.`,
       id_reservacion: reserva.id_reservacion
     };
     this.reservaciones[index].estatus = 3;
 
     this.http.put(apiURL, JSON.stringify(body)).subscribe();
-    this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
-  }
-
-  cancelarPorNoConfirmar(reserva: Reserva) {
-    let index = this.reservaciones.indexOf(reserva);
-    this.reservaciones[index].estatus = 3;
-
-    const headers = { 'Content-Type': 'application/json' };
-    const options = { headers: headers };
-    const body = {
-      matricula: localStorage.getItem('id'),
-      encabezado: 'Reservacion Cancelada',
-      texto: `Tu reservación de la ${reserva.nombre_espacio} a las ${reserva.hora_entrada} ha sido cancelada por no confirmar la llegada al espacio.`,
-      id_reservacion: reserva.id_reservacion
-    };
-
-    let apiURL = `${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`
-    this.http.put(apiURL, {}).subscribe();
     this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
   }
 
@@ -116,8 +92,6 @@ export class MisReservasComponent implements OnInit {
     let prorrogaTimeLimit = new Date(reserva.hora_entrada);
     prorrogaTimeLimit.setMinutes(prorrogaTimeLimit.getMinutes() + this.prorroga);
     
-    if (reserva.estatus === 1 && now.getTime() > prorrogaTimeLimit.getTime()) {this.cancelarPorNoConfirmar(reserva)}
-
     return now > new Date(reserva.hora_entrada) && now.getTime() < prorrogaTimeLimit.getTime();
   }
 

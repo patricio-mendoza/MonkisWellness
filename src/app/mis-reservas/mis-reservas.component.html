@@ -16,14 +16,14 @@
                     <div class="reserva-right-up-up">Estado:</div>  
                     <div class="reserva-right-up-middle">
                         <div class="semaforo-left"> 
-                            <!-- 1 = Activa, 2 = Finalizada, 3 = Cancelada, 4 = En Progreso -->
-                            <div *ngIf = "reserva.estatus === 0" class="semaforo-circle-0"></div>
-                            <div *ngIf = "reserva.estatus === 1" class="semaforo-circle-1"></div>
+                            <!-- 1 = Activa, 2 = Finalizada, 3 = Cancelada -->
+                            <div *ngIf = "reserva.estatus === 1 && !isReservacionEnProgreso(reserva)" class="semaforo-circle-1"></div>
+                            <div *ngIf = "reserva.estatus === 1 && isReservacionEnProgreso(reserva)" class="semaforo-circle-1-2"></div>
                             <div *ngIf = "reserva.estatus === 2" class="semaforo-circle-2"></div>
                             <div *ngIf = "reserva.estatus === 3" class="semaforo-circle-3"></div>
                         </div>
-                        <div *ngIf = "reserva.estatus === 0" class="semaforo-right">En Progreso</div>
-                        <div *ngIf = "reserva.estatus === 1" class="semaforo-right">Activa</div>
+                        <div *ngIf = "reserva.estatus === 1 && !isReservacionEnProgreso(reserva)" class="semaforo-right">Activa</div>
+                        <div *ngIf = "reserva.estatus === 1 && isReservacionEnProgreso(reserva)" class="semaforo-right">En Progreso</div>
                         <div *ngIf = "reserva.estatus === 2" class="semaforo-right">Finalizada</div>
                         <div *ngIf = "reserva.estatus === 3" class="semaforo-right">Cancelada</div>
                     </div>
