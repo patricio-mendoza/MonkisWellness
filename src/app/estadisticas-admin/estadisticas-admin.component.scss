@@ -1,0 +1,28 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(33rem, 1fr));
+    grid-gap: 10px;
+
+    .cuadrante {
+        .title {
+            font-family: 'Poppins', sans-serif;;
+            font-weight: bold;
+            font-size: large;
+        }        
+    }
+
+    .opciones {
+        .configuracion {
+            .date-picker {
+                width: 15rem;
+                margin: 0.5rem;
+            }
+            .btn {
+                margin-left: 1rem;
+            }
+        }
+    }
+}
