@@ -58,6 +58,13 @@ export class EstadisticasAdminComponent {
       else { alert("Selecciona un final al rango de fecha para descargar."); }
       return;
     }
-    alert("Funcion de Descargar Datos No Implementada :)")
+  
+    let fechaInicioStr = fechaInicio.toISOString().slice(0, 19).replace('T', ' ');
+    let fechaFinalStr = fechaFinal.toISOString().slice(0, 19).replace('T', ' ');
+    console.log(`${API_URI}/gym/descargar_datos/${fechaInicioStr}/${fechaFinalStr}`)
+    this.http.get(`${API_URI}/gym/descargar_datos/${fechaInicioStr}/${fechaFinalStr}`).subscribe(res => {
+      this.reqData = res;
+      console.log(this.reqData.data)
+    });
   }
 }

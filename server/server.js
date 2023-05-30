@@ -207,6 +207,16 @@ server.get('/api/gym/historial/:fecha', (req, res) => {
         else res.send({ data: result });
     });
 });
+server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', (req, res) => {
+    let fecha = req.params.fecha;
+
+    let sql = `SELECT tiempo, aforo FROM Historial WHERE tiempo > '${fechaInicio}' AND tiempo < '${fechaFinal}';
+    `
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
 
 //DEPORTES
 server.get(`/api/deporte/:id`, (req, res) => {
