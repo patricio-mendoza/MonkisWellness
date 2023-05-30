@@ -200,7 +200,8 @@ server.get('/api/gym/semana/:fecha', (req, res) => {
 server.get('/api/gym/historial/:fecha', (req, res) => {
     let fecha = req.params.fecha;
 
-    let sql = `SELECT HOUR(tiempo) as hora, aforo FROM Historial WHERE tiempo >= DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000') AND tiempo < DATE_ADD(DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000'),INTERVAL 1 DAY) and aforo > 0;`
+    let sql = `SELECT HOUR(tiempo) as hora, CASE WHEN tiempo < now() THEN aforo ELSE 0 END aforo FROM Historial WHERE tiempo >= DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000') AND tiempo < DATE_ADD(DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000'),INTERVAL 1 DAY) and aforo > 0;
+    `
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
