@@ -3,6 +3,7 @@ import { DatePipe, Location } from '@angular/common';
 import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { CardService } from './card.service';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -55,11 +56,19 @@ export class ReservarEspacioComponent {
     fecha: string;
     id: string;
 
-    constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
+    constructor(public tarjeta:CardService, private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     
       if(this.today.getHours() > 22) this.today.setHours(24);
+    }
+  
+    abrirTarjeta(){
+      this.tarjeta.idBlocking = true;
+    }
+
+    cerrarTarjeta(){
+        this.tarjeta.idBlocking = false;
     }
 
     ngOnInit() {
