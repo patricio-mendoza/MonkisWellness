@@ -244,11 +244,10 @@ server.get('/api/gym/historial/:fecha', (req, res) => {
     });
 });
 server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', (req, res) => {
-    let fechaInicio = req.params.fechaInicio;
-    let fechaFinal = req.params.fechaFinal;
+    let fecha = req.params.fecha;
 
-    let sql = `SELECT CONCAT(YEAR(tiempo),'-',MONTH(tiempo),'-',DAY(tiempo)) as date, CONCAT(HOUR(tiempo), ':00') as hour, aforo FROM Historial WHERE tiempo >= DATE_FORMAT("${fechaInicio}", '%Y-%m-%d 00:00.000') AND tiempo <=  DATE_FORMAT("${fechaFinal}", '%Y-%m-%d 23:00.000');`
-
+    let sql = `SELECT tiempo, aforo FROM Historial WHERE tiempo > '${fechaInicio}' AND tiempo < '${fechaFinal}';
+    `
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });

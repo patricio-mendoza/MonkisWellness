@@ -61,8 +61,8 @@ export class EstadisticasAdminComponent {
   
     let fechaInicioStr = fechaInicio.toISOString().slice(0, 19).replace('T', ' ');
     let fechaFinalStr = fechaFinal.toISOString().slice(0, 19).replace('T', ' ');
-    console.log(`${API_URI}/gym/descargar/${fechaInicioStr}/${fechaFinalStr}`)
-    this.http.get(`${API_URI}/gym/descargar/${fechaInicioStr}/${fechaFinalStr}`).subscribe(res => {
+    console.log(`${API_URI}/gym/descargar_datos/${fechaInicioStr}/${fechaFinalStr}`)
+    this.http.get(`${API_URI}/gym/descargar_datos/${fechaInicioStr}/${fechaFinalStr}`).subscribe(res => {
       this.reqData = res;
       console.log(this.reqData.data)
     });
