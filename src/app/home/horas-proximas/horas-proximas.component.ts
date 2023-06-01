@@ -12,6 +12,7 @@ export class HorasProximasComponent {
   estimacionEn1Horas: number;
   estimacionEn2Horas: number;
   estimacionEn3Horas: number;
+  currentDateTime: Date;
 
   reqData: any
 
@@ -19,6 +20,7 @@ export class HorasProximasComponent {
 
   ngOnInit() {
     this.getEstimaciones();
+    this.currentDateTime = new Date();
   }
 
   getEstimaciones() {
