@@ -35,7 +35,8 @@ export class ReservarEspacioComponent {
 
     today = new Date();
     tomorrow = new Date();
-    selectedDate: any = []
+    selectedDate: Date | null;
+    horas: string[];
 
     invalidRequest: boolean = false;
     clicked: boolean = false;
@@ -43,6 +44,7 @@ export class ReservarEspacioComponent {
     id_espacio: number;
     nombreEspacio: string;
     nombreInstalacion: string;
+    idInstalacion: number;
 
     hora_inicio: number = 6;
     hora_fin: number = 23;
@@ -70,8 +72,6 @@ export class ReservarEspacioComponent {
             this.getReservaciones();
         }
     }
-    
-    settings: MbscDatepickerOptions;
 
     getBloqueosActivos(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
@@ -86,23 +86,29 @@ export class ReservarEspacioComponent {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
-        this.http.get(`${API_URI}/instalacion/horario/${this.id_espacio}`).subscribe(res => {
-            this.reqData = res
-            this.hora_inicio = this.reqData.data[0].apertura;
-            this.hora_fin = this.reqData.data[0].cierre;
-            this.nombreEspacio = this.reqData.data[0].nombre;
-            this.nombreInstalacion = this.reqData.data[0].nombreInstalacion
-            
-            this.settings = {
-                display: 'inline',
-                controls: ['calendar', 'timegrid'],
-                min: this.today,
-                max: this.tomorrow,
-                minTime: `${this.hora_inicio}:00`,
-                maxTime: `${this.hora_fin}:00`,
-                selectMultiple: true,
-            };
+        this.http.get(`${API_URI}/instalacion/horario/${this.id_espacio}`).subscribe({
+            next: (res) => {
+                this.reqData = res
+                this.hora_inicio = this.reqData.data[0].apertura;
+                this.hora_fin = this.reqData.data[0].cierre;
+                this.nombreEspacio = this.reqData.data[0].nombre;
+                this.nombreInstalacion = this.reqData.data[0].nombreInstalacion;
+                this.idInstalacion = this.reqData.data[0].inst_id;
+
+            },
+            complete: () => {
+                this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${1}`).subscribe(res => {
+                    this.reqData = res
+                    this.horas = this.reqData.data.map((row) => row.interval_time.slice(0, -3));
+                    console.log(this.horas)
+                });
+            },
+            error: (error) => {
+                console.log(error)
+            }
+
         });
+        
     }
 
     getReservaciones() {

@@ -379,7 +379,7 @@ server.get('/api/instalacion/horario/:id', (req, res) => {
     let dia = new Date();
     numDia = dia.getDay() === 0 ? 7 : dia.getDay();
 
-    let sql = `SELECT es.nombre as nombre, HOUR(ho.hora_apertura) as apertura, HOUR(ho.hora_cierre) as cierre, ins.nombre as nombreInstalacion FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
+    let sql = `SELECT es.nombre as nombre, HOUR(ho.hora_apertura) as apertura, HOUR(ho.hora_cierre) as cierre, ins.id_instalacion as inst_id, ins.nombre as nombreInstalacion FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
@@ -405,5 +405,27 @@ server.put('/api/reserva/enprogreso/:id', (req, res) => {
         else{
             res.send({ data: true });
         } 
+    });
+});
+server.get('/api/instalacion/horas_disponibles/:id_instalacion/:id_dia', (req, res) => {
+    let id_instalacion = req.params.id_instalacion;
+    let id_dia = req.params.id_dia;
+
+    let sql = `SELECT TIME(datetime_interval) AS interval_time
+    FROM (
+        SELECT TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval
+        FROM
+            (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t1,
+            (SELECT 0 AS num UNION ALL SELECT 10 UNION ALL SELECT 20 UNION ALL SELECT 30 UNION ALL SELECT 40 UNION ALL SELECT 50) t2,
+            (SELECT 0 AS num UNION ALL SELECT 100 UNION ALL SELECT 200 UNION ALL SELECT 300 UNION ALL SELECT 400 UNION ALL SELECT 500) t3,
+            (SELECT STR_TO_DATE(CONCAT('2023-05-31', hora_apertura), '%Y-%m-%d %H:%i') AS start_time, STR_TO_DATE(CONCAT('2023-05-31', hora_cierre), '%Y-%m-%d %H:%i') AS end_time
+            FROM Horario WHERE id_instalacion=${id_instalacion} AND dia=${id_dia}) params
+        WHERE TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) <= end_time
+    ) intervals
+    ORDER BY interval_time;`
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
     });
 });
