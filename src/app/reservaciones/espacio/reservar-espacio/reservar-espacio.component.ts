@@ -65,6 +65,30 @@ export class ReservarEspacioComponent {
       if (this.today.getHours() > 22) this.today.setHours(24);
     }
 
+    sumMinutesToHour(hora: string, minutes: number) {
+        const [hour, minute] = hora.split(":").map(Number);
+        const totalMinutes = hour * 60 + minute + minutes;
+        const newHour = Math.floor(totalMinutes / 60);
+        const newMinute = totalMinutes % 60;
+
+        const formattedHour = String(newHour).padStart(2, "0");
+        const formattedMinute = String(newMinute).padStart(2, "0");
+
+        return `${formattedHour}:${formattedMinute}`;
+    }
+    hourIsBigger(hour1: string, hour2: string) {
+        const [firstHourValue, firstMinuteValue] = hour1.split(":").map(Number);
+        const [secondHourValue, secondMinuteValue] = hour2.split(":").map(Number);
+
+        if (firstHourValue > secondHourValue) {
+            return true;
+        } else if (firstHourValue === secondHourValue && firstMinuteValue > secondMinuteValue) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     ngOnInit() {
         this.getBloqueosActivos();
         this.getHorarioInstalacion();
@@ -81,7 +105,26 @@ export class ReservarEspacioComponent {
             horaSeleccionada.is_selected = true; 
             // deshabilitar horas que no entran en el rango de reserva disponible
             this.horas.map(hora => {
+                if (this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA))) {
+                    hora.is_disabled = true;
+                }
             });
+        } else if (this.selectedHourStart && horaSeleccionada.is_disabled) {
+            this.horas.map(hora => {
+                // reemplazar hora de entrada
+                this.selectedHourStart.is_selected = false;
+                this.selectedHourStart = horaSeleccionada;
+                horaSeleccionada.is_selected = true; 
+
+                hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA));
+            });
+        } else if (this.selectedHourStart && !this.selectedHourEnd) {
+            if (this.selectedHourStart == horaSeleccionada) { return; }
+            // seleccionar hora fin
+            this.selectedHourEnd = horaSeleccionada;
+            this.selectedHourEnd.is_selected = true;
+        } else if (this.selectedHourStart && this.selectedHourEnd) { 
+            // reemplazar hora fin
         }
     }
 
@@ -110,7 +153,6 @@ export class ReservarEspacioComponent {
                 this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${1}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
                     this.reqData = res
                     this.horas = this.reqData.data;
-                    console.log(this.horas)
                 });
             },
             error: (error) => {
