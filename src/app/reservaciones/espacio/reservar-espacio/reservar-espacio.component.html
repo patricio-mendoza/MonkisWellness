@@ -22,11 +22,12 @@
                             <mat-calendar [(selected)]="selectedDate"></mat-calendar>
                         </mat-card>
                         <div class="hour-selector">
-                            <div class="hour"></div>
+                            <div (click)="selectHora(hora)" *ngFor="let hora of horas" class="hour" [ngClass]="hora.is_selected ? 'selected' : ''">
+                                {{hora.hora}}
+                            </div>
                         </div>
                     </div>
-                    <button *ngIf="!clicked" (click)="reservar()" class="boton-reserva">Reservar</button>
-                    <button *ngIf="clicked" class="boton-reserva">Reservar</button>
+                    <button (click)="reservar()" class="boton-reserva">Reservar</button>
                 </div>
             </div>
             <div *ngIf="isAdmin" class = "container-right-down-right">
@@ -42,7 +43,7 @@
                         <div>{{reservacion.hora}}</div>
                     </div>
                     <div (click)="cancelarReservacion(reservacion.id, reservacion.dueno)" class = "reservaciones-actuales-right">
-                     X
+                        X
                     </div>
                 </div>
                 <div *ngIf="reservaciones.length === 0" class="no-reservations">

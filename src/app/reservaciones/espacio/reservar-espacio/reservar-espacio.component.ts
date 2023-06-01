@@ -5,6 +5,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
+const MAXIMO_TIEMPO_RESERVA = 90 // tiempo en minutos
+const TIME_INTERVAL_FOR_RESERVA = 30 // tiempo en minutos
 
 interface Bloqueo {
     start: Date;
@@ -16,6 +18,12 @@ interface Reservacion {
     dueno: string;
     hora: string;
     fecha: string;
+}
+
+interface Hora {
+    hora: string;
+    is_selected: boolean;
+    is_disabled: boolean;
 }
 
 setOptions({
@@ -31,37 +39,30 @@ setOptions({
   styleUrls: ['./reservar-espacio.component.scss']
 })
 export class ReservarEspacioComponent {
-    isAdmin = localStorage.getItem('isAdmin') === "true"
+    isAdmin = localStorage.getItem('isAdmin') === "true";
 
     today = new Date();
     tomorrow = new Date();
-    selectedDate: Date | null;
-    horas: string[];
 
-    invalidRequest: boolean = false;
-    clicked: boolean = false;
+    selectedDate: Date | null;
+    selectedHourStart: Hora;
+    selectedHourEnd: Hora;
 
     id_espacio: number;
     nombreEspacio: string;
     nombreInstalacion: string;
     idInstalacion: number;
 
-    hora_inicio: number = 6;
-    hora_fin: number = 23;
-
     reqData: any;
+    horas: Hora[];
     bloqueos: Bloqueo[];
     reservaciones: Reservacion[] = [];
-
-    horaReserva: string;
-    fecha: string;
-    id: string;
 
     constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     
-      if(this.today.getHours() > 22) this.today.setHours(24);
+      if (this.today.getHours() > 22) this.today.setHours(24);
     }
 
     ngOnInit() {
@@ -70,6 +71,17 @@ export class ReservarEspacioComponent {
 
         if (this.isAdmin) {
             this.getReservaciones();
+        }
+    }
+
+    selectHora(horaSeleccionada: Hora) {
+        if (!this.selectedHourStart && !this.selectedHourEnd) {
+            // seleccionar hora de entrada
+            this.selectedHourStart = horaSeleccionada;
+            horaSeleccionada.is_selected = true; 
+            // deshabilitar horas que no entran en el rango de reserva disponible
+            this.horas.map(hora => {
+            });
         }
     }
 
@@ -82,33 +94,29 @@ export class ReservarEspacioComponent {
             this.bloqueos = this.reqData.data;
         });
     }
+
     getHorarioInstalacion(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
-        this.http.get(`${API_URI}/instalacion/horario/${this.id_espacio}`).subscribe({
+        this.http.get(`${API_URI}/instalacion/datos/${this.id_espacio}`).subscribe({
             next: (res) => {
                 this.reqData = res
-                this.hora_inicio = this.reqData.data[0].apertura;
-                this.hora_fin = this.reqData.data[0].cierre;
                 this.nombreEspacio = this.reqData.data[0].nombre;
                 this.nombreInstalacion = this.reqData.data[0].nombreInstalacion;
                 this.idInstalacion = this.reqData.data[0].inst_id;
-
             },
             complete: () => {
-                this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${1}`).subscribe(res => {
+                this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${1}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
                     this.reqData = res
-                    this.horas = this.reqData.data.map((row) => row.interval_time.slice(0, -3));
+                    this.horas = this.reqData.data;
                     console.log(this.horas)
                 });
             },
             error: (error) => {
                 console.log(error)
             }
-
         });
-        
     }
 
     getReservaciones() {
@@ -119,13 +127,6 @@ export class ReservarEspacioComponent {
     }
 
     reservar(): void {
-        if (this.selectedDate === null || this.selectedDate[0] === null || this.selectedDate[1] === null) {
-            this.invalidRequest = true;
-            return;
-        }
-        
-        this.clicked = true;
-        
         let formattedStartDate = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd HH:mm:ss')
         let formattedFinishDate = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd HH:mm:ss')
 
