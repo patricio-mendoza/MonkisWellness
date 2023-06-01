@@ -397,14 +397,3 @@ server.put('/api/cancelar/mireserva/:id', (req, res) => {
         } 
     });
 });
-server.put('/api/reserva/enprogreso/:id', (req, res) => {
-    let id = req.params.id;
-    let sql = `UPDATE Reservacion SET estatus = 0 WHERE id_reservacion = ${id}`
-    
-    db.query(sql, function (error) {
-        if (error) console.log("Error retrieving the data")
-        else{
-            res.send({ data: true });
-        } 
-    });
-});
