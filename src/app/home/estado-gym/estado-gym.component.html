@@ -25,7 +25,7 @@
             <app-programar-cierre *ngIf="isAdmin"></app-programar-cierre>
             <div>
                 <div class="letrero-estado">
-                    <td *ngIf="estado"><span class="icono-estado fas fa-circle ms-4" style="color: green"></span></td>
+                    <td *ngIf="estado"><span class="icono-estado fas fa-circle ms-4" style="color: rgb(0, 231, 0)"></span></td>
                     <td *ngIf="!estado"><span class="icono-estado fas fa-circle ms-4" style="color: red"></span></td>
                     <td><h1 class="texto-estado text-white">{{estado ? 'Abierto' : 'Cerrado'}}</h1></td>
                 </div>

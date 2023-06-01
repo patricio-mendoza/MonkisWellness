@@ -51,13 +51,25 @@ server.get("/api/user/:id", (req, res) => {
     }
 
     db.query(sql, function (error, result) {
-        if (error) console.log("Error retrieving the data")
+        if (error) res.send({ status: false, data: [] })
         else res.send({ status: true, data: result });    
     });
 });
 server.get("/api/user/reservaciones/:id", (req, res) => {   
     let id = req.params.id;
-    sql = `SELECT * FROM Reservacion WHERE ("${id}" = matricula OR "${id}" = num_nomina) AND estatus = 1`;
+    sql = `SELECT sub.id_reservacion, sub.hora_entrada, sub.hora_salida, sub.estatus, sub.nombre_espacio, sub.nombre_deporte, sub.nombre_instalacion
+    FROM (
+        SELECT res.id_reservacion, DATE_FORMAT(res.hora_entrada, '%Y/%m/%d %H:%i') as hora_entrada, DATE_FORMAT(res.hora_salida, '%Y/%m/%d %H:%i') as hora_salida, res.estatus, esp.nombre as nombre_espacio, dep.nombre as nombre_deporte, ins.nombre AS nombre_instalacion,
+               ROW_NUMBER() OVER (PARTITION BY res.id_reservacion ORDER BY res.id_reservacion) AS row_num
+        FROM Reservacion res
+        JOIN Espacio esp ON res.id_espacio = esp.id_espacio
+        JOIN EspacioDeporte espdep ON espdep.id_espacio = esp.id_espacio
+        JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
+        JOIN Instalacion ins ON ins.id_instalacion = esp.id_instalacion
+        WHERE ("${id}" = matricula OR "${id}" = num_nomina)
+    ) sub
+    WHERE sub.row_num = 1
+    ORDER BY sub.estatus, sub.hora_entrada`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -83,8 +95,7 @@ server.get("/api/avisos/:id", (req, res) => {
     });
 });
 server.post('/api/generar/aviso', (req, res) => {
-    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo, id_reservacion) VALUES ('${req.body.matricula}', '${req.body.id_espacio ? 'Reservacion Confirmada' : 'Reservacion Cancelada'}', 'Tu reservacion en la ${req.body.nombreEspacio} en el ${req.body.nombreInstalacion} ha sido ${req.body.id_espacio ? 'guardada' : 'cancelada'}.', now(), ${req.body.id_reservacion ? `${req.body.id_reservacion}` : 'LAST_INSERT_ID()'})`;
-    console.log(sql);
+    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo, id_reservacion) VALUES ('${req.body.matricula}', '${req.body.encabezado}', '${req.body.texto}', now(), ${req.body.id_reservacion})`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -114,14 +125,18 @@ server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
 server.delete('/api/reservacion/delete/:id', (req, res) => {
     let id = req.params.id;
     let sql = `UPDATE Reservacion SET estatus=3 WHERE id_reservacion=${id}`;
-    console.log(sql);
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else{
             res.send({ data: true });
         } 
     });
-}); 
+});
+server.post('/api/generar/avisoCancelacion', (req, res) => {
+    let id = localStorage.getItem("id")
+    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo) VALUES ('${id}, 'Reservacion Cancelada', ''')`
+});
 
 // GYM
 server.get("/api/gym/estado", (req, res) => {    
@@ -236,3 +251,14 @@ server.get('/api/instalacion/horario/:id', (req, res) => {
         else res.send({ data: result });
     });
 })
+server.put('/api/cancelar/mireserva/:id', (req, res) => {
+    let id = req.params.id;
+    let sql = `UPDATE Reservacion SET estatus = 3 WHERE id_reservacion = ${id}`
+
+    db.query(sql, function (error) {
+        if (error) console.log("Error retrieving the data")
+        else{
+            res.send({ data: true });
+        } 
+    });
+});

@@ -32,7 +32,7 @@ export class AvisosComponent implements OnInit {
   getAnuncios(): void {
     let id = localStorage.getItem("id")
     let apiURL = `${API_URI}/avisos/${id}`;
-    console.log(apiURL)
+
     this.http.get(apiURL).subscribe(res => {
       this.reqData = res;
       this.anuncios = this.reqData.data;
