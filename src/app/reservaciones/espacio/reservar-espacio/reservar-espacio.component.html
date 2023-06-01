@@ -14,23 +14,20 @@
             <div class = "texto-area">Elige un horario</div>
             <img class="barra-texto" src="../../../assets/assets-elegir-area/barra-texto.png">
         </div>
-        <div class = "container-right-down">
+        <div class="container-right-down">
             <div class = "container-right-down-left">
                 <div class="container">
-                    <div class="mbsc-form-group">
-                        <mbsc-datepicker [(ngModel)]="selectedDate"
-                            [options]="settings" 
-                            [invalid]="bloqueos"
-                            select="range"
-                            [showRangeLabels]="true"
-                            [minRange]="1"
-                            [maxRange]="5400000"
-                            [touchUi]="true"
-                            >
-                        </mbsc-datepicker>
+                    <div class="time-selector">
+                        <mat-card class="calendario">
+                            <mat-calendar [(selected)]="selectedDate"></mat-calendar>
+                        </mat-card>
+                        <div class="hour-selector">
+                            <div (click)="selectHora(hora)" *ngFor="let hora of horas" class="hour" [ngClass]="hora.is_selected ? 'selected' : hora.is_disabled ? 'disabled' : ''">
+                                {{hora.hora}}
+                            </div>
+                        </div>
                     </div>
-                    <button *ngIf="!clicked" (click)="reservar()" class="boton-reserva">Reservar</button>
-                    <button *ngIf="clicked" class="boton-reserva">Reservar</button>
+                    <button (click)="reservar()" class="boton-reserva">Reservar</button>
                 </div>
             </div>
             <div *ngIf="isAdmin" class = "container-right-down-right">
@@ -46,7 +43,7 @@
                         <div>{{reservacion.hora}}</div>
                     </div>
                     <div (click)="cancelarReservacion(reservacion.id, reservacion.dueno)" class = "reservaciones-actuales-right">
-                     X
+                        X
                     </div>
                 </div>
                 <div *ngIf="reservaciones.length === 0" class="no-reservations">

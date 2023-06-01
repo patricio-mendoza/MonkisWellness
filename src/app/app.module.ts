@@ -8,11 +8,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
+import {MatCardModule} from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -82,6 +82,7 @@ registerLocaleData(localeEs, 'es');
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatCardModule,
     MatFormFieldModule, 
     MatInputModule, 
     MatDatepickerModule, 

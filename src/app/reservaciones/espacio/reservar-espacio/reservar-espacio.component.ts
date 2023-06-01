@@ -5,6 +5,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
+const MAXIMO_TIEMPO_RESERVA = 90 // tiempo en minutos
+const TIME_INTERVAL_FOR_RESERVA = 30 // tiempo en minutos
 
 interface Bloqueo {
     start: Date;
@@ -16,6 +18,12 @@ interface Reservacion {
     dueno: string;
     hora: string;
     fecha: string;
+}
+
+interface Hora {
+    hora: string;
+    is_selected: boolean;
+    is_disabled: boolean;
 }
 
 setOptions({
@@ -31,35 +39,54 @@ setOptions({
   styleUrls: ['./reservar-espacio.component.scss']
 })
 export class ReservarEspacioComponent {
-    isAdmin = localStorage.getItem('isAdmin') === "true"
+    isAdmin = localStorage.getItem('isAdmin') === "true";
 
     today = new Date();
     tomorrow = new Date();
-    selectedDate: any = []
 
-    invalidRequest: boolean = false;
-    clicked: boolean = false;
+    selectedDate: Date | null;
+    selectedHourStart: Hora;
+    selectedHourEnd: Hora;
 
     id_espacio: number;
     nombreEspacio: string;
     nombreInstalacion: string;
-
-    hora_inicio: number = 6;
-    hora_fin: number = 23;
+    idInstalacion: number;
 
     reqData: any;
+    horas: Hora[];
     bloqueos: Bloqueo[];
     reservaciones: Reservacion[] = [];
-
-    horaReserva: string;
-    fecha: string;
-    id: string;
 
     constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     
-      if(this.today.getHours() > 22) this.today.setHours(24);
+      if (this.today.getHours() > 22) this.today.setHours(24);
+    }
+
+    sumMinutesToHour(hora: string, minutes: number) {
+        const [hour, minute] = hora.split(":").map(Number);
+        const totalMinutes = hour * 60 + minute + minutes;
+        const newHour = Math.floor(totalMinutes / 60);
+        const newMinute = totalMinutes % 60;
+
+        const formattedHour = String(newHour).padStart(2, "0");
+        const formattedMinute = String(newMinute).padStart(2, "0");
+
+        return `${formattedHour}:${formattedMinute}`;
+    }
+    hourIsBigger(hour1: string, hour2: string) {
+        const [firstHourValue, firstMinuteValue] = hour1.split(":").map(Number);
+        const [secondHourValue, secondMinuteValue] = hour2.split(":").map(Number);
+
+        if (firstHourValue > secondHourValue) {
+            return true;
+        } else if (firstHourValue === secondHourValue && firstMinuteValue > secondMinuteValue) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     ngOnInit() {
@@ -70,8 +97,36 @@ export class ReservarEspacioComponent {
             this.getReservaciones();
         }
     }
-    
-    settings: MbscDatepickerOptions;
+
+    selectHora(horaSeleccionada: Hora) {
+        if (!this.selectedHourStart && !this.selectedHourEnd) {
+            // seleccionar hora de entrada
+            this.selectedHourStart = horaSeleccionada;
+            horaSeleccionada.is_selected = true; 
+            // deshabilitar horas que no entran en el rango de reserva disponible
+            this.horas.map(hora => {
+                if (this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA))) {
+                    hora.is_disabled = true;
+                }
+            });
+        } else if (this.selectedHourStart && horaSeleccionada.is_disabled) {
+            this.horas.map(hora => {
+                // reemplazar hora de entrada
+                this.selectedHourStart.is_selected = false;
+                this.selectedHourStart = horaSeleccionada;
+                horaSeleccionada.is_selected = true; 
+
+                hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA));
+            });
+        } else if (this.selectedHourStart && !this.selectedHourEnd) {
+            if (this.selectedHourStart == horaSeleccionada) { return; }
+            // seleccionar hora fin
+            this.selectedHourEnd = horaSeleccionada;
+            this.selectedHourEnd.is_selected = true;
+        } else if (this.selectedHourStart && this.selectedHourEnd) { 
+            // reemplazar hora fin
+        }
+    }
 
     getBloqueosActivos(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
@@ -82,26 +137,27 @@ export class ReservarEspacioComponent {
             this.bloqueos = this.reqData.data;
         });
     }
+
     getHorarioInstalacion(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
-        this.http.get(`${API_URI}/instalacion/horario/${this.id_espacio}`).subscribe(res => {
-            this.reqData = res
-            this.hora_inicio = this.reqData.data[0].apertura;
-            this.hora_fin = this.reqData.data[0].cierre;
-            this.nombreEspacio = this.reqData.data[0].nombre;
-            this.nombreInstalacion = this.reqData.data[0].nombreInstalacion
-            
-            this.settings = {
-                display: 'inline',
-                controls: ['calendar', 'timegrid'],
-                min: this.today,
-                max: this.tomorrow,
-                minTime: `${this.hora_inicio}:00`,
-                maxTime: `${this.hora_fin}:00`,
-                selectMultiple: true,
-            };
+        this.http.get(`${API_URI}/instalacion/datos/${this.id_espacio}`).subscribe({
+            next: (res) => {
+                this.reqData = res
+                this.nombreEspacio = this.reqData.data[0].nombre;
+                this.nombreInstalacion = this.reqData.data[0].nombreInstalacion;
+                this.idInstalacion = this.reqData.data[0].inst_id;
+            },
+            complete: () => {
+                this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${1}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
+                    this.reqData = res
+                    this.horas = this.reqData.data;
+                });
+            },
+            error: (error) => {
+                console.log(error)
+            }
         });
     }
 
@@ -113,13 +169,6 @@ export class ReservarEspacioComponent {
     }
 
     reservar(): void {
-        if (this.selectedDate === null || this.selectedDate[0] === null || this.selectedDate[1] === null) {
-            this.invalidRequest = true;
-            return;
-        }
-        
-        this.clicked = true;
-        
         let formattedStartDate = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd HH:mm:ss')
         let formattedFinishDate = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd HH:mm:ss')
 
