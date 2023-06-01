@@ -11,9 +11,26 @@
 <div class="lower-container">
     <div (click)="openEstaSemanaTab()" class="flex-box3"><app-esta-semana></app-esta-semana></div>
     <div  class="flex-box4"><app-historial></app-historial></div>
+
     
+        <div class="estado-gym flex-box"><app-estado-gym></app-estado-gym></div>
+        <span *ngIf="isAdmin" (click)="ocultar()"  class=" botonAforo">
+            <img src="../../../../assets/Vector.png" class="img-fluid" alt="..." />
+        </span>
     
+        <span *ngIf="isAdmin" id="boton-cierre" class="boton-cierre" >
+            <p class="cierre">ProgramarCierre</p> 
+          </span>
+        <div class="flex-box2"><app-horas-proximas></app-horas-proximas></div>
+    </div>
+    <div *ngIf="isAdmin" class="lower-container">
+        <div (click)="openEstaSemanaTab()" class="flex-box3"><app-esta-semana></app-esta-semana></div>
+        <div  class="flex-box4"><app-historial></app-historial></div>
+        
+        
+    </div>
 </div>
+
 
 
 <app-modif-aforo *ngIf="miServicio.isModifyingAforo" ></app-modif-aforo>

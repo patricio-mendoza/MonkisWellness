@@ -28,10 +28,14 @@
                     <div id="hora-de-cambio" class="fw-bold ms-1"> {{estado? hora_cierre : hora_apertura }} </div>
                 </div>
             </div>
-            <div class="d-flex flex-row align-items-center">
-                <span *ngIf="estado" class="icono-estado fas fa-circle" style="color: green"></span>
-                <span *ngIf="!estado" class="icono-estado fas fa-circle" style="color: red"></span>
-                <div class="texto-estado text-white ms-2">{{estado ? 'Abierto' : 'Cerrado'}}</div>
+            <app-programar-cierre *ngIf="isAdmin"></app-programar-cierre>
+            <div>
+                <div class="letrero-estado">
+                    <td *ngIf="estado"><span class="icono-estado fas fa-circle ms-4" style="color: rgb(0, 231, 0)"></span></td>
+                    <td *ngIf="!estado"><span class="icono-estado fas fa-circle ms-4" style="color: red"></span></td>
+                    <td><h1 class="texto-estado text-white">{{estado ? 'Abierto' : 'Cerrado'}}</h1></td>
+                </div>
+
             </div>
         </div>
 
