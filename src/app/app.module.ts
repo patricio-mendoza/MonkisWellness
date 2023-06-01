@@ -2,10 +2,17 @@ import { MbscModule } from '@mobiscroll/angular';
 import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,10 +37,12 @@ import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estima
 import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
-import { ProgramarCierreComponent } from './home/estado-gym/programar-cierre/programar-cierre.component';
 import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
 import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
+import { CierresComponent } from './home/cierres/cierres.component';
 import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
+import { EstadisticasAdminComponent } from './estadisticas-admin/estadisticas-admin.component';
+import { ChartComponent } from './estadisticas-admin/chart/chart.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -58,10 +67,12 @@ registerLocaleData(localeEs, 'es');
     MisReservasComponent,
     EspacioComponent,
     ReservarEspacioComponent,
-    ProgramarCierreComponent,
     ModifAforoComponent,
     EstaSemanaPopUpComponent,
+    CierresComponent,
     BarChartComponent,
+    EstadisticasAdminComponent,
+    ChartComponent,
   ],
   imports: [  
     MbscModule,   
@@ -71,6 +82,10 @@ registerLocaleData(localeEs, 'es');
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    MatFormFieldModule, 
+    MatInputModule, 
+    MatDatepickerModule, 
+    MatNativeDateModule,
     NgCircleProgressModule.forRoot({
       "radius": 100,
       "space": -10,
@@ -90,7 +105,7 @@ registerLocaleData(localeEs, 'es');
       "backgroundColor": "#004891",
       "clockwise": true,
       "startFromZero": false,
-      "lazy": true})
+      "lazy": true}),
   ],
   providers: 
   [DatePipe, {provide: LOCALE_ID, useValue: 'es'}

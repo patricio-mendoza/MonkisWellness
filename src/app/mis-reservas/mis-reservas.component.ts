@@ -51,15 +51,17 @@ export class MisReservasComponent implements OnInit {
   }
   cancelar(reserva: Reserva){
     let index = this.reservaciones.indexOf(reserva);
-    if (this.reservaciones[index].estatus === 3 ) {
-      alert ("Esta reservacion ya está cancelada");
+
+    if (this.reservaciones[index].estatus != 1) {
+      alert ("Solo puedes cancelar reservaciones activas.");
+
       return;
     }
 
     let wantsToDelete = confirm('¿Seguro que quieres cancelar esta reservación?')
     if(!wantsToDelete) { return; }
 
-    alert ("Reservacion Cancelada")
+    alert ("Reservacion Cancelada.")
 
     let apiURL = `${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`
     

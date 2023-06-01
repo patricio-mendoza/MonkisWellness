@@ -148,6 +148,29 @@ server.get("/api/gym/estado", (req, res) => {
     });
 });
 
+// Daniel
+// Cambiar el estado del gimnasio a abierto 
+server.put("/api/gym/estado/abrir", (req,res) => {
+    let sql = "UPDATE Wellness SET estado = 1";
+
+    db.query(sql, function (error) {
+        if (error) console.log("Error abriendo el gimnasio")
+        else res.send({ data: true });
+    });
+});
+
+// Daniel
+// Cambiar el estado del gimnasio a abierto 
+server.put("/api/gym/estado/cerrar", (req,res) => {
+    let sql = "UPDATE Wellness SET estado = 0"
+
+    db.query(sql, function (error) {
+        if (error) console.log("Error cerrando el gimnasio")
+        else res.send({ data: true });
+    });
+
+});
+
 server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
     let newAforo = req.params.newAforo;
     let sql = `UPDATE Wellness SET aforo_max = ${newAforo} WHERE id=1;`
@@ -165,6 +188,19 @@ server.get("/api/gym/aforo", (req, res) => {
         else res.send({ data: result[0] });    
     });
 });
+
+// Programar nuevos cierres
+
+server.post('/api/bloqueo/', (req, res) => {
+    let sql = "";
+    sql = `INSERT INTO Bloqueo(id_espacio, id_wellness, dia, hora_inicio, hora_fin, repetible) VALUES (${req.body.id_espacio}, "${req.body.id_wellness}", "${req.body.dia}", '${req.body.hora_inicio}', '${req.body.hora_fin}', ${req.body.repetible})` // Esto es una query
+    db.query(sql, function (error, result) {
+        if (error) console.log(sql)
+        else res.send({ status: true });
+    });
+});
+
+
 server.get('/api/gym/estimaciones', (req, res) => {
     let fecha = new Date();
     var offset = -(new Date().getTimezoneOffset() / 60);
@@ -180,11 +216,110 @@ server.get('/api/gym/estimaciones', (req, res) => {
     });
 })
 server.get('/api/gym/estaSemana', (req, res) => {
-    let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE DAY(tiempo) > DAY(NOW() - INTERVAL 7 day) AND tiempo < now() GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
+    let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE tiempo > DATE_FORMAT(NOW() - INTERVAL 7 day, '%Y-%m-%d 00:00.000') AND tiempo < now() GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
+    });
+});
+server.get('/api/gym/semana/:fecha', (req, res) => {
+    let fecha = req.params.fecha;
+
+    let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE tiempo > DATE_FORMAT("${fecha}" - INTERVAL 7 day, '%Y-%m-%d 00:00.000') AND tiempo < "${fecha}" GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
+server.get('/api/gym/historial/:fecha', (req, res) => {
+    let fecha = req.params.fecha;
+
+    let sql = `SELECT HOUR(tiempo) as hora, CASE WHEN tiempo < now() THEN aforo ELSE 0 END aforo FROM Historial WHERE tiempo >= DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000') AND tiempo < DATE_ADD(DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000'),INTERVAL 1 DAY) and aforo > 0;
+    `
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
+server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', (req, res) => {
+    let fechaInicio = req.params.fechaInicio;
+    let fechaFinal = req.params.fechaFinal;
+
+    let sql = `SELECT CONCAT(YEAR(tiempo),'-',MONTH(tiempo),'-',DAY(tiempo)) as date, CONCAT(HOUR(tiempo), ':00') as hour, aforo FROM Historial WHERE tiempo >= DATE_FORMAT("${fechaInicio}", '%Y-%m-%d 00:00.000') AND tiempo <=  DATE_FORMAT("${fechaFinal}", '%Y-%m-%d 23:00.000');`
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
+
+// Daniel
+// Obtener todos los cierres repetibles
+server.get('/api/gym/cierresR', (req,res) => {
+    // Ordena por dia y hora las siguientes aperturas aplicables, obtiene el primer resultado aplicable
+    sql = "select id_bloqueo, dia, hora_inicio, hora_fin from bloqueo where repetible = 1 order by dia, hora_inicio, hora_fin"
+    db.query(sql, function (error, result) {
+        if (error) console.log(error)
+        else res.send({ data: result });
+    });
+})
+
+// Daniel
+// Ver la siguiente apertura
+server.get('/api/gym/siguienteAp', (req,res) => {
+    // Ordena por dia y hora las siguientes aperturas aplicables, obtiene el primer resultado aplicable
+    sql = "select dia, hora_fin from bloqueo where ((dia =  dayofweek(localtimestamp) AND hora_fin > localtime()) or dia = dayofweek(localtimestamp)+1 or (dia = 1 AND dayofweek(localtimestamp) = 7)) AND repetible < 2 order by case when dayofweek(localtimestamp) = 7 then dia end desc, case when dayofweek(localtimestamp) != 7 then dia end, hora_fin"
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+})
+
+// Daniel
+// Ver el siguiente cierre
+server.get('/api/gym/siguienteCi', (req,res) => {
+    // Ordena por dia y hora los siguientes cierres aplicables, obtiene el primer resultado aplicable
+    sql = "select dia, hora_inicio from bloqueo where ((dia =  dayofweek(localtimestamp) AND hora_inicio > localtime()) or dia = dayofweek(localtimestamp)+1 or (dia = 1 AND dayofweek(localtimestamp) = 7)) AND repetible < 2 order by case when dayofweek(localtimestamp) = 7 then dia end desc,case when dayofweek(localtimestamp) != 7 then dia end,hora_inicio"
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+})
+
+// Daniel 
+// Inserta en la tabla de bloqueos el cierre y apertura manual (Utilizan el mismo query, se diferencian por los datos insertados)
+server.post('/api/gym/cambioManual', (req,res) => {
+    sql = `insert into bloqueo(id_wellness, dia, hora_inicio, hora_fin, repetible) values (1,${req.body.dia},'${req.body.hora_inicio}','${req.body.hora_fin}',0)`
+    db.query(sql,function(error,result) {
+
+        if(error) console.log(error)
+        else {
+            res.send({data:result})
+        };
+    });
+})
+
+// Daniel
+// Cancela todos los cierres manuales, ya que solo puede haber uno activo a la vez
+server.put("/api/gym/cancelarCierresM", (req, res) => {
+    let sql = `Delete from bloqueo WHERE repetible = 0;`
+    
+    db.query(sql, function (error) {
+        if (error) console.log("Error Updating the Data")
+        else res.send({ data: true });    
+    });
+});
+
+// Daniel
+// Borra el cierre repetible seleccionado
+server.put("/api/gym/borrar", (req, res) => {
+    let sql = `Delete from bloqueo WHERE id_bloqueo = ${req.body.id_bloqueo};`
+    
+    db.query(sql, function (error) {
+        if (error) console.log(sql)
+        else res.send({ data: true });    
     });
 });
 

@@ -8,7 +8,7 @@ export const navbarData: INavbarData[] = [
     },
     {
         routeLink: "reservaciones",
-        icon: "fal fa-bookmark",
+        icon: "fal fa-calendar-check",
         label: "Reservaciones",
         items: [
             {
@@ -36,7 +36,7 @@ export const navbarDataAdmin: INavbarData[] = [
     },
     {
         routeLink: "reservaciones",
-        icon: "fal fa-bookmark",
+        icon: "fal fa-calendar-check",
         label: "Reservaciones",
         items: [
             {
@@ -50,8 +50,8 @@ export const navbarDataAdmin: INavbarData[] = [
         ]
     },
     {
-        routeLink: "avisos",
-        icon: "fal fa-bell",
-        label: "Avisos"
+        routeLink: "estadisticas",
+        icon: "fal fa-chart-line",
+        label: "Estadisticas"
     },
 ];

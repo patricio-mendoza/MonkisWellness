@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ReservacionesComponent } from './reservaciones/reservaciones.component';
@@ -7,6 +7,7 @@ import { LoginComponent } from './login/login.component';
 import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
+import { EstadisticasAdminComponent } from './estadisticas-admin/estadisticas-admin.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'reservarEspacio/:id',
     component: ReservarEspacioComponent
+  },
+  {
+    path: 'estadisticas',
+    component: EstadisticasAdminComponent
   }
 ];
 
