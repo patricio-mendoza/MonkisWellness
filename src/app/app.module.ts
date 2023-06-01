@@ -34,7 +34,6 @@ import { MisReservasComponent } from './mis-reservas/mis-reservas.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { GrafPorcentajeComponent } from './home/estado-gym/graf-porcentaje/graf-porcentaje.component';
 import { EstimacionesComponent } from './home/horas-proximas/estimaciones/estimaciones.component';
-import { HoraMinutoComponent } from './home/horas-proximas/estimaciones/hora-minuto/hora-minuto.component';
 import { EspacioComponent } from './reservaciones/espacio/espacio.component';
 import { ReservarEspacioComponent } from './reservaciones/espacio/reservar-espacio/reservar-espacio.component';
 import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
@@ -63,7 +62,6 @@ registerLocaleData(localeEs, 'es');
     SublevelMenuComponent,
     GrafPorcentajeComponent,
     EstimacionesComponent,
-    HoraMinutoComponent,
     MisReservasComponent,
     EspacioComponent,
     ReservarEspacioComponent,
