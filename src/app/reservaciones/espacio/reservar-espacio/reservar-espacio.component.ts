@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
-import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { CardService } from './card.service';
+
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -17,12 +18,6 @@ interface Reservacion {
     hora: string;
     fecha: string;
 }
-
-setOptions({
-    locale: localeEs,
-    theme: 'ios',
-    themeVariant: 'light'
-});
 
 
 @Component({
@@ -55,12 +50,20 @@ export class ReservarEspacioComponent {
     fecha: string;
     id: string;
 
-    constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
+    constructor(public tarjeta:CardService, private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     
       if(this.today.getHours() > 22) this.today.setHours(24);
     }
+
+    abrirTarjeta(){
+        this.tarjeta.idBlocking = true;
+      }
+  
+      cerrarTarjeta(){
+          this.tarjeta.idBlocking = false;
+      }
 
     ngOnInit() {
         this.getBloqueosActivos();
@@ -71,8 +74,6 @@ export class ReservarEspacioComponent {
         }
     }
     
-    settings: MbscDatepickerOptions;
-
     getBloqueosActivos(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
@@ -93,15 +94,6 @@ export class ReservarEspacioComponent {
             this.nombreEspacio = this.reqData.data[0].nombre;
             this.nombreInstalacion = this.reqData.data[0].nombreInstalacion
             
-            this.settings = {
-                display: 'inline',
-                controls: ['calendar', 'timegrid'],
-                min: this.today,
-                max: this.tomorrow,
-                minTime: `${this.hora_inicio}:00`,
-                maxTime: `${this.hora_fin}:00`,
-                selectMultiple: true,
-            };
         });
     }
 

@@ -1,58 +1,55 @@
-<div class = "big-container">
-    <div class = "big-container-left">
-        <div class = "container-left">
+<div class="big-container">
+    <div class="big-container-left">
+        <div class="container-left">
             <img class="sport-imagen" src="../../../assets/foto_deporte/futbol.jpeg">
             <div class="sport-gradient"></div>
-            <div class = "sport-texto-container"><div class = "sport-texto">{{nombreEspacio}}</div></div>
+            <div class="sport-texto-container">
+                <div class="sport-texto">{{nombreEspacio}}</div>
+            </div>
 
             <img class="sport-barra-down" src="../../../assets/assets-elegir-area/espacio-barra.png">
             <img class="sport-barra-up" src="../../../assets/assets-elegir-area/barra-sport.png">
         </div>
     </div>
-    <div class = "big-container-right">
-        <div class = "container-right-up">
-            <div class = "texto-area">Elige un horario</div>
+    <div class="big-container-right">
+        <div class="container-right-up">
+            <div class="texto-area">Elige un horario</div>
             <img class="barra-texto" src="../../../assets/assets-elegir-area/barra-texto.png">
         </div>
-        <div class = "container-right-down">
-            <div class = "container-right-down-left">
+        <div class="container-right-down">
+            <div class="container-right-down-left">
                 <div class="container">
                     <div class="mbsc-form-group">
-                        <mbsc-datepicker [(ngModel)]="selectedDate"
-                            [options]="settings" 
-                            [invalid]="bloqueos"
-                            select="range"
-                            [showRangeLabels]="true"
-                            [minRange]="1"
-                            [maxRange]="5400000"
-                            [touchUi]="true"
-                            >
-                        </mbsc-datepicker>
                     </div>
                     <button *ngIf="!clicked" (click)="reservar()" class="boton-reserva">Reservar</button>
                     <button *ngIf="clicked" class="boton-reserva">Reservar</button>
                 </div>
             </div>
-            <div *ngIf="isAdmin" class = "container-right-down-right">
+            <div *ngIf="isAdmin" class="container-right-down-right">
                 <div class="headers">
                     <div class="header">Id</div>
                     <div class="header">Fecha</div>
                     <div class="header">Hora</div>
                 </div>
-                <div *ngFor="let reservacion of reservaciones" class = "reservacion">
+                <div *ngFor="let reservacion of reservaciones" class="reservacion">
                     <div *ngIf="reservaciones.length > 0" class="reservaciones-actuales-left">
                         <div>{{reservacion.dueno}}</div>
                         <div>{{reservacion.fecha}}</div>
                         <div>{{reservacion.hora}}</div>
                     </div>
-                    <div (click)="cancelarReservacion(reservacion.id, reservacion.dueno)" class = "reservaciones-actuales-right">
-                     X
+                    <div (click)="cancelarReservacion(reservacion.id, reservacion.dueno)"
+                        class="reservaciones-actuales-right">
+                        X
                     </div>
                 </div>
                 <div *ngIf="reservaciones.length === 0" class="no-reservations">
-                    <div>NO HAY RESERVACIONES POR EL MOMENTO</div> 
+                    <div>NO HAY RESERVACIONES POR EL MOMENTO</div>
                 </div>
+            </div>
+            <div (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white">
+                Bloquear espacio
             </div>
         </div>
     </div>
 </div>
+<app-bloquear-espacio *ngIf="this.tarjeta.idBlocking"></app-bloquear-espacio>

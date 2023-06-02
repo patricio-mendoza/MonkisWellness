@@ -407,3 +407,19 @@ server.put('/api/reserva/enprogreso/:id', (req, res) => {
         } 
     });
 });
+
+// Daniel
+// Insertar bloqueo 
+server.put('/api/bloquea/:id', (req,res)=>{
+
+    let id = req.params.id;
+    let sql = `Insert into bloqueo(id_espacio, dia, hora_inicio, hora_fin, repetible, fecha_inicio, fecha_final) values (${id},${req.body.dia},'${req.body.hora_inicio}','${req.body.hora_fin}',2,'${req.body.fechaInicio}','${req.body.fechaFinal}');`
+    
+    db.query(sql, function (error) {
+        if (error) console.log("Error retrieving the data")
+        else{
+            res.send({ data: true });
+        } 
+    });
+
+})
