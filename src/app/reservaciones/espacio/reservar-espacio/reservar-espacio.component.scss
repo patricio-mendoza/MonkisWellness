@@ -29,6 +29,7 @@
             padding: 1rem;
             overflow: auto;
             .hour {
+                height: min-content;
                 padding-top: 5px;
                 padding-bottom: 5px;
                 padding-left: 10px;
@@ -176,7 +177,7 @@
         color: #004891;
     }
     .barra-texto{
-        margin-top: -2vh;
+        margin-top: 2vh;
         width: 30vw;
         height: auto;
     }
@@ -212,7 +213,7 @@
     .container-right-down-right{
        // position:absolute;
         height: 100%;
-        width: 30%;
+        width: 100%;
         background-color: #0f0072;
         border-radius: 15px;
         display: flex;

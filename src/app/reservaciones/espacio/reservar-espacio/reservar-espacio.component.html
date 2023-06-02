@@ -17,6 +17,8 @@
         <div class="container-right-down">
             <div class = "container-right-down-left">
                 <div class="container">
+                    <p>Hora Entrada: {{selectedHourStart ? selectedHourStart.hora : "null"}}</p>
+                    <p>Hora Salida: {{selectedHourEnd ? selectedHourEnd.hora : "null"}}</p>
                     <div class="time-selector">
                         <mat-card class="calendario">
                             <mat-calendar [(selected)]="selectedDate"></mat-calendar>

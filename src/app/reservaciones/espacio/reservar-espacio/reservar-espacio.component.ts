@@ -110,12 +110,18 @@ export class ReservarEspacioComponent {
                 }
             });
         } else if (this.selectedHourStart && horaSeleccionada.is_disabled) {
-            this.horas.map(hora => {
-                // reemplazar hora de entrada
-                this.selectedHourStart.is_selected = false;
-                this.selectedHourStart = horaSeleccionada;
-                horaSeleccionada.is_selected = true; 
+            // reemplazar hora de entrada
+            this.selectedHourStart.is_selected = false;
+            this.selectedHourStart = horaSeleccionada;
+            horaSeleccionada.is_selected = true;
+            
+            // borrar hora de salida
+            if (this.selectedHourEnd) { 
+                this.selectedHourEnd.is_selected = false;
+                this.selectedHourEnd = null; 
+            }
 
+            this.horas.map(hora => {
                 hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA));
             });
         } else if (this.selectedHourStart && !this.selectedHourEnd) {
@@ -124,7 +130,21 @@ export class ReservarEspacioComponent {
             this.selectedHourEnd = horaSeleccionada;
             this.selectedHourEnd.is_selected = true;
         } else if (this.selectedHourStart && this.selectedHourEnd) { 
-            // reemplazar hora fin
+            // si hora_seleccionada es la hora de salida, reemplazar hora de entrada
+            if (horaSeleccionada == this.selectedHourEnd) {
+                this.selectedHourStart.is_selected = false;
+                this.selectedHourStart = this.selectedHourEnd;
+                this.selectedHourEnd = null;
+
+                this.horas.map(hora => {
+                    hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA));
+                });
+            } else {
+                // reemplazar hora fin
+                this.selectedHourEnd.is_selected = false;
+                this.selectedHourEnd = horaSeleccionada;
+                this.selectedHourEnd.is_selected = true;
+            }
         }
     }
 
@@ -139,6 +159,8 @@ export class ReservarEspacioComponent {
     }
 
     getHorarioInstalacion(): void {
+        let today = new Date().getDay();
+
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
@@ -150,7 +172,7 @@ export class ReservarEspacioComponent {
                 this.idInstalacion = this.reqData.data[0].inst_id;
             },
             complete: () => {
-                this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${1}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
+                this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${today}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
                     this.reqData = res
                     this.horas = this.reqData.data;
                 });
