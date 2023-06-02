@@ -17,6 +17,7 @@
         <div class="container-right-down">
             <div class = "container-right-down-left">
                 <div class="container">
+                    <p>Dia seleccionado: {{selectedDate}}</p>
                     <p>Hora Entrada: {{selectedHourStart ? selectedHourStart.hora : "null"}}</p>
                     <p>Hora Salida: {{selectedHourEnd ? selectedHourEnd.hora : "null"}}</p>
                     <div class="time-selector">
@@ -29,7 +30,7 @@
                             </div>
                         </div>
                     </div>
-                    <button (click)="reservar()" class="boton-reserva">Reservar</button>
+                    <button (click)="reservar(selectedDate, selectedHourStart.hora, selectedHourEnd.hora)" class="boton-reserva">Reservar</button>
                 </div>
             </div>
             <div *ngIf="isAdmin" class = "container-right-down-right">

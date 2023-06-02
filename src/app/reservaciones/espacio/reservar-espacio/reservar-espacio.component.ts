@@ -44,7 +44,7 @@ export class ReservarEspacioComponent {
     today = new Date();
     tomorrow = new Date();
 
-    selectedDate: Date | null;
+    selectedDate: Date = new Date();
     selectedHourStart: Hora;
     selectedHourEnd: Hora;
 
@@ -187,9 +187,11 @@ export class ReservarEspacioComponent {
         });
     }
 
-    reservar(): void {
-        let formattedStartDate = this.datepipe.transform(this.selectedDate[0], 'yyyy-MM-dd HH:mm:ss')
-        let formattedFinishDate = this.datepipe.transform(this.selectedDate[1], 'yyyy-MM-dd HH:mm:ss')
+    reservar(dia: Date, hora_entrada: string, hora_salida: string): void {
+        let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd')
+
+        let dateTimeEntrada = diaFormateado + " " + hora_entrada;
+        let dateTimeSalida = diaFormateado + " " + hora_salida;
 
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };
@@ -197,8 +199,8 @@ export class ReservarEspacioComponent {
             matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
             num_nomina : localStorage.getItem('isAdmin') === 'true' ? localStorage.getItem('id') : null,
             id_espacio : this.id_espacio,
-            hora_entrada : formattedStartDate,
-            hora_salida : formattedFinishDate,
+            hora_entrada : dateTimeEntrada,
+            hora_salida : dateTimeSalida,
             prioridad : localStorage.getItem('isAdmin') === 'true' ? 1 : 2,
             estatus : 1,
             nombreEspacio: this.nombreEspacio,
