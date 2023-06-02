@@ -176,9 +176,6 @@ export class ReservarEspacioComponent {
                     this.reqData = res
                     this.horas = this.reqData.data;
                 });
-            },
-            error: (error) => {
-                console.log(error)
             }
         });
     }
