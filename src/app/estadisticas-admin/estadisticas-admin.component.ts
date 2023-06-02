@@ -27,6 +27,10 @@ export class EstadisticasAdminComponent {
     this.getDataCharts(new Date());
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    this.getDataCharts(new Date());
+  }
+
   getDataCharts(fecha: Date) {    
     let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
 

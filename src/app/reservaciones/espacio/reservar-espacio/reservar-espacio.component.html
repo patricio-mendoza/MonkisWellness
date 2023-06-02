@@ -17,7 +17,7 @@
         <div class="container-right-down">
             <div class = "container-right-down-left">
                 <div class="container">
-                    <p>Dia seleccionado: {{selectedDate}}</p>
+                    <p>Dia seleccionado: {{selectedDate.getFullYear()}}-{{selectedDate.getMonth()}}-{{selectedDate.getDate()}}</p>
                     <p>Hora Entrada: {{selectedHourStart ? selectedHourStart.hora : "null"}}</p>
                     <p>Hora Salida: {{selectedHourEnd ? selectedHourEnd.hora : "null"}}</p>
                     <div class="time-selector">
