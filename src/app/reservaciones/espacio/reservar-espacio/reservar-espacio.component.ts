@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -37,7 +37,7 @@ export class ReservarEspacioComponent {
     today = new Date();
     tomorrow = new Date();
 
-    selectedDate: Date = new Date();
+    _selectedDate: Date = new Date();
     selectedHourStart: Hora;
     selectedHourEnd: Hora;
 
@@ -58,6 +58,19 @@ export class ReservarEspacioComponent {
       if (this.today.getHours() > 22) this.today.setHours(24);
     }
 
+    get selectedDate(): Date {
+        return this._selectedDate;
+    }
+    
+    set selectedDate(value: Date) {
+        if (value !== this._selectedDate) {
+            this._selectedDate = value;
+            this.selectedHourStart = null;
+            this.selectedHourEnd = null;
+            this.getHorasDisponibles(value);
+        }
+    }
+    
     sumMinutesToHour(hora: string, minutes: number) {
         const [hour, minute] = hora.split(":").map(Number);
         const totalMinutes = hour * 60 + minute + minutes;
@@ -141,6 +154,15 @@ export class ReservarEspacioComponent {
         }
     }
 
+    getHorasDisponibles(dia: Date): void {
+        let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd');
+
+        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
+            this.reqData = res
+            this.horas = this.reqData.data;
+        });
+    }
+
     getBloqueosActivos(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
@@ -152,8 +174,6 @@ export class ReservarEspacioComponent {
     }
 
     getHorarioInstalacion(): void {
-        let today = new Date().getDay();
-
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
@@ -165,10 +185,7 @@ export class ReservarEspacioComponent {
                 this.idInstalacion = this.reqData.data[0].inst_id;
             },
             complete: () => {
-                this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${today}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
-                    this.reqData = res
-                    this.horas = this.reqData.data;
-                });
+                this.getHorasDisponibles(new Date());
             }
         });
     }
@@ -180,11 +197,16 @@ export class ReservarEspacioComponent {
         });
     }
 
-    reservar(dia: Date, hora_entrada: string, hora_salida: string): void {
+    reservar(dia: Date, hora_entrada: Hora, hora_salida: Hora): void {
+        if (!dia || !hora_entrada || !hora_salida) {
+            alert("Selecciona un horario valido para tu reservación.");
+            return;
+        }
+
         let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd')
 
-        let dateTimeEntrada = diaFormateado + " " + hora_entrada;
-        let dateTimeSalida = diaFormateado + " " + hora_salida;
+        let dateTimeEntrada = diaFormateado + " " + hora_entrada.hora;
+        let dateTimeSalida = diaFormateado + " " + hora_salida.hora;
 
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };

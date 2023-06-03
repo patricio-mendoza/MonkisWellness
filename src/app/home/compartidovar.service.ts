@@ -12,6 +12,8 @@ export class CompartidovarService {
   isModifyingAforo: boolean = false;
   isCheckingEstaSemana: boolean = false;
   isClosing: boolean = false;
+  isLogged: boolean = false;
+  isAdmin: boolean = false;
 
   reqData: any;
 
@@ -22,8 +24,6 @@ export class CompartidovarService {
   cambiarEstado(nuevoEstado:boolean){
     this.estadoSubject.next(nuevoEstado);
   }
-
-  isLogged: boolean = false;
 
   constructor(private router: Router) {
     router.events

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CompartidovarService } from '../home/compartidovar.service';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -13,7 +12,7 @@ export class AuthService {
    
    reqData: any;
 
-   constructor(private miservicio: CompartidovarService, private http: HttpClient) { }
+   constructor( private http: HttpClient) { }
 
    login(matricula: string) {
       // obtener desde la API
