@@ -357,7 +357,7 @@ server.get("/api/deportes/cancha/:id", (req, res) => {
 server.get("/api/bloqueos/espacio/:id", (req, res) => {
     let id = req.params.id;
 
-    let sql = `SELECT ADDTIME(hora_entrada, '-0:00:10') as start, ADDTIME(hora_salida, '-0:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`;
+    let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id} ORDER BY hora_entrada`;
     
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")

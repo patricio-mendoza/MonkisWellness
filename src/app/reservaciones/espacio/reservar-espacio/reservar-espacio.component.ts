@@ -105,7 +105,7 @@ export class ReservarEspacioComponent {
 
     selectHora(horaSeleccionada: Hora) {
         if (!this.selectedHourStart && !this.selectedHourEnd) {
-            // seleccionar hora de entrada
+            // seleccionar hora de entrada y salida
             this.selectedHourStart = horaSeleccionada;
             horaSeleccionada.is_selected = true; 
             // deshabilitar horas que no entran en el rango de reserva disponible
@@ -119,15 +119,14 @@ export class ReservarEspacioComponent {
             this.selectedHourStart.is_selected = false;
             this.selectedHourStart = horaSeleccionada;
             horaSeleccionada.is_selected = true;
-            
             // borrar hora de salida
             if (this.selectedHourEnd) { 
                 this.selectedHourEnd.is_selected = false;
                 this.selectedHourEnd = null; 
             }
-
+            // deshabilitar horas que no entran en el rango de reserva disponible
             this.horas.map(hora => {
-                hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA));
+                hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA - TIME_INTERVAL_FOR_RESERVA));
             });
         } else if (this.selectedHourStart && !this.selectedHourEnd) {
             if (this.selectedHourStart == horaSeleccionada) { return; }
@@ -142,7 +141,7 @@ export class ReservarEspacioComponent {
                 this.selectedHourEnd = null;
 
                 this.horas.map(hora => {
-                    hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA));
+                    hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA - TIME_INTERVAL_FOR_RESERVA));
                 });
             } else {
                 // reemplazar hora fin
@@ -173,19 +172,28 @@ export class ReservarEspacioComponent {
         })
         this.http.get(`${API_URI}/bloqueos/espacio/${this.id_espacio}`).subscribe( (res) => {
             this.reqData = res
-            this.bloqueos = this.reqData.data;
+            this.bloqueos = this.reqData.data.map((obj) => {
+                return {
+                    start: new Date(obj.start),
+                    end: new Date(obj.end)
+                }
+            });
+            console.log(this.bloqueos)
 
             // deshabilitar horarios no disponibles
             let horasIndex = 0;
             let rangoIndex = 0;
 
             while (horasIndex != this.horas.length && rangoIndex != this.bloqueos.length) {
-                let [hours, minutes] = this.horas[horasIndex].hora.split(":");
-                let tempDate = new Date(this._selectedDate.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0));
+                let [hoursStart, minutesStart] = this.horas[horasIndex].hora.split(":");
+                let [hoursEnd, minutesEnd] = this.sumMinutesToHour(this.horas[horasIndex].hora, TIME_INTERVAL_FOR_RESERVA).split(":");
 
-                if (tempDate < new Date(this.bloqueos[rangoIndex].start)) {
+                let tempDateStart = new Date(this._selectedDate.setHours(parseInt(hoursStart, 10), parseInt(minutesStart, 10), 0, 0));
+                let tempDateEnd = new Date(this._selectedDate.setHours(parseInt(hoursEnd, 10), parseInt(minutesEnd, 10), 0, 0));
+
+                if (tempDateStart < this.bloqueos[rangoIndex].start) {
                     horasIndex++;
-                } else if (tempDate > new Date(this.bloqueos[rangoIndex].end)) {
+                } else if (tempDateEnd > this.bloqueos[rangoIndex].end) {
                     rangoIndex++;
                 } else {
                     this.horas[horasIndex].is_disabled = true;
@@ -220,15 +228,26 @@ export class ReservarEspacioComponent {
     }
 
     reservar(dia: Date, hora_entrada: Hora, hora_salida: Hora): void {
-        if (!dia || !hora_entrada || !hora_salida) {
+        if (!dia || !hora_entrada) {
             alert("Selecciona un horario valido para tu reservación.");
             return;
+        } else {
+            if (!confirm("Seguro que quieres confirmar la reservación")){
+                return ;
+            }
         }
 
         let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd')
-
         let dateTimeEntrada = diaFormateado + " " + hora_entrada.hora;
-        let dateTimeSalida = diaFormateado + " " + hora_salida.hora;
+        let dateTimeSalida = diaFormateado + " ";
+
+        if (hora_salida) { 
+            dateTimeSalida += this.sumMinutesToHour(hora_salida.hora, TIME_INTERVAL_FOR_RESERVA);
+        } else {
+            dateTimeSalida += this.sumMinutesToHour(hora_entrada.hora, TIME_INTERVAL_FOR_RESERVA);
+        }
+        console.log(dateTimeEntrada)
+        console.log(dateTimeSalida)
 
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };
