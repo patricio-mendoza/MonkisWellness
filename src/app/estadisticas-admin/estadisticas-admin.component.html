@@ -1,6 +1,6 @@
 <div class="container">
     <div class="cuadrante afluencia-semanal">
-        <div class="title">Afluencia Por Semana</div>
+        <div id="afluencia" class="title">Afluencia Por Semana</div>
         <app-chart 
             [my_id]="'afluencia-semanal'"
             [type]="'bar'"
@@ -10,7 +10,7 @@
         ></app-chart>
     </div>
     <div class="cuadrante estancia-promedio">
-        <div class="title">Estancia Promedio</div>
+        <div id="estancia" class="title">Estancia Promedio</div>
         <app-chart 
             [my_id]="'estancia-promedio'"
             [type]="'bar'"
@@ -20,7 +20,7 @@
         ></app-chart>
     </div>
     <div class="cuadrante historial-aforo">
-        <div class="title">Historial del Aforo</div>
+        <div id="historial" class="title">Historial del Aforo</div>
         <app-chart 
             [my_id]="'historial-aforo'"
             [type]="'bar'"

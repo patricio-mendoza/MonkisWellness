@@ -2,8 +2,6 @@ import { Component, Input } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { CardService } from './card.service';
-
 
 const API_URI = 'http://localhost:8888/api';
 const MAXIMO_TIEMPO_RESERVA = 90 // tiempo en minutos
@@ -21,16 +19,17 @@ interface Reservacion {
     fecha: string;
 }
 
-interface Hora{
-    hora:string;
-    is_selected:boolean;
-    is_disabled:boolean;
+
+interface Hora {
+    hora: string;
+    is_selected: boolean;
+    is_disabled: boolean;
 }
 
 @Component({
-    selector: 'app-reservar-espacio',
-    templateUrl: './reservar-espacio.component.html',
-    styleUrls: ['./reservar-espacio.component.scss']
+  selector: 'app-reservar-espacio',
+  templateUrl: './reservar-espacio.component.html',
+  styleUrls: ['./reservar-espacio.component.scss']
 })
 export class ReservarEspacioComponent {
     isAdmin = localStorage.getItem('isAdmin') === "true";
@@ -51,31 +50,12 @@ export class ReservarEspacioComponent {
     horas: Hora[];
     bloqueos: Bloqueo[];
     reservaciones: Reservacion[] = [];
-    bloqueosEspacio: any[] = [];
 
-
-    horaReserva: string;
-    fecha: string;
-    id: string;
-
-    bloqueosCargados:boolean = false;
-
-    constructor(public tarjeta: CardService, public location: Location, public datepipe: DatePipe, public route: ActivatedRoute, public http: HttpClient) {
-        this.tomorrow.setDate(this.today.getDate() + 1);
-        this.tomorrow.setHours(22, 0, 0);
-        this.bloqueosCargados = false;
-
-        if (this.today.getHours() > 22) this.today.setHours(24);
-    }
-
+    constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
+      this.tomorrow.setDate(this.today.getDate() + 1);
+      this.tomorrow.setHours(22, 0, 0);
     
-
-    abrirTarjeta() {
-        this.tarjeta.idBlocking = true;
-    }
-
-    cerrarTarjeta() {
-        this.tarjeta.idBlocking = false;
+      if (this.today.getHours() > 22) this.today.setHours(24);
     }
 
     sumMinutesToHour(hora: string, minutes: number) {
@@ -105,23 +85,10 @@ export class ReservarEspacioComponent {
     ngOnInit() {
         this.getBloqueosActivos();
         this.getHorarioInstalacion();
-        this.getBloqueos();
 
         if (this.isAdmin) {
             this.getReservaciones();
         }
-    }
-
-    getBloqueos(): void {
-
-        const headers = { 'Content-Type': 'application/json' };
-        const options = { headers: headers };
-
-        this.http.get(`${API_URI}/reservaciones/bloqueos_espacio/${this.id_espacio}`, options).subscribe(res => {
-            this.reqData = res;
-            this.bloqueosEspacio = this.reqData.data;
-            this.bloqueosCargados = true;
-        })
     }
 
     selectHora(horaSeleccionada: Hora) {
@@ -223,13 +190,13 @@ export class ReservarEspacioComponent {
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };
         const body = {
-            matricula: localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
-            num_nomina: localStorage.getItem('isAdmin') === 'true' ? localStorage.getItem('id') : null,
-            id_espacio: this.id_espacio,
-            hora_entrada: formattedStartDate,
-            hora_salida: formattedFinishDate,
-            prioridad: localStorage.getItem('isAdmin') === 'true' ? 1 : 2,
-            estatus: 1,
+            matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
+            num_nomina : localStorage.getItem('isAdmin') === 'true' ? localStorage.getItem('id') : null,
+            id_espacio : this.id_espacio,
+            hora_entrada : formattedStartDate,
+            hora_salida : formattedFinishDate,
+            prioridad : localStorage.getItem('isAdmin') === 'true' ? 1 : 2,
+            estatus : 1,
             nombreEspacio: this.nombreEspacio,
             nombreInstalacion: this.nombreInstalacion
         };
@@ -242,7 +209,7 @@ export class ReservarEspacioComponent {
             }
         });
         const bodyAviso = {
-            matricula: localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
+            matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
             encabezado: 'Reservacion Confirmada',
             texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido confirmada.`,
             id_reservacion: 'LAST_INSERT_ID()'
@@ -259,7 +226,7 @@ export class ReservarEspacioComponent {
             texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido cancelada por un administrador.`,
             id_reservacion: id
         };
-
+      
         this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
         window.location.replace(this.location.path());

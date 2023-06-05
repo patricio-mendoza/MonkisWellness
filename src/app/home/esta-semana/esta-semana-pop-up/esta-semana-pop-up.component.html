@@ -1,9 +1,9 @@
 <div *ngIf="miServicio.isCheckingEstaSemana" class="blur">
-    <div class="container p-3">
+    <div class="container">
         <button (click)="closeEstaSemanaTab()" class="close-btn">X</button>
         <div class="header">
-            <p class="title m-2 ms-0">Esta Semana</p>
-            <p class="today mt-3">Hoy, {{dia.charAt(0).toUpperCase() + dia.slice(1)}}</p>
+            <p class="title">Esta Semana</p>
+            <p class="today">Hoy, {{dia.charAt(0).toUpperCase() + dia.slice(1)}}</p>
         </div>
         <div class="chart-container">
             <app-bar-chart [data]="historial"></app-bar-chart>
