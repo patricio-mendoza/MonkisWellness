@@ -14,7 +14,7 @@
             <img class="barra-texto" src="../../../assets/assets-elegir-area/barra-texto.png">
         </div>
         <div class = "container-right-down">
-            <span *ngFor="let espacio of espacios" class="espacio" (click)="handleClick(espacio.id_espacio)">
+            <span id="{{'tarjeta-espacio'+i}}" *ngFor="let espacio of espacios, let i = index" class="espacio" (click)="handleClick(espacio.id_espacio)">
                 <img class="espacio-imagen" src="../../../assets/foto_deporte/futbol.jpeg">
                 <div class = "back-color"></div>
                 <div class = "gradient"></div>
