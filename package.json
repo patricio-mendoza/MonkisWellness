@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^15.2.0",
     "@angular/platform-browser-dynamic": "^15.2.0",
     "@angular/router": "^15.2.0",
+    "@mobiscroll/angular": "https://npm.mobiscroll.com/@mobiscroll/angular-ivy-trial/-/angular-ivy-trial-5.24.1.tgz",
     "body-parser": "^1.20.2",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.4",
