@@ -40,13 +40,10 @@
             .hour:hover {
                 background-color: rgb(165, 165, 165);
             }
-            .hour.available {
-                background-color: #a9a6ff;
-            }
-            .hour.selected {
+            .hour.selected{
                 background-color: rgb(109, 180, 255);
             }
-            .hour.disabled {
+            .hour.disabled{
                 color: rgba(0, 0, 0, 0.293);
                 background-color: rgba(221, 221, 221, 0.259);
             }

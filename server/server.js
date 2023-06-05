@@ -115,7 +115,7 @@ server.delete('/api/delete/aviso/:id', (req, res) => {
 
 server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
     let id = req.params.id;
-    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
+    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -354,10 +354,10 @@ server.get("/api/deportes/cancha/:id", (req, res) => {
 });
 
 //ESPACIOS
-server.get("/api/bloqueos/espacio/:id", (req, res) => {
+server.get("/api/reservaciones/espacio/:id", (req, res) => {
     let id = req.params.id;
-
-    let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id} ORDER BY hora_entrada`;
+    let hourOffSet = new Date().getTimezoneOffset() / 60;
+    let sql = `SELECT ADDTIME(hora_entrada, '-${hourOffSet}:00:10') as start, ADDTIME(hora_salida, '-${hourOffSet}:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`;
     
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -440,6 +440,8 @@ server.put('/api/reserva/enprogreso/:id', (req, res) => {
         } 
     });
 });
+
+
 // Daniel
 // Insertar bloqueo 
 server.post('/api/bloquea/:id', (req,res)=>{
@@ -458,11 +460,11 @@ server.post('/api/bloquea/:id', (req,res)=>{
 
 server.get('/api/instalacion/horas_disponibles/:id_instalacion/:id_dia/:time_interval', (req, res) => {
     let id_instalacion = req.params.id_instalacion;
-    let fecha = req.params.fecha;
+    let id_dia = req.params.id_dia;
     let time_interval = req.params.time_interval;
 
     let sql = `SELECT * FROM (
-        SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
+        SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled
             FROM (
                 SELECT TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval
                 FROM
@@ -470,13 +472,13 @@ server.get('/api/instalacion/horas_disponibles/:id_instalacion/:id_dia/:time_int
                     (SELECT 0 AS num UNION ALL SELECT 10 UNION ALL SELECT 20 UNION ALL SELECT 30 UNION ALL SELECT 40 UNION ALL SELECT 50) t2,
                     (SELECT 0 AS num UNION ALL SELECT 100 UNION ALL SELECT 200 UNION ALL SELECT 300 UNION ALL SELECT 400 UNION ALL SELECT 500) t3,
                     (SELECT STR_TO_DATE(CONCAT('2023-05-31', hora_apertura), '%Y-%m-%d %H:%i') AS start_time, STR_TO_DATE(CONCAT('2023-05-31', hora_cierre), '%Y-%m-%d %H:%i') AS end_time
-                    FROM Horario WHERE id_instalacion=${id_instalacion} AND dia=dayofweek("${fecha}")) params
+                    FROM Horario WHERE id_instalacion=${id_instalacion} AND dia=${id_dia}) params
                 WHERE TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) <= end_time
             ) intervals
             ORDER BY hora) res
-            WHERE "${fecha}" = CURDATE() + INTERVAL 1 DAY OR ("${fecha}" = CURDATE() AND TIME(res.hora) >= CURTIME());`
-
-        db.query(sql, function (error, result) {
+        WHERE TIME(res.hora) >= TIME(now());`
+    console.log(sql)
+    db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
     });
