@@ -9,9 +9,14 @@ import { filter } from 'rxjs/operators';
 
 export class CompartidovarService {
   
+  MAXIMO_TIEMPO_RESERVA = 90 // tiempo en minutos
+  TIME_INTERVAL_FOR_RESERVA = 30 // tiempo en minutos
+  
   isModifyingAforo: boolean = false;
   isCheckingEstaSemana: boolean = false;
   isClosing: boolean = false;
+  isLogged: boolean = false;
+  isAdmin: boolean = false;
 
   reqData: any;
 
@@ -22,8 +27,6 @@ export class CompartidovarService {
   cambiarEstado(nuevoEstado:boolean){
     this.estadoSubject.next(nuevoEstado);
   }
-
-  isLogged: boolean = false;
 
   constructor(private router: Router) {
     router.events

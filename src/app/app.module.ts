@@ -107,10 +107,7 @@ registerLocaleData(localeEs, 'es');
   ],
   providers: 
   [DatePipe, {provide: LOCALE_ID, useValue: 'es'}
-  
-
 ],
-  
   bootstrap: [AppComponent]
 })
 export class AppModule { 

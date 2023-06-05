@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { CompartidovarService } from '../compartidovar.service.js';
-import { HttpClient } from '@angular/common/http';
 import { API_URI } from '../../../../server/server.js';
 import { HomeComponent } from '../home.component';
 import { DatePipe } from '@angular/common';
