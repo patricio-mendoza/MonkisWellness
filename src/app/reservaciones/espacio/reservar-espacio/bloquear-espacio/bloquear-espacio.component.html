@@ -56,5 +56,21 @@
 
         <!-- Separador -->
         <img src="../../../assets/Line 26.png" class="img-fluid m-2">
+
+        <p id="titulo-cierre-manual" class="text-white h1"> Liberar espacio </p>
+
+        <p class="text-white"> Quitar el bloqueo de un espacio</p>
+
+        <div id="caja-bloqueos" class="d-flex flex-column">
+            <div class="d-flex flex-column" *ngFor="let item of bloqueosEspacio" >
+                <div class="d-flex flex-row justify-content-between bg-primary rounded border border-2 border-white mb-1">
+                    <div class="text-white" >{{item.fecha_inicio.substring(0,10)}}</div>
+                    <div class="text-white">{{item.hora_inicio.substring(0,5)}} - {{item.hora_fin.substring(0,5)}}</div>
+                    <div class="btn bton border border-1 border-white text-white" (click)="liberar(item.id_bloqueo)" >Liberar</div>
+                </div>
+                
+            </div>
+        </div>
+
     </div>
 </div>
