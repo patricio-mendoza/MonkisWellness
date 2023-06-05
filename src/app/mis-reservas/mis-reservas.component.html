@@ -1,5 +1,5 @@
 <div class="big-container">
-    <div *ngFor = "let reserva of reservaciones"  class="reserva">
+    <div id="{{'reserva-'+i}}" *ngFor = "let reserva of reservaciones, let i = index"  class="reserva">
         <img class="back-foto" src="{{backgroundURL(reserva.nombre_deporte)}}">
         <div class = "color-foto"></div>
         <div class = "gradient"></div>
@@ -24,7 +24,7 @@
                         </div>
                         <div *ngIf = "reserva.estatus === 0" class="semaforo-right">En Progreso</div>
                         <div *ngIf = "reserva.estatus === 1" class="semaforo-right">Activa</div>
-                        <div *ngIf = "reserva.estatus === 2" class="semaforo-right">Finalizada</div>
+                        <div id="id-finalizada" *ngIf = "reserva.estatus === 2" class="semaforo-right">Finalizada</div>
                         <div *ngIf = "reserva.estatus === 3" class="semaforo-right">Cancelada</div>
                     </div>
                     <div *ngIf="isProrrogaActiva(reserva)" class="reserva-right-up-down">Prorroga hasta: {{getProrroga(reserva.hora_entrada)}}</div> 

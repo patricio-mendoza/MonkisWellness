@@ -364,6 +364,39 @@ server.get("/api/bloqueos/espacio/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
+
+// Daniel
+// Obtener reservaciones de un espacio de tiempo bloqueado
+server.get("/api/reservaciones/bloqueadas/:id/:fecha_inicio/:fecha_fin", (req, res) => {
+    let id = req.params.id;
+    
+    let sql = `select id_reservacion, matricula from reservacion where id_espacio = ${id} and hora_entrada > '${req.params.fecha_inicio}' and hora_salida < '${req.params.fecha_fin}';`
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+
+server.get("/api/reservaciones/bloqueos_espacio/:id", (req,res) => {
+    let id = req.params.id;
+    let sql = `select id_bloqueo, fecha_inicio, hora_inicio, hora_fin from bloqueo where id_espacio = ${id};`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+
+server.put("/api/reservaciones/liberar_espacio/:id", (req,res) => {
+    let id = req.params.id;
+    let sql = `delete from bloqueo where id_bloqueo = ${id};`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log(error)
+        else res.send({data: result });
+    });
+});
+
 server.post('/api/reservar/espacio', (req, res) => {
     let sql = "";
     if (req.body.matricula) sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
@@ -407,7 +440,23 @@ server.put('/api/reserva/enprogreso/:id', (req, res) => {
         } 
     });
 });
-server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_interval', (req, res) => {
+// Daniel
+// Insertar bloqueo 
+server.post('/api/bloquea/:id', (req,res)=>{
+
+    let id = req.params.id;
+    let sql = `Insert into bloqueo(id_espacio, dia, hora_inicio, hora_fin, repetible, fecha_inicio, fecha_final) values (${id},${req.body.dia},'${req.body.hora_inicio}','${req.body.hora_fin}',2,'${req.body.fechaInicio}','${req.body.fechaFinal}');`
+    
+    db.query(sql, function (error) {
+        if (error) console.log(error)
+        else{
+            res.send({ data: true });
+        } 
+    });
+
+})
+
+server.get('/api/instalacion/horas_disponibles/:id_instalacion/:id_dia/:time_interval', (req, res) => {
     let id_instalacion = req.params.id_instalacion;
     let fecha = req.params.fecha;
     let time_interval = req.params.time_interval;
