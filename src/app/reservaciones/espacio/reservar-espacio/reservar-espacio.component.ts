@@ -1,11 +1,10 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { CompartidovarService } from '../../../home/compartidovar.service';
 
 const API_URI = 'http://localhost:8888/api';
-const MAXIMO_TIEMPO_RESERVA = 90 // tiempo en minutos
-const TIME_INTERVAL_FOR_RESERVA = 30 // tiempo en minutos
 
 interface Bloqueo {
     start: Date;
@@ -23,6 +22,7 @@ interface Hora {
     hora: string;
     is_selected: boolean;
     is_disabled: boolean;
+    is_available: boolean;
 }
 
 
@@ -51,7 +51,12 @@ export class ReservarEspacioComponent {
     bloqueos: Bloqueo[];
     reservaciones: Reservacion[] = [];
 
-    constructor(private location: Location, private datepipe: DatePipe,private route: ActivatedRoute, private http: HttpClient) {
+    constructor(private location: Location, 
+                private datepipe: DatePipe,
+                private route: ActivatedRoute, 
+                private http: HttpClient,
+                public miServicio : CompartidovarService) 
+    {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
     
@@ -104,17 +109,18 @@ export class ReservarEspacioComponent {
     }
 
     selectHora(horaSeleccionada: Hora) {
+        if (horaSeleccionada.is_disabled) {return;}
+
+        let checkOverlap = false;
+
         if (!this.selectedHourStart && !this.selectedHourEnd) {
             // seleccionar hora de entrada y salida
             this.selectedHourStart = horaSeleccionada;
             horaSeleccionada.is_selected = true; 
-            // deshabilitar horas que no entran en el rango de reserva disponible
-            this.horas.map(hora => {
-                if (this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA - TIME_INTERVAL_FOR_RESERVA))) {
-                    hora.is_disabled = true;
-                }
-            });
-        } else if (this.selectedHourStart && horaSeleccionada.is_disabled) {
+
+            checkOverlap = true;
+
+        } else if (this.selectedHourStart && !horaSeleccionada.is_available) {
             // reemplazar hora de entrada
             this.selectedHourStart.is_selected = false;
             this.selectedHourStart = horaSeleccionada;
@@ -124,10 +130,8 @@ export class ReservarEspacioComponent {
                 this.selectedHourEnd.is_selected = false;
                 this.selectedHourEnd = null; 
             }
-            // deshabilitar horas que no entran en el rango de reserva disponible
-            this.horas.map(hora => {
-                hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA - TIME_INTERVAL_FOR_RESERVA));
-            });
+            checkOverlap = true;
+
         } else if (this.selectedHourStart && !this.selectedHourEnd) {
             if (this.selectedHourStart == horaSeleccionada) { return; }
             // seleccionar hora fin
@@ -140,9 +144,7 @@ export class ReservarEspacioComponent {
                 this.selectedHourStart = this.selectedHourEnd;
                 this.selectedHourEnd = null;
 
-                this.horas.map(hora => {
-                    hora.is_disabled = this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA - TIME_INTERVAL_FOR_RESERVA));
-                });
+                checkOverlap = true;
             } else {
                 // reemplazar hora fin
                 this.selectedHourEnd.is_selected = false;
@@ -150,12 +152,29 @@ export class ReservarEspacioComponent {
                 this.selectedHourEnd.is_selected = true;
             }
         }
+        if (checkOverlap) {
+            // checar las horas que se pueden seleccionar
+            let overlap = false;
+            for(let i = 0; i < this.horas.length; i++) {
+                if (!(this.hourIsBigger(horaSeleccionada.hora, this.horas[i].hora) || this.hourIsBigger(this.horas[i].hora, this.sumMinutesToHour(horaSeleccionada.hora, this.miServicio.MAXIMO_TIEMPO_RESERVA - this.miServicio.TIME_INTERVAL_FOR_RESERVA)))) {
+                    // revisar que no haya una reservacion entre la hora seleccionada y las posibles horas disponibles
+                    if (!this.horas[i].is_disabled && !overlap) {
+                        this.horas[i].is_available = true;
+                    } else {
+                        overlap = true;
+                        this.horas[i].is_available = false;
+                    }
+                } else {
+                    this.horas[i].is_available = false;
+                }
+            }
+        }
     }
 
     getHorasDisponibles(dia: Date): void {
         let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd');
 
-        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe({
+        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${this.miServicio.TIME_INTERVAL_FOR_RESERVA}`).subscribe({
             next: (res) => {
                 this.reqData = res
                 this.horas = this.reqData.data;
@@ -186,7 +205,7 @@ export class ReservarEspacioComponent {
 
             while (horasIndex != this.horas.length && rangoIndex != this.bloqueos.length) {
                 let [hoursStart, minutesStart] = this.horas[horasIndex].hora.split(":");
-                let [hoursEnd, minutesEnd] = this.sumMinutesToHour(this.horas[horasIndex].hora, TIME_INTERVAL_FOR_RESERVA).split(":");
+                let [hoursEnd, minutesEnd] = this.sumMinutesToHour(this.horas[horasIndex].hora, this.miServicio.TIME_INTERVAL_FOR_RESERVA).split(":");
 
                 let tempDateStart = new Date(this._selectedDate.setHours(parseInt(hoursStart, 10), parseInt(minutesStart, 10), 0, 0));
                 let tempDateEnd = new Date(this._selectedDate.setHours(parseInt(hoursEnd, 10), parseInt(minutesEnd, 10), 0, 0));
@@ -242,9 +261,9 @@ export class ReservarEspacioComponent {
         let dateTimeSalida = diaFormateado + " ";
 
         if (hora_salida) { 
-            dateTimeSalida += this.sumMinutesToHour(hora_salida.hora, TIME_INTERVAL_FOR_RESERVA);
+            dateTimeSalida += this.sumMinutesToHour(hora_salida.hora, this.miServicio.TIME_INTERVAL_FOR_RESERVA);
         } else {
-            dateTimeSalida += this.sumMinutesToHour(hora_entrada.hora, TIME_INTERVAL_FOR_RESERVA);
+            dateTimeSalida += this.sumMinutesToHour(hora_entrada.hora, this.miServicio.TIME_INTERVAL_FOR_RESERVA);
         }
         console.log(dateTimeEntrada)
         console.log(dateTimeSalida)

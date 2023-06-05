@@ -413,7 +413,7 @@ server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_inte
     let time_interval = req.params.time_interval;
 
     let sql = `SELECT * FROM (
-        SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled
+        SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
             FROM (
                 SELECT TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval
                 FROM

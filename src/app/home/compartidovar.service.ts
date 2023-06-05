@@ -9,6 +9,9 @@ import { filter } from 'rxjs/operators';
 
 export class CompartidovarService {
   
+  MAXIMO_TIEMPO_RESERVA = 90 // tiempo en minutos
+  TIME_INTERVAL_FOR_RESERVA = 30 // tiempo en minutos
+  
   isModifyingAforo: boolean = false;
   isCheckingEstaSemana: boolean = false;
   isClosing: boolean = false;
