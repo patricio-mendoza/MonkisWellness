@@ -25,8 +25,8 @@
                             <mat-calendar [(selected)]="selectedDate"></mat-calendar>
                         </mat-card>
                         <div class="hour-selector">
-                            <div (click)="selectHora(hora)" *ngFor="let hora of horas" class="hour" [ngClass]="hora.is_selected ? 'selected' : hora.is_disabled ? 'disabled' : ''">
-                                {{hora.hora}}
+                            <div (click)="selectHora(hora)" *ngFor="let hora of horas; let i = index" class="hour" [ngClass]="hora.is_selected ? 'selected' : hora.is_disabled ? 'disabled' : ''">
+                                {{horas[i].hora}} - {{horas[i+1] ? horas[i+1].hora : "null"}}
                             </div>
                         </div>
                     </div>

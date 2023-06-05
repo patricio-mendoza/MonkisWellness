@@ -110,7 +110,7 @@ export class ReservarEspacioComponent {
             horaSeleccionada.is_selected = true; 
             // deshabilitar horas que no entran en el rango de reserva disponible
             this.horas.map(hora => {
-                if (this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA))) {
+                if (this.hourIsBigger(horaSeleccionada.hora, hora.hora) || this.hourIsBigger(hora.hora, this.sumMinutesToHour(horaSeleccionada.hora, MAXIMO_TIEMPO_RESERVA - TIME_INTERVAL_FOR_RESERVA))) {
                     hora.is_disabled = true;
                 }
             });
