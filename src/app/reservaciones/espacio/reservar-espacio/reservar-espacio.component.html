@@ -20,27 +20,19 @@
 
             <div class = "container-right-down-left">
                 <div class="container">
-                    <p class="display-selected-time">
-                        Fecha Seleccionada: {{selectedDate.getFullYear()}}-{{selectedDate.getMonth()}}-{{selectedDate.getDate()}}
-                        desde las {{selectedHourStart ? selectedHourStart.hora : "???"}} 
-                        a las {{selectedHourStart ? selectedHourEnd ? sumMinutesToHour(selectedHourEnd.hora, miServicio.TIME_INTERVAL_FOR_RESERVA) : sumMinutesToHour(selectedHourStart.hora, miServicio.TIME_INTERVAL_FOR_RESERVA) : "???"}}
-                    </p>
+                    <p>Hora Entrada: {{selectedHourStart ? selectedHourStart.hora : "null"}}</p>
+                    <p>Hora Salida: {{selectedHourEnd ? selectedHourEnd.hora : "null"}}</p>
                     <div class="time-selector">
                         <mat-card class="calendario">
                             <mat-calendar [(selected)]="selectedDate"></mat-calendar>
                         </mat-card>
                         <div class="hour-selector">
-                            <div (click)="selectHora(hora)" *ngFor="let hora of horas; let i = index" class="hour" 
-                                [ngClass]="{
-                                    'selected': hora.is_selected,
-                                    'available': hora.is_available,
-                                    'disabled': hora.is_disabled,
-                                }">
-                                {{horas[i].hora}} - {{horas[i+1] ? horas[i+1].hora : "null"}}
+                            <div (click)="selectHora(hora)" *ngFor="let hora of horas" class="hour" [ngClass]="hora.is_selected ? 'selected' : hora.is_disabled ? 'disabled' : ''">
+                                {{hora.hora}}
                             </div>
                         </div>
                     </div>
-                    <button (click)="reservar(selectedDate, selectedHourStart, selectedHourEnd)" class="boton-reserva">Reservar</button>
+                    <button (click)="reservar()" class="boton-reserva">Reservar</button>
                 </div>
             </div>
             <div *ngIf="isAdmin" class="container-right-down-right">
