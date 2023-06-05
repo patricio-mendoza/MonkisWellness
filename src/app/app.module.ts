@@ -1,3 +1,4 @@
+import { MbscModule } from '@mobiscroll/angular';
 import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -41,7 +42,6 @@ import { CierresComponent } from './home/cierres/cierres.component';
 import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
 import { EstadisticasAdminComponent } from './estadisticas-admin/estadisticas-admin.component';
 import { ChartComponent } from './estadisticas-admin/chart/chart.component';
-import { BloquearEspacioComponent} from './reservaciones/espacio/reservar-espacio/bloquear-espacio/bloquear-espacio.component'
 
 
 registerLocaleData(localeEs, 'es');
@@ -71,9 +71,9 @@ registerLocaleData(localeEs, 'es');
     BarChartComponent,
     EstadisticasAdminComponent,
     ChartComponent,
-    BloquearEspacioComponent,
   ],
-  imports: [    
+  imports: [  
+    MbscModule,   
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
