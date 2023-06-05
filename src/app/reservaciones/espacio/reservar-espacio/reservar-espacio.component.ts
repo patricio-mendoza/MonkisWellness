@@ -19,12 +19,12 @@ interface Reservacion {
     fecha: string;
 }
 
+
 interface Hora {
     hora: string;
     is_selected: boolean;
     is_disabled: boolean;
 }
-
 
 @Component({
   selector: 'app-reservar-espacio',
