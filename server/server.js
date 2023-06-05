@@ -115,7 +115,7 @@ server.delete('/api/delete/aviso/:id', (req, res) => {
 
 server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
     let id = req.params.id;
-    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1`;
+    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -354,10 +354,10 @@ server.get("/api/deportes/cancha/:id", (req, res) => {
 });
 
 //ESPACIOS
-server.get("/api/reservaciones/espacio/:id", (req, res) => {
+server.get("/api/bloqueos/espacio/:id", (req, res) => {
     let id = req.params.id;
-    let hourOffSet = new Date().getTimezoneOffset() / 60;
-    let sql = `SELECT ADDTIME(hora_entrada, '-${hourOffSet}:00:10') as start, ADDTIME(hora_salida, '-${hourOffSet}:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`;
+
+    let sql = `SELECT ADDTIME(hora_entrada, '-0:00:10') as start, ADDTIME(hora_salida, '-0:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`;
     
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")

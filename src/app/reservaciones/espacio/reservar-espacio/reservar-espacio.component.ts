@@ -96,7 +96,6 @@ export class ReservarEspacioComponent {
     }
 
     ngOnInit() {
-        this.getBloqueosActivos();
         this.getHorarioInstalacion();
 
         if (this.isAdmin) {
@@ -157,9 +156,14 @@ export class ReservarEspacioComponent {
     getHorasDisponibles(dia: Date): void {
         let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd');
 
-        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe(res => {
-            this.reqData = res
-            this.horas = this.reqData.data;
+        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${TIME_INTERVAL_FOR_RESERVA}`).subscribe({
+            next: (res) => {
+                this.reqData = res
+                this.horas = this.reqData.data;
+            },
+            complete: () => {
+                this.getBloqueosActivos();
+            }
         });
     }
 
@@ -167,9 +171,27 @@ export class ReservarEspacioComponent {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
-        this.http.get(`${API_URI}/reservaciones/espacio/${this.id_espacio}`).subscribe(res => {
-            this.reqData = res;
+        this.http.get(`${API_URI}/bloqueos/espacio/${this.id_espacio}`).subscribe( (res) => {
+            this.reqData = res
             this.bloqueos = this.reqData.data;
+
+            // deshabilitar horarios no disponibles
+            let horasIndex = 0;
+            let rangoIndex = 0;
+
+            while (horasIndex != this.horas.length && rangoIndex != this.bloqueos.length) {
+                let [hours, minutes] = this.horas[horasIndex].hora.split(":");
+                let tempDate = new Date(this._selectedDate.setHours(parseInt(hours, 10), parseInt(minutes, 10), 0, 0));
+
+                if (tempDate < new Date(this.bloqueos[rangoIndex].start)) {
+                    horasIndex++;
+                } else if (tempDate > new Date(this.bloqueos[rangoIndex].end)) {
+                    rangoIndex++;
+                } else {
+                    this.horas[horasIndex].is_disabled = true;
+                    horasIndex++;
+                }
+            }
         });
     }
 
