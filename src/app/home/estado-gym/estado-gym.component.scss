@@ -46,6 +46,11 @@
     font-weight: bolder;
 }
 
+.texto-estado {
+    font-size: 5vw;
+    font-family: 'Bebas Neue';
+    
+
 .estado {
     .texto-estado {
         margin-top: 3rem;
@@ -67,8 +72,19 @@
 }
 
 .grafica-porcentaje {
-    float: left;
-    left: 5rem;
-    margin-top: -0.7rem;
-    margin-bottom: auto;
+    height: 100%;
+    width: auto;
+}
+
+#cierres-col, #cierres-row{
+    height: 100%;
+}
+
+.botonAforo{
+    background-color: #00912204;
+    height: fit-content;
+    width: fit-content;
+}
+.botonAforo:hover{
+    opacity: 0.6;
 }
