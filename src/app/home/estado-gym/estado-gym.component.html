@@ -22,6 +22,7 @@
 
 
         <div id="letrero-estado" class="d-flex flex-column text-white ms-auto mt-auto mb-3">
+
             <div class="textos-estado  text-white">
                 <div class="d-flex flex-row mb-3">
                     <div class="fw-light"> Hora de {{estado ? 'Cierre' : 'Apertura'}}: </div>
@@ -31,7 +32,7 @@
             <div class="d-flex flex-row align-items-center mt-3">
                 <span *ngIf="estado" class="icono-estado fas fa-circle" style="color: green"></span>
                 <span *ngIf="!estado" class="icono-estado fas fa-circle" style="color: red"></span>
-                <div class="texto-estado text-white ms-2">{{estado ? 'Abierto' : 'Cerrado'}}</div>
+                <div class="texto-estado text-white">{{estado ? 'Abierto' : 'Cerrado'}}</div>
             </div>
         </div>
 
