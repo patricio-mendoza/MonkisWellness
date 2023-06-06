@@ -15,7 +15,7 @@ import { fadeInOut, INavbarData } from './helper';
       class="sublevel-nav"
     >
       <li *ngFor="let item of data.items" class="sublevel-nav-item">
-          <a class="sublevel-nav-link"
+          <a id="sub-1" class="sublevel-nav-link"
           (click)="handleClick(item)"
             *ngIf="item.items && item.items.length > 0"
             [ngClass]="getActiveClass(item)"
@@ -27,7 +27,7 @@ import { fadeInOut, INavbarData } from './helper';
               [ngClass]="!item.expanded ? 'fal fa-angle-right' : 'fal fa-angle-down'"
             ></i>
           </a>
-          <a class="sublevel-nav-link"
+          <a id="{{'sub-' + item.label}}" class="sublevel-nav-link"
             *ngIf="!item.items || (item.items && item.items.length === 0)"
             [routerLink]="[item.routeLink]"
             routerLinkActive="active-sublevel"

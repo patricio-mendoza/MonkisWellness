@@ -10,9 +10,11 @@
 </div>
 <div *ngIf="isAdmin" class="lower-container">
     <div (click)="openEstaSemanaTab()" class="flex-box3"><app-esta-semana></app-esta-semana></div>
-    <div  class="flex-box4"><app-historial></app-historial></div>
+    <div (click)="openHistorialTab()" class="flex-box4"><app-historial></app-historial></div>
+
 </div>
 
 <app-modif-aforo *ngIf="miServicio.isModifyingAforo" ></app-modif-aforo>
-<app-cierres *ngIf="miServicio.isClosing" id="overlay-cierres" ></app-cierres>
 <app-esta-semana-pop-up *ngIf="miServicio.isCheckingEstaSemana"></app-esta-semana-pop-up>
+<app-historial-pop-up [datos]="historial" *ngIf="miServicio.isCheckingHistorial"></app-historial-pop-up>
+<app-cierres *ngIf="miServicio.isClosing" id="overlay-cierres" ></app-cierres>

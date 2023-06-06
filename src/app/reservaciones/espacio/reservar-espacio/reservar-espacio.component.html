@@ -1,6 +1,6 @@
-<div class = "big-container">
-    <div class = "big-container-left">
-        <div class = "container-left">
+<div class="big-container">
+    <div class="big-container-left">
+        <div class="container-left">
             <img class="sport-imagen" src="../../../assets/foto_deporte/futbol.jpeg">
             <div class="sport-gradient"></div>
             <div class="sport-texto-container">
@@ -10,57 +10,55 @@
             <img class="sport-barra-up" src="../../../assets/assets-elegir-area/barra-sport.png">
         </div>
     </div>
-    <div class = "big-container-right">
-        <div class = "container-right-up">
-            <div class = "texto-area">Elige un horario</div>
+    <div class="big-container-right">
+        <div class="container-right-up">
+            <div class="texto-area">Elige un horario</div>
             <img class="barra-texto" src="../../../assets/assets-elegir-area/barra-texto.png">
         </div>
         <div class="container-right-down">
+
             <div class = "container-right-down-left">
                 <div class="container">
-                    <p class="display-selected-time">
-                        Fecha Seleccionada: {{selectedDate.getFullYear()}}-{{selectedDate.getMonth()}}-{{selectedDate.getDate()}}
-                        desde las {{selectedHourStart ? selectedHourStart.hora : "???"}} 
-                        a las {{selectedHourStart ? selectedHourEnd ? sumMinutesToHour(selectedHourEnd.hora, miServicio.TIME_INTERVAL_FOR_RESERVA) : sumMinutesToHour(selectedHourStart.hora, miServicio.TIME_INTERVAL_FOR_RESERVA) : "???"}}
-                    </p>
+                    <p>Hora Entrada: {{selectedHourStart ? selectedHourStart.hora : "null"}}</p>
+                    <p>Hora Salida: {{selectedHourEnd ? selectedHourEnd.hora : "null"}}</p>
                     <div class="time-selector">
                         <mat-card class="calendario">
                             <mat-calendar [(selected)]="selectedDate"></mat-calendar>
                         </mat-card>
                         <div class="hour-selector">
-                            <div (click)="selectHora(hora)" *ngFor="let hora of horas; let i = index" class="hour" 
-                                [ngClass]="{
-                                    'selected': hora.is_selected,
-                                    'available': hora.is_available,
-                                    'disabled': hora.is_disabled,
-                                }">
-                                {{horas[i].hora}} - {{horas[i+1] ? horas[i+1].hora : "null"}}
+                            <div (click)="selectHora(hora)" *ngFor="let hora of horas" class="hour" [ngClass]="hora.is_selected ? 'selected' : hora.is_disabled ? 'disabled' : ''">
+                                {{hora.hora}}
                             </div>
                         </div>
                     </div>
-                    <button (click)="reservar(selectedDate, selectedHourStart, selectedHourEnd)" class="boton-reserva">Reservar</button>
+                    <button (click)="reservar()" class="boton-reserva">Reservar</button>
                 </div>
             </div>
-            <div *ngIf="isAdmin" class = "container-right-down-right">
+            <div *ngIf="isAdmin" class="container-right-down-right">
                 <div class="headers">
                     <div class="header">Id</div>
                     <div class="header">Fecha</div>
                     <div class="header">Hora</div>
                 </div>
-                <div *ngFor="let reservacion of reservaciones" class = "reservacion">
+                <div *ngFor="let reservacion of reservaciones" class="reservacion">
                     <div *ngIf="reservaciones.length > 0" class="reservaciones-actuales-left">
                         <div>{{reservacion.dueno}}</div>
                         <div>{{reservacion.fecha}}</div>
                         <div>{{reservacion.hora}}</div>
                     </div>
+
                     <div (click)="cancelarReservacion(reservacion.id, reservacion.dueno)" class = "reservaciones-actuales-right">
                         X
                     </div>
                 </div>
                 <div *ngIf="reservaciones.length === 0" class="no-reservations">
-                    <div>NO HAY RESERVACIONES POR EL MOMENTO</div> 
+                    <div>NO HAY RESERVACIONES POR EL MOMENTO</div>
                 </div>
+            </div>
+            <div *ngIf="bloqueosCargados && isAdmin" (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white">
+                Bloquear espacio
             </div>
         </div>
     </div>
 </div>
+<app-bloquear-espacio *ngIf="this.tarjeta.idBlocking"></app-bloquear-espacio>

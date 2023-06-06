@@ -39,9 +39,11 @@ import { ModifAforoComponent } from './home/modif-aforo/modif-aforo.component';
 import { EstaSemanaPopUpComponent } from './home/esta-semana/esta-semana-pop-up/esta-semana-pop-up.component';
 import { CierresComponent } from './home/cierres/cierres.component';
 import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-chart/bar-chart.component';
+import { HistorialPopUpComponent } from './home/historial/historial-pop-up/historial-pop-up.component';
+import { GrafBarrasComponent } from './home/historial/historial-pop-up/graf-barras/graf-barras.component';
 import { EstadisticasAdminComponent } from './estadisticas-admin/estadisticas-admin.component';
 import { ChartComponent } from './estadisticas-admin/chart/chart.component';
-
+import { BloquearEspacioComponent } from './reservaciones/espacio/reservar-espacio/bloquear-espacio/bloquear-espacio.component';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -68,10 +70,13 @@ registerLocaleData(localeEs, 'es');
     EstaSemanaPopUpComponent,
     CierresComponent,
     BarChartComponent,
+    HistorialPopUpComponent,
+    GrafBarrasComponent,
     EstadisticasAdminComponent,
     ChartComponent,
+    BloquearEspacioComponent
   ],
-  imports: [  
+  imports: [   
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -106,7 +111,10 @@ registerLocaleData(localeEs, 'es');
   ],
   providers: 
   [DatePipe, {provide: LOCALE_ID, useValue: 'es'}
+  
+
 ],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { 
