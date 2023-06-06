@@ -1,34 +1,35 @@
-<div class="d-flex flex-row justify-content-start">
+<div id="caja-estado" class="d-flex flex-row justify-content-start ">
 
-    <div class="d-flex flex-column align-items-evenly">
-        <div class="d-flex flex-column">
-            <div class="titulo-aforo">Aforo actual</div>
-            <div class="separator"></div>
+    <div id="columna-estado" class="d-flex flex-column">
+
+        <div class="d-flex flex-column mb-3 mt-3">
+            <div class="titulo-aforo ms-3 m-0">Aforo actual</div>
+            <div class="separator mt-3"></div>
         </div>
 
-        <div class="saludo d-flex flex-column text-white ms-5">
-            <p id="saludo">
+        <div class="saludo d-flex flex-column text-white ms-5 mt-auto">
+            <p id="saludo m-0 mb-3">
                 HOY, {{dia.toUpperCase()}}
             </p>
-            <p id="fecha" class="reloj m-0">{{time | date: 'dd'}} de {{time | date: 'MMMM'}}</p>
-            <p id="hora" class="reloj m-0">{{time | date: 'hh:mm a'}}</p>
+            <p id="fecha" class="reloj m-0 mb-1">{{time | date: 'dd'}} de {{time | date: 'MMMM'}}</p>
+            <p id="hora" class="reloj m-0 mb-1">{{time | date: 'hh:mm a'}}</p>
             <div id="boton-cierre" *ngIf="isAdmin" (click)="cierresTab()" id="boton-cierre"
-                class="shadow btn btn-light fw-bold border border-dark border-3 d-flex align-items-center justify-content-center mt-2">
+                class="shadow btn btn-light fw-bold border border-dark border-3 mb-1 d-flex align-items-center justify-content-center mt-2">
                 Programar Cierre
             </div>
         </div>
 
-        <div class="estado-actual d-flex flex-column text-white ms-5 mt-3">
-            <div class="textos-estado  text-white">
+        <div class="estado-actual d-flex flex-column text-white ms-5 mt-auto">
+            <div class="textos-estado text-white m-0">
                 <div class="d-flex flex-row">
                     <div class="fw-light"> Hora de {{estado ? 'Cierre' : 'Apertura'}}: </div>
                     <div id="hora-de-cambio" class="fw-bold ms-1"> {{estado? hora_cierre : hora_apertura }} </div>
                 </div>
             </div>
-            <div class="estado d-flex flex-row align-items-center">
+            <div class="estado d-flex flex-row align-items-center mb-2">
                 <span *ngIf="estado" class="icono-estado fas fa-circle" style="color: rgb(0, 200, 0)"></span>
                 <span *ngIf="!estado" class="icono-estado fas fa-circle" style="color: red"></span>
-                <div class="texto-estado text-white">{{estado ? 'Abierto' : 'Cerrado'}}</div>
+                <div class="texto-estado text-white ms-2">{{estado ? 'Abierto' : 'Cerrado'}}</div>
             </div>
         </div>
 
