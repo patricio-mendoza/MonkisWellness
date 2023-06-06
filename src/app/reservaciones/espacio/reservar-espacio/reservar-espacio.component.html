@@ -34,7 +34,7 @@
                                     'available': hora.is_available,
                                     'disabled': hora.is_disabled,
                                 }">
-                                {{horas[i].hora}} - {{horas[i+1] ? horas[i+1].hora : "null"}}
+                                {{horas[i+1] ? horas[i].hora : ""}} - {{horas[i+1] ? horas[i+1].hora : ""}}
                             </div>
                         </div>
                     </div>
