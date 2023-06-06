@@ -488,7 +488,7 @@ server.get('/api/instalacion/horas_disponibles/:id_instalacion/:id_dia/:time_int
             ) intervals
             ORDER BY hora) res
         WHERE TIME(res.hora) >= TIME(now());`
-    console.log(sql)
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
