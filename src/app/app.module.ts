@@ -71,7 +71,7 @@ registerLocaleData(localeEs, 'es');
     CierresComponent,
     BarChartComponent,
     HistorialPopUpComponent,
-    GrafBarrasComponent
+    GrafBarrasComponent,
     EstadisticasAdminComponent,
     ChartComponent,
     BloquearEspacioComponent

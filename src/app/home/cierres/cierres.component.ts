@@ -38,12 +38,11 @@ export class CierresComponent extends HomeComponent {
 
   estado: boolean;
   warning: boolean = false;
-  reqData: any;
 
   // Se obtiene la hora actual
   hora: string = this.datePipe.transform(new Date(), 'HH:mm');
 
-  ngOnInit() {
+  override ngOnInit() {
     // Se obtiene el estado del gimnasio
     this.getEstadoGym();
     this.getCierres();

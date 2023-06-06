@@ -28,7 +28,7 @@ export class EstadoGymComponent extends HomeComponent {
 
 
 
-  ngOnInit() {
+    override ngOnInit() {
     this.getEstadoGym();
     this.getAforo();
     this.getHoraA();
