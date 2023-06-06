@@ -38,6 +38,8 @@ export class EstadisticasAdminComponent {
     this.http.get(`${API_URI}/gym/semana/${fechastr}`).subscribe(res => {
       this.reqData = res;
       this.dataChartSemanal = this.reqData.data.map(x => x.aforo);
+      console.log(this.reqData.data)
+      console.log(this.dataChartSemanal)
     });
 
     // Esta Historial Fetch
