@@ -56,7 +56,7 @@
                     <div>NO HAY RESERVACIONES POR EL MOMENTO</div>
                 </div>
             </div>
-            <div *ngIf="bloqueosCargados" (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white">
+            <div *ngIf="bloqueosCargados && isAdmin" (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white">
                 Bloquear espacio
             </div>
         </div>
