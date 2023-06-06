@@ -2,29 +2,27 @@
 
 
 .container{
-    height: 120px;
-    width: 140px;
-    margin-top: 30px;
-    margin-right: 12px;
-    background-color: rgba(0, 255, 255, 0);
-    place-items: center;
-    display: grid;
+    margin-left: 1rem;
+    margin-top: 8rem;
+    
+    .hora {
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: -40px;
+        background-color: rgba(0, 255, 255, 0);
+        font-size: 2rem;
+    }
+    .grafica_wrapper {
+        position: absolute;
+        margin-left: 10rem;
+        margin-top: -4rem;
+        .porcentaje_text {
+            position: absolute;
+            transform:translate(-250%, 220%);
+            color: white;
+            font-weight: bold;
+        }
+    }
 }
-
-.empty-container{
-    position: absolute;
-    top: 250px;
-    background-color: rgba(0, 255, 255, 0);
-}
-
-.porcentaje_actual{
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: bold;
-    position: absolute;
-    margin-top: -80px;
-    right: 100px; 
-    background-color: rgba(0, 255, 255, 0);
-}
-
    

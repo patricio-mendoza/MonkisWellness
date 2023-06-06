@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HoraMinutoComponent } from './hora-minuto.component';
+import { CierresComponent } from './cierres.component';
 
-describe('HoraMinutoComponent', () => {
-  let component: HoraMinutoComponent;
-  let fixture: ComponentFixture<HoraMinutoComponent>;
+describe('CierresComponent', () => {
+  let component: CierresComponent;
+  let fixture: ComponentFixture<CierresComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HoraMinutoComponent ]
+      declarations: [ CierresComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HoraMinutoComponent);
+    fixture = TestBed.createComponent(CierresComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

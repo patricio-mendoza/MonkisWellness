@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="cuadrante afluencia-semanal">
+        <div id="afluencia" class="title">Afluencia Por Semana</div>
+        <app-chart 
+            [my_id]="'afluencia-semanal'"
+            [type]="'bar'"
+            [label]="'Promedio de Personas Por Día de la Semana'"
+            [labels]="['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado']"
+            [data]="dataChartSemanal"
+        ></app-chart>
+    </div>
+    <div class="cuadrante estancia-promedio">
+        <div id="estancia" class="title">Estancia Promedio</div>
+        <app-chart 
+            [my_id]="'estancia-promedio'"
+            [type]="'bar'"
+            [label]="'Promedio de Personas Por Día de la Semana'"
+            [labels]="['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado']"
+            [data]="dataChartSemanal"
+        ></app-chart>
+    </div>
+    <div class="cuadrante historial-aforo">
+        <div id="historial" class="title">Historial del Aforo</div>
+        <app-chart 
+            [my_id]="'historial-aforo'"
+            [type]="'bar'"
+            [label]="'Historial de Aforo Por Hora'"
+            [labels]="labelsChartHistorial"
+            [data]="dataChartHistorial"
+        ></app-chart>
+    </div>
+    <div class="cuadrante opciones">
+        <div class="title">Opciones de Visualización</div>
+        <div class="configuracion recargar-datos">
+            <mat-form-field class="date-picker">
+                <mat-label>Elige una fecha</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="fechaPorCargar">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <button (click)="recargarDatos(fechaPorCargar)" class="btn btn-primary btn-recargar">Recargar Datos</button>
+        </div>
+        <div class="configuracion descargar-datos">
+            <mat-form-field class="date-picker">
+                <mat-label>Elige un rango de fecha</mat-label>
+                <mat-date-range-input [rangePicker]="picker2">
+                  <input matStartDate placeholder="Start date" [(ngModel)]="fechaInicio">
+                  <input matEndDate placeholder="End date" [(ngModel)]="fechaFinal">
+                </mat-date-range-input>
+                <mat-hint>MM/DD/YYYY - MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker2></mat-date-range-picker>
+              </mat-form-field>
+            <button (click)="descargarDatos(fechaInicio, fechaFinal)" class="btn btn-primary btn-descargar">Descargar Datos</button>
+        </div>
+    </div>
+</div>
