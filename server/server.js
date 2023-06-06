@@ -19,9 +19,9 @@ var config = {
     ssl: true
 };
 
-const db = new mysql.createConnection(config); 
+const db = new mysql.createConnection(config);
 
-db.connect( function (error) {
+db.connect(function (error) {
     if (error) {
         console.log("Error connecting to database")
     } else {
@@ -35,7 +35,7 @@ server.listen(port, function check(error) {
 });
 
 // USERS
-server.get("/api/user/:id", (req, res) => {    
+server.get("/api/user/:id", (req, res) => {
     let id = req.params.id
 
     if (id.length != 9 || (id[0] !== 'A' && id[0] !== 'L')) {
@@ -55,7 +55,7 @@ server.get("/api/user/:id", (req, res) => {
         else res.send({ status: true, data: result });    
     });
 });
-server.get("/api/user/reservaciones/:id", (req, res) => {   
+server.get("/api/user/reservaciones/:id", (req, res) => {
     let id = req.params.id;
     sql = `SELECT sub.id_reservacion, sub.hora_entrada, sub.hora_salida, sub.estatus, sub.nombre_espacio, sub.nombre_deporte, sub.nombre_instalacion
     FROM (
@@ -73,7 +73,7 @@ server.get("/api/user/reservaciones/:id", (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: result });    
+        else res.send({ data: result });
     });
 });
 server.get("/api/avisos/:id", (req, res) => {
@@ -91,7 +91,7 @@ server.get("/api/avisos/:id", (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: result });    
+        else res.send({ data: result });
     });
 });
 server.post('/api/generar/aviso', (req, res) => {
@@ -128,9 +128,9 @@ server.delete('/api/reservacion/delete/:id', (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else{
+        else {
             res.send({ data: true });
-        } 
+        }
     });
 });
 server.post('/api/generar/avisoCancelacion', (req, res) => {
@@ -139,12 +139,12 @@ server.post('/api/generar/avisoCancelacion', (req, res) => {
 });
 
 // GYM
-server.get("/api/gym/estado", (req, res) => {    
+server.get("/api/gym/estado", (req, res) => {
     let sql = `SELECT estado FROM Wellness WHERE id = 1`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ estado: result[0].estado });    
+        else res.send({ estado: result[0].estado });
     });
 });
 
@@ -174,10 +174,10 @@ server.put("/api/gym/estado/cerrar", (req,res) => {
 server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
     let newAforo = req.params.newAforo;
     let sql = `UPDATE Wellness SET aforo_max = ${newAforo} WHERE id=1;`
-    
+
     db.query(sql, function (error) {
         if (error) console.log("Error Updating the Data")
-        else res.send({ data: true });    
+        else res.send({ data: true });
     });
 });
 server.get("/api/gym/aforo", (req, res) => {
@@ -185,7 +185,7 @@ server.get("/api/gym/aforo", (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: result[0] });    
+        else res.send({ data: result[0] });
     });
 });
 
@@ -204,7 +204,7 @@ server.post('/api/bloqueo/', (req, res) => {
 server.get('/api/gym/estimaciones', (req, res) => {
     let fecha = new Date();
     var offset = -(new Date().getTimezoneOffset() / 60);
-
+    
     fecha.setHours(fecha.getHours() + offset)
     fecha = fecha.toISOString().slice(0, 19).replace('T', ' ');
 
@@ -322,14 +322,25 @@ server.put("/api/gym/borrar", (req, res) => {
     });
 });
 
+//Get para tabla historial
+server.get('/api/gym/historial/:fecha/:fecha_sem_ant', (req, res) => {
+    let fecha = req.params.fecha;
+    let fecha_sem_ant = req.params.fecha_sem_ant;
+    let sql = `Select aforo, tiempo, dayname(tiempo) as dia from historial  WHERE (tiempo < '${fecha}' AND tiempo > '${fecha_sem_ant}') ORDER BY dia desc, tiempo asc`
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error")
+        else res.send({ data: result });
+    });
+});
+
 //DEPORTES
 server.get(`/api/deporte/:id`, (req, res) => {
     let id = req.params.id;
     let sql = `SELECT nombre FROM Deporte WHERE id_deporte=${id}`;
-    
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: result });    
+        else res.send({ data: result });
     });
 });
 server.get("/api/deportes", (req, res) => {
@@ -337,10 +348,10 @@ server.get("/api/deportes", (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: result });    
+        else res.send({ data: result });
     });
 });
-server.get("/api/deportes/cancha/:id", (req, res) => {    
+server.get("/api/deportes/cancha/:id", (req, res) => {
     let id = req.params.id;
     let sql = `SELECT esp.id_espacio, esp.nombre AS nombre_espacio, esp.url_fotos, ins.nombre AS nombre_instalacion
     FROM Espacio esp JOIN Instalacion ins ON esp.id_instalacion = ins.id_instalacion JOIN EspacioDeporte espdep ON esp.id_espacio = espdep.id_espacio JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
@@ -349,7 +360,7 @@ server.get("/api/deportes/cancha/:id", (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: result });    
+        else res.send({ data: result });
     });
 });
 
@@ -358,10 +369,10 @@ server.get("/api/reservaciones/espacio/:id", (req, res) => {
     let id = req.params.id;
     let hourOffSet = new Date().getTimezoneOffset() / 60;
     let sql = `SELECT ADDTIME(hora_entrada, '-${hourOffSet}:00:10') as start, ADDTIME(hora_salida, '-${hourOffSet}:00:10') as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id}`;
-    
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
-        else res.send({ data: result });    
+        else res.send({ data: result });
     });
 });
 
@@ -400,7 +411,7 @@ server.put("/api/reservaciones/liberar_espacio/:id", (req,res) => {
 server.post('/api/reservar/espacio', (req, res) => {
     let sql = "";
     if (req.body.matricula) sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
-    else  sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${req.body.matricula}, "${req.body.num_nomina}", ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
+    else sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${req.body.matricula}, "${req.body.num_nomina}", ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error")

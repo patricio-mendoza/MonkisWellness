@@ -11,6 +11,7 @@ export class CompartidovarService {
   
   isModifyingAforo: boolean = false;
   isCheckingEstaSemana: boolean = false;
+  isCheckingHistorial: boolean = false;
   isClosing: boolean = false;
 
   reqData: any;

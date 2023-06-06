@@ -26,7 +26,7 @@ export class EstadoGymComponent extends HomeComponent {
   aforo_max: number = 280;
   aforo_actual: number = 0;
 
-  reqData: any;
+
 
   ngOnInit() {
     this.getEstadoGym();
