@@ -38,8 +38,6 @@ export class EstadisticasAdminComponent {
     this.http.get(`${API_URI}/gym/semana/${fechastr}`).subscribe(res => {
       this.reqData = res;
       this.dataChartSemanal = this.reqData.data.map(x => x.aforo);
-      console.log(this.reqData.data)
-      console.log(this.dataChartSemanal)
     });
 
     // Esta Historial Fetch
@@ -53,6 +51,9 @@ export class EstadisticasAdminComponent {
   recargarDatos(fechaPorCargar: Date) {
     if (fechaPorCargar === undefined) { 
       alert("No hay una fecha seleccionada para recargar los datos de la página."); 
+      return;
+    } else if (fechaPorCargar > new Date()) {
+      alert("No se pueden cargar datos de una fecha futura");
       return;
     }
     this.getDataCharts(fechaPorCargar);
