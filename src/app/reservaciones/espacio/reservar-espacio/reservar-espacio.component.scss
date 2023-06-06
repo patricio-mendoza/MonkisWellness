@@ -54,7 +54,7 @@
     }
     
     .boton-reserva{
-        background-color: #413bff;
+        background-color: #004386;
         border-radius: 8px;
         border-style: none;
         box-sizing: border-box;
@@ -79,7 +79,6 @@
         -webkit-user-select: none;
         touch-action: manipulation;
         margin-top: 1rem;
-
     }
 }
 .big-container{
@@ -129,10 +128,8 @@
             //font-size-adjust: 0.8;
             .sport-texto{
                 font-family: 'Poppins', sans-serif;
-                font-size: 5vh;
-                
+                font-size: 4vmin;
                 line-height: 5vh;
-                
                 letter-spacing: 00.03em;
                 color: #ffffff;
                 position: absolute;
@@ -217,7 +214,7 @@
        // position:absolute;
         height: 100%;
         width: 100%;
-        background-color: #0f0072;
+        background-color: #003366;
         border-radius: 15px;
         display: flex;
         flex-direction: column;
@@ -229,7 +226,7 @@
         overflow-y: auto;
         .headers{
             display: flex;
-            margin-left: 1rem;
+            margin-left: 2rem;
             .header{
                 flex-grow: 1;
                 color: white;
@@ -253,6 +250,7 @@
                 background-color: #FFFFFF;
                 border-radius: 10px;
                 align-items: center;
+                line-height: 1;
                 font-family: 'Poppins', sans-serif;
                 font-size: 0.8vw;
                 text-align: center;
