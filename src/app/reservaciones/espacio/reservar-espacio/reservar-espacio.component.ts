@@ -235,8 +235,6 @@ export class ReservarEspacioComponent {
                     end: new Date(obj.end)
                 }
             });
-            console.log(this.bloqueos)
-
             // deshabilitar horarios no disponibles
             let horasIndex = 0;
             let rangoIndex = 0;

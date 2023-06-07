@@ -199,8 +199,6 @@ export class CierresComponent extends HomeComponent {
             repetible: 1,
           };
 
-          console.log(body)
-
           this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
         }
 
