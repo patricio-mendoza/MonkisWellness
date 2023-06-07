@@ -243,10 +243,12 @@ server.get('/api/gym/historial/:fecha', (req, res) => {
     });
 });
 server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', (req, res) => {
-    let fecha = req.params.fecha;
+    let fechaInicio = req.params.fechaInicio;
+    let fechaFinal = req.params.fechaFinal;
 
-    let sql = `SELECT tiempo, aforo FROM Historial WHERE tiempo > '${fechaInicio}' AND tiempo < '${fechaFinal}';
-    `
+    let sql = `SELECT tiempo, aforo FROM Historial WHERE tiempo > '${fechaInicio}' AND tiempo < '${fechaFinal}';`
+    console.log(sql)
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
