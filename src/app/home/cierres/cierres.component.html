@@ -85,25 +85,25 @@
                 <div class="d-flex flex-column-reverse col-sm-3">
                     <div class="d-flex flex-row input-group-text fw-bold justify-content-center">
                         <label>
-                            <input type="checkbox" [checked]="diaSemana.includes(1)" (change)="toggleDay(1)"> D
+                            <input id="sele-domingo" type="checkbox" [checked]="diaSemana.includes(1)" (change)="toggleDay(1)"> D
                         </label>
                         <label>
-                            <input type="checkbox" [checked]="diaSemana.includes(2)" (change)="toggleDay(2)"> L
+                            <input id="sele-lunes" type="checkbox" [checked]="diaSemana.includes(2)" (change)="toggleDay(2)"> L
                         </label>
                         <label>
-                            <input type="checkbox" [checked]="diaSemana.includes(3)" (change)="toggleDay(3)"> Ma
+                            <input id="sele-martes" type="checkbox" [checked]="diaSemana.includes(3)" (change)="toggleDay(3)"> Ma
                         </label>
                         <label>
-                            <input type="checkbox" [checked]="diaSemana.includes(4)" (change)="toggleDay(4)"> Mi
+                            <input id="sele-miercoles" type="checkbox" [checked]="diaSemana.includes(4)" (change)="toggleDay(4)"> Mi
                         </label>
                         <label>
-                            <input type="checkbox" [checked]="diaSemana.includes(5)" (change)="toggleDay(5)"> J
+                            <input id="sele-jueves" type="checkbox" [checked]="diaSemana.includes(5)" (change)="toggleDay(5)"> J
                         </label>
                         <label>
-                            <input type="checkbox" [checked]="diaSemana.includes(6)" (change)="toggleDay(6)"> V
+                            <input id="sele-viernes" type="checkbox" [checked]="diaSemana.includes(6)" (change)="toggleDay(6)"> V
                         </label>
                         <label>
-                            <input type="checkbox" [checked]="diaSemana.includes(7)" (change)="toggleDay(7)"> S
+                            <input id="sele-sabado" type="checkbox" [checked]="diaSemana.includes(7)" (change)="toggleDay(7)"> S
                         </label>
                     </div>
                     <p [ngClass]="{'validacionFallida': valProg1}" class="h6 fw-bold"> Indique los días en los que aplica el cierre: </p>
