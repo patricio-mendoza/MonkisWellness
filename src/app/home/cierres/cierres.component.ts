@@ -25,14 +25,20 @@ export class CierresComponent extends HomeComponent {
   hora_inicio: string;
   hora_fin: string;
   form: FormGroup;
-  diaSemana: number = 0;
+  diaSemana: number[] = [];
   diaSemanaM: number = 0;
   cierres: bloqueo[];
   cierresByDay: bloqueo[];
   cierre_act: number = -1;
   editarIni: string;
   editarFin: string;
-  valCierre: boolean;
+  valCierre1: boolean;
+  valCierre2: boolean;
+
+  valProg1: boolean = false;
+  valProg2: boolean = false;
+  valProg3: boolean = false;
+
 
   datePipe = new DatePipe("en-US");
 
@@ -144,28 +150,55 @@ export class CierresComponent extends HomeComponent {
     this.diaSemanaM = 0;
   }
 
+  toggleDay(day: number): void {
+    if (this.diaSemana.includes(day)) {
+      this.diaSemana = this.diaSemana.filter(d => d !== day);
+    } else {
+      this.diaSemana.push(day);
+    }
+  }
+
   bloquear(): void {
+    this.valProg1 = false;
+    this.valProg2 = false;
+    this.valProg3 = false;
     const horaInicio = this.hora_inicio;
     const horaFin = this.hora_fin;
 
-    let confirmar = window.confirm("¿Deseas programar el cierre de " + horaInicio + " a " + horaFin + "?")
-    if (confirmar) {
-      const headers = { 'Content-Type': 'application/json' };
-      const options = { headers: headers };
+    if (this.diaSemana.length != 0 && this.hora_inicio != null && this.hora_fin != null) {
 
-      const body = {
-        id_espacio: null,
-        id_wellness: 1,
-        dia: this.diaSemana,
-        hora_inicio: horaInicio,
-        hora_fin: horaFin,
-        repetible: 1,
-      };
+      let confirmar = window.confirm("¿Deseas programar el cierre de " + horaInicio + " a " + horaFin + "?")
+      if (confirmar) {
+        for (let d of this.diaSemana) {
+          const headers = { 'Content-Type': 'application/json' };
+          const options = { headers: headers };
 
-      this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
+          const body = {
+            id_espacio: null,
+            id_wellness: 1,
+            dia: d,
+            hora_inicio: horaInicio,
+            hora_fin: horaFin,
+            repetible: 1,
+          };
 
-      this.reiniciarInputP();
-      this.miServicio.cambiarEstado(true);
+          console.log(body)
+
+          this.http.post(`${API_URI}/bloqueo/`, JSON.stringify(body), options).subscribe();
+        }
+
+        this.reiniciarInputP();
+        this.miServicio.cambiarEstado(true);
+      }
+    }
+    else {
+      // Validación de campos
+      if (this.diaSemana.length == 0) this.valProg1 = true;
+      else this.valProg1 = false;
+      if (this.hora_inicio == null) this.valProg2 = true;
+      else this.valProg2 = false;
+      if (this.hora_fin == null) this.valProg3 = true;
+      else this.valProg3 = false;
     }
   }
 
@@ -237,10 +270,14 @@ export class CierresComponent extends HomeComponent {
   borrarCierre() {
 
     if (this.diaSemanaM == 0 || this.cierre_act == -1) {
-      this.valCierre = true;
+      if (this.diaSemanaM == 0) this.valCierre1 = true;
+      else this.valCierre1 = false;
+      if (this.cierre_act == -1) this.valCierre2 = true;
+      else this.valCierre2 = false;
     }
     else {
-      this.valCierre = false;
+      this.valCierre1 = false;
+      this.valCierre2 = false;
       let confirmar = window.confirm("¿Deseas eliminar este cierre?")
 
       const headers = { 'Content-Type': 'application/json' };
