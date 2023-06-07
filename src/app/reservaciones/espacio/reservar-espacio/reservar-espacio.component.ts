@@ -3,6 +3,7 @@ import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CompartidovarService } from '../../../home/compartidovar.service';
+import { CardService } from './card.service';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -50,17 +51,33 @@ export class ReservarEspacioComponent {
     horas: Hora[];
     bloqueos: Bloqueo[];
     reservaciones: Reservacion[] = [];
+    bloqueosEspacio: any[] = [];
 
-    constructor(private location: Location, 
-                private datepipe: DatePipe,
+    bloqueosCargados:boolean = false;
+
+    constructor(public tarjeta: CardService,
+                private location: Location, 
+                public datepipe: DatePipe,
                 private route: ActivatedRoute, 
-                private http: HttpClient,
+                public http: HttpClient,
                 public miServicio : CompartidovarService) 
     {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
+      this.bloqueosCargados = false;
+
     
       if (this.today.getHours() > 22) this.today.setHours(24);
+    }
+
+
+
+    abrirTarjeta() {
+        this.tarjeta.idBlocking = true;
+    }
+
+    cerrarTarjeta() {
+        this.tarjeta.idBlocking = false;
     }
 
     get selectedDate(): Date {
@@ -102,10 +119,23 @@ export class ReservarEspacioComponent {
 
     ngOnInit() {
         this.getHorarioInstalacion();
+        this.getBloqueos();
 
         if (this.isAdmin) {
             this.getReservaciones();
         }
+    }
+
+    getBloqueos(): void {
+
+        const headers = { 'Content-Type': 'application/json' };
+        const options = { headers: headers };
+
+        this.http.get(`${API_URI}/reservaciones/bloqueos_espacio/${this.id_espacio}`, options).subscribe(res => {
+            this.reqData = res;
+            this.bloqueosEspacio = this.reqData.data;
+            this.bloqueosCargados = true;
+        })
     }
 
     selectHora(horaSeleccionada: Hora) {
