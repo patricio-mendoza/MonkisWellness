@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -22,7 +22,10 @@ export class HorasProximasComponent {
   }
 
   getEstimaciones() {
-    this.http.get(`${API_URI}/gym/estimaciones`).subscribe(res => {
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(`${API_URI}/gym/estimaciones`, {headers}).subscribe(res => {
       this.reqData = res;
       this.estimacionEn1Horas = this.reqData.data[0].aforo;
       this.estimacionEn2Horas = this.reqData.data[1].aforo;

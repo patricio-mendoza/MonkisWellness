@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 const API_URI = 'http://localhost:8888/api';
@@ -34,8 +34,10 @@ export class ReservacionesComponent implements OnInit {
 
   getDeportes() {
     let apiURL = `${API_URI}/deportes`;
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
 
-    this.http.get(apiURL).subscribe(res => {
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.deportes = this.reqData.data
     });

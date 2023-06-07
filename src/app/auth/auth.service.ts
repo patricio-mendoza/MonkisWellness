@@ -31,6 +31,7 @@ export class AuthService {
                      this.isUserLoggedIn = true;
                      this.isAdmin = id[0] === 'L';  
 
+                     localStorage.setItem('token', this.reqData.token);
                      localStorage.setItem('id', id);
                   }
                   localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 

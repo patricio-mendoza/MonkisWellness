@@ -1,4 +1,5 @@
 const express = require("express");
+const jwt = require("jsonwebtoken")
 const bodyParser = require("body-parser")
 const mysql = require("mysql")
 const cors = require("cors")
@@ -34,6 +35,19 @@ server.listen(port, function check(error) {
     else console.log(`Started in port ${port}`)
 });
 
+// Authorization: Bearer <token>
+function verifyToken(req, res, next) {
+    const bearerHeader = req.headers['authorization'];
+
+    if (typeof bearerHeader === "undefined") { 
+        res.sendStatus(403); 
+    } else {
+        const bearerToken = bearerHeader.split(" ")[1];
+        req.token = bearerToken;
+        next();
+    }
+}
+
 // USERS
 server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id
@@ -52,10 +66,20 @@ server.get("/api/user/:id", (req, res) => {
 
     db.query(sql, function (error, result) {
         if (error) res.send({ status: false, data: [] })
-        else res.send({ status: true, data: result });    
+        else {
+            jwt.sign({user: result}, "secretkey", {expiresIn: "2h"}, (err, token) => {
+                res.send({ status: true, token: token, data: result });
+            });
+        }    
     });
 });
-server.get("/api/user/reservaciones/:id", (req, res) => {   
+server.get("/api/user/reservaciones/:id", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });   
     let id = req.params.id;
     sql = `SELECT sub.id_reservacion, sub.hora_entrada, sub.hora_salida, sub.estatus, sub.nombre_espacio, sub.nombre_deporte, sub.nombre_instalacion
     FROM (
@@ -76,7 +100,13 @@ server.get("/api/user/reservaciones/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
-server.get("/api/avisos/:id", (req, res) => {
+server.get("/api/avisos/:id", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     sql = `SELECT CONCAT(DATE_FORMAT(res.hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(res.hora_salida, '%H:%i')) AS tiempoReserva,
                 DATE_FORMAT(avi.tiempo, '%H:%i') AS tiempoNotif,
@@ -88,20 +118,32 @@ server.get("/api/avisos/:id", (req, res) => {
             FROM Reservacion res JOIN Anuncio avi ON avi.id_reservacion = res.id_reservacion JOIN Espacio esp ON esp.id_espacio = res.id_espacio
             WHERE avi.matricula="${id}"
             ORDER BY avi.tiempo DESC`;
-
+    console.log('b')
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
     });
 });
-server.post('/api/generar/aviso', (req, res) => {
+server.post('/api/generar/aviso', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo, id_reservacion) VALUES ('${req.body.matricula}', '${req.body.encabezado}', '${req.body.texto}', now(), ${req.body.id_reservacion})`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
     });
 });
-server.delete('/api/delete/aviso/:id', (req, res) => {
+server.delete('/api/delete/aviso/:id', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     let sql = `DELETE FROM Anuncio WHERE id_anuncio=${id}`;
     
@@ -113,7 +155,13 @@ server.delete('/api/delete/aviso/:id', (req, res) => {
     });
 });
 
-server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
+server.get('/api/reservacionesActivas/espacio/:id', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
 
@@ -122,7 +170,13 @@ server.get('/api/reservacionesActivas/espacio/:id', (req, res) => {
         else res.send({ data: result });
     });
 });
-server.delete('/api/reservacion/delete/:id', (req, res) => {
+server.delete('/api/reservacion/delete/:id', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     let sql = `UPDATE Reservacion SET estatus=3 WHERE id_reservacion=${id}`;
 
@@ -133,13 +187,15 @@ server.delete('/api/reservacion/delete/:id', (req, res) => {
         } 
     });
 });
-server.post('/api/generar/avisoCancelacion', (req, res) => {
-    let id = localStorage.getItem("id")
-    let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo) VALUES ('${id}, 'Reservacion Cancelada', ''')`
-});
 
 // GYM
-server.get("/api/gym/estado", (req, res) => {    
+server.get("/api/gym/estado", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });    
     let sql = `SELECT estado FROM Wellness WHERE id = 1`;
 
     db.query(sql, function (error, result) {
@@ -171,7 +227,13 @@ server.put("/api/gym/estado/cerrar", (req,res) => {
 
 });
 
-server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
+server.put("/api/gym/updateAforo/:newAforo", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let newAforo = req.params.newAforo;
     let sql = `UPDATE Wellness SET aforo_max = ${newAforo} WHERE id=1;`
     
@@ -180,7 +242,13 @@ server.put("/api/gym/updateAforo/:newAforo", (req, res) => {
         else res.send({ data: true });    
     });
 });
-server.get("/api/gym/aforo", (req, res) => {
+server.get("/api/gym/aforo", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let sql = `SELECT aforo_max, aforo_actual FROM Wellness WHERE id = 1`;
 
     db.query(sql, function (error, result) {
@@ -191,7 +259,13 @@ server.get("/api/gym/aforo", (req, res) => {
 
 // Programar nuevos cierres
 
-server.post('/api/bloqueo/', (req, res) => {
+server.post('/api/bloqueo/', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let sql = "";
     sql = `INSERT INTO Bloqueo(id_espacio, id_wellness, dia, hora_inicio, hora_fin, repetible) VALUES (${req.body.id_espacio}, "${req.body.id_wellness}", "${req.body.dia}", '${req.body.hora_inicio}', '${req.body.hora_fin}', ${req.body.repetible})` // Esto es una query
     db.query(sql, function (error, result) {
@@ -201,7 +275,13 @@ server.post('/api/bloqueo/', (req, res) => {
 });
 
 
-server.get('/api/gym/estimaciones', (req, res) => {
+server.get('/api/gym/estimaciones', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let fecha = new Date();
     var offset = -(new Date().getTimezoneOffset() / 60);
 
@@ -215,7 +295,13 @@ server.get('/api/gym/estimaciones', (req, res) => {
         else res.send({ data: result });
     });
 })
-server.get('/api/gym/estaSemana', (req, res) => {
+server.get('/api/gym/estaSemana', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE tiempo > DATE_FORMAT(NOW() - INTERVAL 7 day, '%Y-%m-%d 00:00.000') AND tiempo < now() GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
 
     db.query(sql, function (error, result) {
@@ -223,7 +309,13 @@ server.get('/api/gym/estaSemana', (req, res) => {
         else res.send({ data: result });
     });
 });
-server.get('/api/gym/semana/:fecha', (req, res) => {
+server.get('/api/gym/semana/:fecha', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let fecha = req.params.fecha;
 
     let sql = `SELECT DAYOFWEEK(tiempo) as dia, AVG(aforo) as aforo FROM Historial WHERE tiempo > DATE_FORMAT("${fecha}" - INTERVAL 1 week, '%Y-%m-%d 00:00.000') GROUP BY DAYOFWEEK(tiempo) ORDER BY DAYOFWEEK(tiempo);`;
@@ -232,7 +324,13 @@ server.get('/api/gym/semana/:fecha', (req, res) => {
         else res.send({ data: result });
     });
 });
-server.get('/api/gym/historial/:fecha', (req, res) => {
+server.get('/api/gym/historial/:fecha', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let fecha = req.params.fecha;
 
     let sql = `SELECT HOUR(tiempo) as hora, CASE WHEN tiempo < now() THEN aforo ELSE 0 END aforo FROM Historial WHERE tiempo >= DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000') AND tiempo < DATE_ADD(DATE_FORMAT("${fecha}", '%Y-%m-%d 00:00.000'),INTERVAL 1 DAY) and aforo > 0;
@@ -242,7 +340,13 @@ server.get('/api/gym/historial/:fecha', (req, res) => {
         else res.send({ data: result });
     });
 });
-server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', (req, res) => {
+server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let fechaInicio = req.params.fechaInicio;
     let fechaFinal = req.params.fechaFinal;
 
@@ -303,7 +407,13 @@ server.post('/api/gym/cambioManual', (req,res) => {
 
 // Daniel
 // Cancela todos los cierres manuales, ya que solo puede haber uno activo a la vez
-server.put("/api/gym/cancelarCierresM", (req, res) => {
+server.put("/api/gym/cancelarCierresM", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let sql = `Delete from bloqueo WHERE repetible = 0;`
     
     db.query(sql, function (error) {
@@ -314,7 +424,13 @@ server.put("/api/gym/cancelarCierresM", (req, res) => {
 
 // Daniel
 // Borra el cierre repetible seleccionado
-server.put("/api/gym/borrar", (req, res) => {
+server.put("/api/gym/borrar", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let sql = `Delete from bloqueo WHERE id_bloqueo = ${req.body.id_bloqueo};`
     
     db.query(sql, function (error) {
@@ -324,7 +440,13 @@ server.put("/api/gym/borrar", (req, res) => {
 });
 
 //DEPORTES
-server.get(`/api/deporte/:id`, (req, res) => {
+server.get(`/api/deporte/:id`, verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     let sql = `SELECT nombre FROM Deporte WHERE id_deporte=${id}`;
     
@@ -333,7 +455,13 @@ server.get(`/api/deporte/:id`, (req, res) => {
         else res.send({ data: result });    
     });
 });
-server.get("/api/deportes", (req, res) => {
+server.get("/api/deportes", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     sql = `SELECT * FROM Deporte`;
 
     db.query(sql, function (error, result) {
@@ -341,7 +469,13 @@ server.get("/api/deportes", (req, res) => {
         else res.send({ data: result });    
     });
 });
-server.get("/api/deportes/cancha/:id", (req, res) => {    
+server.get("/api/deportes/cancha/:id", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });    
     let id = req.params.id;
     let sql = `SELECT esp.id_espacio, esp.nombre AS nombre_espacio, esp.url_fotos, ins.nombre AS nombre_instalacion
     FROM Espacio esp JOIN Instalacion ins ON esp.id_instalacion = ins.id_instalacion JOIN EspacioDeporte espdep ON esp.id_espacio = espdep.id_espacio JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
@@ -356,7 +490,13 @@ server.get("/api/deportes/cancha/:id", (req, res) => {
 
 // Daniel
 // Obtener reservaciones de un espacio de tiempo bloqueado
-server.get("/api/reservaciones/bloqueadas/:id/:fecha_inicio/:fecha_fin", (req, res) => {
+server.get("/api/reservaciones/bloqueadas/:id/:fecha_inicio/:fecha_fin", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     
     let sql = `select id_reservacion, matricula from reservacion where id_espacio = ${id} and hora_entrada > '${req.params.fecha_inicio}' and hora_salida < '${req.params.fecha_fin}';`
@@ -387,7 +527,13 @@ server.put("/api/reservaciones/liberar_espacio/:id", (req,res) => {
 });
 
 //ESPACIOS
-server.get("/api/bloqueos/espacio/:id", (req, res) => {
+server.get("/api/bloqueos/espacio/:id", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
 
     let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id} ORDER BY hora_entrada`;
@@ -397,7 +543,13 @@ server.get("/api/bloqueos/espacio/:id", (req, res) => {
         else res.send({ data: result });    
     });
 });
-server.post('/api/reservar/espacio', (req, res) => {
+server.post('/api/reservar/espacio', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let sql = "";
     if (req.body.matricula) sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES ("${req.body.matricula}", ${req.body.num_nomina}, ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
     else  sql = `INSERT INTO Reservacion(matricula, num_nomina, id_espacio, hora_entrada, hora_salida, prioridad, estatus) VALUES (${req.body.matricula}, "${req.body.num_nomina}", ${req.body.id_espacio}, "${req.body.hora_entrada}", "${req.body.hora_salida}", ${req.body.prioridad}, ${req.body.estatus})`
@@ -407,7 +559,13 @@ server.post('/api/reservar/espacio', (req, res) => {
         else res.send({ status: true });
     });
 });
-server.get('/api/instalacion/datos/:id', (req, res) => {
+server.get('/api/instalacion/datos/:id', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     let dia = new Date();
     numDia = dia.getDay() === 0 ? 7 : dia.getDay();
@@ -418,7 +576,13 @@ server.get('/api/instalacion/datos/:id', (req, res) => {
         else res.send({ data: result });
     });
 })
-server.put('/api/cancelar/mireserva/:id', (req, res) => {
+server.put('/api/cancelar/mireserva/:id', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     let sql = `UPDATE Reservacion SET estatus = 3 WHERE id_reservacion = ${id}`
 
@@ -429,7 +593,13 @@ server.put('/api/cancelar/mireserva/:id', (req, res) => {
         } 
     });
 });
-server.put('/api/reserva/enprogreso/:id', (req, res) => {
+server.put('/api/reserva/enprogreso/:id', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id = req.params.id;
     let sql = `UPDATE Reservacion SET estatus = 0 WHERE id_reservacion = ${id}`
     
@@ -457,11 +627,17 @@ server.post('/api/bloquea/:id', (req,res)=>{
 
 });
 
-server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_interval', (req, res) => {
+server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_interval', verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
     let id_instalacion = req.params.id_instalacion;
     let fecha = req.params.fecha;
     let time_interval = req.params.time_interval;
-
+    
     let sql = `SELECT * FROM (
         SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
             FROM (

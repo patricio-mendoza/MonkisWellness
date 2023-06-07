@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -33,12 +33,13 @@ export class MisReservasComponent implements OnInit {
   getReservas(): void {
     let id = localStorage.getItem("id")
     let apiURL = `${API_URI}/user/reservaciones/${id}`;
-    this.http.get(apiURL).subscribe(res => {
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.reservaciones = this.reqData.data;
     });
-
-    
   }
   
   confirmar(reserva: Reserva){
@@ -47,8 +48,10 @@ export class MisReservasComponent implements OnInit {
     // estado de reserva = 4
     let index = this.reservaciones.indexOf(reserva);
     this.reservaciones[index].estatus = 0;
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.put(`${API_URI}/reserva/enprogreso/${reserva.id_reservacion}`, {}).subscribe()
+    this.http.put(`${API_URI}/reserva/enprogreso/${reserva.id_reservacion}`, {headers}).subscribe()
     
   }
   cancelar(reserva: Reserva){
@@ -63,9 +66,10 @@ export class MisReservasComponent implements OnInit {
 
     alert ("Reservacion Cancelada.")
 
-    let apiURL = `${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`
-    
-    const headers = { 'Content-Type': 'application/json' };
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
     const options = { headers: headers };
     const body = {
       matricula: localStorage.getItem('id'),
@@ -73,9 +77,10 @@ export class MisReservasComponent implements OnInit {
       texto: `Has cancelado tu reservacion de la ${reserva.nombre_espacio} a las ${reserva.hora_entrada}.`,
       id_reservacion: reserva.id_reservacion
     };
+
     this.reservaciones[index].estatus = 3;
 
-    this.http.put(apiURL, JSON.stringify(body)).subscribe();
+    this.http.put(`${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`, JSON.stringify(body), options).subscribe();
     this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
   }
 
@@ -83,7 +88,10 @@ export class MisReservasComponent implements OnInit {
     let index = this.reservaciones.indexOf(reserva);
     this.reservaciones[index].estatus = 3;
 
-    const headers = { 'Content-Type': 'application/json' };
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
     const options = { headers: headers };
     const body = {
       matricula: localStorage.getItem('id'),
@@ -93,7 +101,7 @@ export class MisReservasComponent implements OnInit {
     };
 
     let apiURL = `${API_URI}/cancelar/mireserva/${reserva.id_reservacion}`
-    this.http.put(apiURL, {}).subscribe();
+    this.http.put(apiURL, {headers}).subscribe();
     this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
   }
 
