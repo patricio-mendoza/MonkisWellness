@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CompartidovarService } from './compartidovar.service';
 import { Location } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CompartidovarService } from '../compartidovar.service';
 import { HomeComponent } from '../home.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormControl } from '@angular/forms';
 const API_URI = 'http://localhost:8888/api';
 
@@ -57,7 +57,10 @@ export class CierresComponent extends HomeComponent {
 
   getEstadoGym() {
     let apiURL = `${API_URI}/gym/estado`;
-    this.http.get(apiURL).subscribe(res => {
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.estado = this.reqData.estado;
     });
@@ -65,12 +68,13 @@ export class CierresComponent extends HomeComponent {
 
   cancelarCierresM() {
     let apiURL = `${API_URI}/gym/cancelarCierresM`
-    this.http.put(apiURL, "").subscribe();
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    this.http.put(apiURL, {headers}).subscribe();
   }
 
   // Función para registrar el cierre en la base de datos
   registrarCambio(): boolean {
-
     this.cancelarCierresM();
 
     // Hora a la que se aplicó el cierre
@@ -101,7 +105,11 @@ export class CierresComponent extends HomeComponent {
     }
 
     // Envió a la base de datos
-    const headers = { 'Content-Type': 'application/json' };
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
+
     const options = { headers: headers };
 
     const body = {
@@ -120,7 +128,10 @@ export class CierresComponent extends HomeComponent {
   abrir() {
     if (this.registrarCambio()) {
       let apiURL = `${API_URI}/gym/estado/abrir`;
-      this.http.put(apiURL, {}).subscribe();
+      let token = localStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+      this.http.put(apiURL, {headers}).subscribe();
       this.getEstadoGym();
       this.miServicio.cambiarEstado(this.estado);
       this.miServicio.isClosing = !this.miServicio.isClosing;
@@ -131,7 +142,10 @@ export class CierresComponent extends HomeComponent {
   cerrar() {
     if (this.registrarCambio()) {
       let apiURL = `${API_URI}/gym/estado/cerrar`;
-      this.http.put(apiURL, {}).subscribe();
+      let token = localStorage.getItem('token');
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+      this.http.put(apiURL, {headers}).subscribe();
       this.getEstadoGym();
       this.miServicio.cambiarEstado(this.estado);
       this.miServicio.isClosing = !this.miServicio.isClosing;
@@ -166,11 +180,14 @@ export class CierresComponent extends HomeComponent {
     const horaFin = this.hora_fin;
 
     if (this.diaSemana.length != 0 && this.hora_inicio != null && this.hora_fin != null) {
-
       let confirmar = window.confirm("¿Deseas programar el cierre de " + horaInicio + " a " + horaFin + "?")
       if (confirmar) {
         for (let d of this.diaSemana) {
-          const headers = { 'Content-Type': 'application/json' };
+          let token = localStorage.getItem('token')
+          const headers = new HttpHeaders()
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', 'application/json');
+
           const options = { headers: headers };
 
           const body = {
@@ -204,8 +221,10 @@ export class CierresComponent extends HomeComponent {
 
   getCierres() {
     let apiURL = `${API_URI}/gym/cierresR`;
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    this.http.get(apiURL).subscribe(res => {
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.cierres = this.reqData.data;
     });
@@ -237,7 +256,6 @@ export class CierresComponent extends HomeComponent {
   }
 
   obtenerCierre() {
-
     this.editarFin = "";
     this.editarIni = "";
 
@@ -279,8 +297,12 @@ export class CierresComponent extends HomeComponent {
       this.valCierre1 = false;
       this.valCierre2 = false;
       let confirmar = window.confirm("¿Deseas eliminar este cierre?")
+      
+      let token = localStorage.getItem('token')
+      const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
 
-      const headers = { 'Content-Type': 'application/json' };
       const options = { headers: headers };
 
       const body = {
