@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ReservarEspacioComponent } from '../reservar-espacio.component';
 import { OnInit } from '@angular/core';
-import * as bodyParser from 'body-parser';
+import { HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -18,8 +18,10 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
   horaIni: string;  
 
   liberar(id:number){
-
-    const headers = { 'Content-Type': 'application/json' };
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
     const options = { headers: headers };
 
     this.http.put(`${API_URI}/reservaciones/liberar_espacio/${id}`,[], options).subscribe()
@@ -32,8 +34,10 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
   notificarAlumnos(fechaInicio: string, fechaFin: string) {
     let reservasACancelar: any[] = [];
 
-
-    const headers = { 'Content-Type': 'application/json' };
+    let token = localStorage.getItem('token');
+        const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
     const options = { headers: headers };
 
     this.http.get(`${API_URI}/reservaciones/bloqueadas/${this.id_espacio}/${fechaInicio}/${fechaFin}`,options).subscribe(res => {
@@ -41,7 +45,6 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
       reservasACancelar = this.reqData.data;
 
       for(let i = 0; i < reservasACancelar.length; i++){
-      
         const body = {
           matricula: reservasACancelar[i].matricula,
           encabezado: 'Reservacion Cancelada',
@@ -49,19 +52,15 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
           id_reservacion: reservasACancelar[i].id_reservacion
         };
   
-        console.log(body)
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
   
       }
 
     });
-
     this.getBloqueos();
-
   }
 
   bloquear() {
-
     confirm("Está seguro de que desea aplicar este bloqueo?")
 
     let rango = (this.fechaFinal.getTime() - this.fechaInicio.getTime()) / (1000 * 60 * 60 * 24)
@@ -69,10 +68,6 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
     let fechaIni = this.fechaInicio.getDate();
     let fechaAuxIni = new Date(this.fechaInicio);
     let fechaAuxFin = new Date(this.fechaInicio);
-
-
-    const headers = { 'Content-Type': 'application/json' };
-    const options = { headers: headers };
 
     for (let index = 0; index <= rango; index++) {
       fechaAuxIni.setDate(fechaIni + index);
@@ -90,20 +85,21 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
 
       let diaSemana = fechaAuxIni.getDay() == 0 ? 7 : fechaAuxIni.getDay();
 
-
+      let token = localStorage.getItem('token');
+      const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
+      const options = { headers: headers };
       const body = {
         dia: diaSemana,
         hora_inicio: this.horaIni,
         hora_fin: this.horaFin,
         fechaInicio: fechaIniForm,
         fechaFinal: fechaFinForm
-
       }
 
       this.http.post(`${API_URI}/bloquea/${this.id_espacio}`, JSON.stringify(body), options).subscribe();
-
       this.notificarAlumnos(fechaIniForm, fechaFinForm);
-
     }
 
   }

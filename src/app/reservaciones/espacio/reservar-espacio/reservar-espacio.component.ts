@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CompartidovarService } from '../../../home/compartidovar.service';
 import { CardService } from './card.service';
+import { set } from 'mongoose';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -127,8 +128,10 @@ export class ReservarEspacioComponent {
     }
 
     getBloqueos(): void {
-        
-        const headers = { 'Content-Type': 'application/json' };
+        let token = localStorage.getItem('token');
+        const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
         const options = { headers: headers };
 
         this.http.get(`${API_URI}/reservaciones/bloqueos_espacio/${this.id_espacio}`, options).subscribe(res => {
@@ -203,8 +206,10 @@ export class ReservarEspacioComponent {
 
     getHorasDisponibles(dia: Date): void {
         let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd');
-
-        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${this.miServicio.TIME_INTERVAL_FOR_RESERVA}`).subscribe({
+        let token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        
+        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${this.miServicio.TIME_INTERVAL_FOR_RESERVA}`, {headers}).subscribe({
             next: (res) => {
                 this.reqData = res
                 this.horas = this.reqData.data;
@@ -219,7 +224,10 @@ export class ReservarEspacioComponent {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
-        this.http.get(`${API_URI}/bloqueos/espacio/${this.id_espacio}`).subscribe( (res) => {
+        let token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+        this.http.get(`${API_URI}/bloqueos/espacio/${this.id_espacio}`, {headers}).subscribe( (res) => {
             this.reqData = res
             this.bloqueos = this.reqData.data.map((obj) => {
                 return {
@@ -256,7 +264,10 @@ export class ReservarEspacioComponent {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
         })
-        this.http.get(`${API_URI}/instalacion/datos/${this.id_espacio}`).subscribe({
+        let token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+        this.http.get(`${API_URI}/instalacion/datos/${this.id_espacio}`, {headers}).subscribe({
             next: (res) => {
                 this.reqData = res
                 this.nombreEspacio = this.reqData.data[0].nombre;
@@ -270,7 +281,10 @@ export class ReservarEspacioComponent {
     }
 
     getReservaciones() {
-        this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`).subscribe(res => {
+        let token = localStorage.getItem('token');
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+        this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`, {headers}).subscribe(res => {
             this.reqData = res;
             this.reservaciones = this.reqData.data;
         });
@@ -295,10 +309,12 @@ export class ReservarEspacioComponent {
         } else {
             dateTimeSalida += this.sumMinutesToHour(hora_entrada.hora, this.miServicio.TIME_INTERVAL_FOR_RESERVA);
         }
-        console.log(dateTimeEntrada)
-        console.log(dateTimeSalida)
 
-        const headers = { 'Content-Type': 'application/json' };
+        let token = localStorage.getItem('token');
+        const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
+
         const options = { headers: headers };
         const body = {
             matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
@@ -329,7 +345,11 @@ export class ReservarEspacioComponent {
     }
 
     cancelarReservacion(id: number, dueno: string) {
-        const headers = { 'Content-Type': 'application/json' };
+        let token = localStorage.getItem('token');
+        const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
+
         const options = { headers: headers };
         const body = {
             matricula: dueno,
@@ -338,7 +358,7 @@ export class ReservarEspacioComponent {
             id_reservacion: id
         };
       
-        this.http.delete(`${API_URI}/reservacion/delete/${id}`).subscribe();
+        this.http.delete(`${API_URI}/reservacion/delete/${id}`, {headers}).subscribe();
         this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
         window.location.replace(this.location.path());
     }

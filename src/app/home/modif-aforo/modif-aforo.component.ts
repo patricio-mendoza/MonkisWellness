@@ -15,10 +15,14 @@ export class ModifAforoComponent extends HomeComponent{
 
   saveNewAforo() {
     if (this.newAforo.length === 0) { return }
+    
     let token = localStorage.getItem('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
+    const options = { headers: headers };
 
-    this.http.put(`${API_URI}/gym/updateAforo/${this.newAforo}`, {headers}).subscribe();
+    this.http.put(`${API_URI}/gym/updateAforo/${this.newAforo}`,[], options).subscribe();
     this.miServicio.isModifyingAforo = false;
     this.miServicio.cambiarEstado(true);
   }
