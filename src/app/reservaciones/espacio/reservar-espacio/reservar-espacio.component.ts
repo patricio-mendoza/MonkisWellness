@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
-import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -26,11 +25,6 @@ interface Hora {
     is_disabled: boolean;
 }
 
-setOptions({
-    locale: localeEs,
-    theme: 'ios',
-    themeVariant: 'light'
-});
 
 
 @Component({

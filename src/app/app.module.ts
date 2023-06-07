@@ -1,4 +1,3 @@
-import { MbscModule } from '@mobiscroll/angular';
 import { LOCALE_ID ,NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -75,7 +74,6 @@ registerLocaleData(localeEs, 'es');
     ChartComponent,
   ],
   imports: [  
-    MbscModule,   
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
