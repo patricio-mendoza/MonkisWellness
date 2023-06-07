@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
-import { MbscDatepickerOptions, setOptions , localeEs } from '@mobiscroll/angular';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
@@ -18,11 +17,6 @@ interface Reservacion {
     fecha: string;
 }
 
-setOptions({
-    locale: localeEs,
-    theme: 'ios',
-    themeVariant: 'light'
-});
 
 
 @Component({
@@ -71,7 +65,6 @@ export class ReservarEspacioComponent {
         }
     }
     
-    settings: MbscDatepickerOptions;
 
     getBloqueosActivos(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
@@ -92,16 +85,6 @@ export class ReservarEspacioComponent {
             this.hora_fin = this.reqData.data[0].cierre;
             this.nombreEspacio = this.reqData.data[0].nombre;
             this.nombreInstalacion = this.reqData.data[0].nombreInstalacion
-            
-            this.settings = {
-                display: 'inline',
-                controls: ['calendar', 'timegrid'],
-                min: this.today,
-                max: this.tomorrow,
-                minTime: `${this.hora_inicio}:00`,
-                maxTime: `${this.hora_fin}:00`,
-                selectMultiple: true,
-            };
         });
     }
 
