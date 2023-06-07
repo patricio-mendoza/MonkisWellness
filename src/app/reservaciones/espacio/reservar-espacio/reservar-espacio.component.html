@@ -15,7 +15,7 @@
             <div class="texto-area">Elige un horario</div>
             <img class="barra-texto" src="../../../assets/assets-elegir-area/barra-texto.png">
         </div>
-        <div class="container-right-down">
+        <div class="d-flex flex-row container-right-down">
             <div class="container-right-down-left">
                 <div class="container">
                     <p class="display-selected-time">
@@ -26,7 +26,7 @@
                         miServicio.TIME_INTERVAL_FOR_RESERVA) : sumMinutesToHour(selectedHourStart.hora,
                         miServicio.TIME_INTERVAL_FOR_RESERVA) : "???"}}
                     </p>
-                    <div class="time-selector">
+                    <div class="time-selector mb-3">
                         <mat-card class="calendario">
                             <mat-calendar [(selected)]="selectedDate"></mat-calendar>
                         </mat-card>
@@ -45,7 +45,7 @@
                         class="boton-reserva">Reservar</button>
                 </div>
             </div>
-            <div class="d-flex flex-row">
+            <div class="d-flex flex-column justify-content-center align-items-center">
                 <div *ngIf="isAdmin" class="container-right-down-right">
                     <div class="headers">
                         <div class="header">Id</div>
@@ -68,7 +68,7 @@
                     </div>
                     
                 </div>
-                <div id="id-bloqueos" *ngIf="isAdmin" (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white">
+                <div id="id-bloqueos" *ngIf="isAdmin" (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white mt-4">
                     Bloquear espacio
                 </div>
             </div>
