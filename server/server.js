@@ -39,8 +39,9 @@ server.listen(port, function check(error) {
 function verifyToken(req, res, next) {
     const bearerHeader = req.headers['authorization'];
 
-    if (typeof bearerHeader === "undefined") { res.sendStatus(403); }
-    else {
+    if (typeof bearerHeader === "undefined") { 
+        res.sendStatus(403); 
+    } else {
         const bearerToken = bearerHeader.split(" ")[1];
         req.token = bearerToken;
         next();
