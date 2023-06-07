@@ -83,29 +83,42 @@
                 </div>
 
                 <div class="d-flex flex-column-reverse col-sm-3">
-                    <select id="dia-programar" [(ngModel)]="diaSemana" class="d-inline-block input-group-text fw-bold">
-                        <option value=0 hidden selected disabled>Seleccione día</option>
-                        <option value=1>Domingo</option>
-                        <option value=2>Lunes</option>
-                        <option value=3>Martes</option>
-                        <option value=4>Miércoles</option>
-                        <option value=5>Jueves</option>
-                        <option value=6>Viernes</option>
-                        <option value=7>Sábado</option>
-                    </select>
-                    <p class="h6 fw-bold"> Indique el día en el que aplica el cierre: </p>
+                    <div class="d-flex flex-row input-group-text fw-bold justify-content-center">
+                        <label>
+                            <input id="sele-domingo" type="checkbox" [checked]="diaSemana.includes(1)" (change)="toggleDay(1)"> D
+                        </label>
+                        <label>
+                            <input id="sele-lunes" type="checkbox" [checked]="diaSemana.includes(2)" (change)="toggleDay(2)"> L
+                        </label>
+                        <label>
+                            <input id="sele-martes" type="checkbox" [checked]="diaSemana.includes(3)" (change)="toggleDay(3)"> Ma
+                        </label>
+                        <label>
+                            <input id="sele-miercoles" type="checkbox" [checked]="diaSemana.includes(4)" (change)="toggleDay(4)"> Mi
+                        </label>
+                        <label>
+                            <input id="sele-jueves" type="checkbox" [checked]="diaSemana.includes(5)" (change)="toggleDay(5)"> J
+                        </label>
+                        <label>
+                            <input id="sele-viernes" type="checkbox" [checked]="diaSemana.includes(6)" (change)="toggleDay(6)"> V
+                        </label>
+                        <label>
+                            <input id="sele-sabado" type="checkbox" [checked]="diaSemana.includes(7)" (change)="toggleDay(7)"> S
+                        </label>
+                    </div>
+                    <p [ngClass]="{'validacionFallida': valProg1}" class="h6 fw-bold"> Indique los días en los que aplica el cierre: </p>
                 </div>
 
                 <!-- caja donde se selecciona una hora de apertura -->
                 <div id="input-apertura-prog" class="d-flex flex-column-reverse mr-5 col-sm-3">
                     <input id="hora-ap" type="time" class="input-group-text fw-bold" name="horaFin" [(ngModel)]="hora_fin">
-                    <p class="h6 fw-bold">Indique la hora de apertura:</p>
+                    <p [ngClass]="{'validacionFallida': valProg3}" class="h6 fw-bold">Indique la hora de apertura:</p>
                 </div>
 
                 <!-- caja donde se selecciona una hora de cierre -->
                 <div id="input-cierre-prog" class="d-flex flex-column-reverse mr-5 col-sm-3">
                     <input id="hora-cierre" type="time" class="input-group-text fw-bold" name="horaInicio" [(ngModel)]="hora_inicio">
-                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
+                    <p [ngClass]="{'validacionFallida': valProg2}" class="h6 fw-bold">Indique la hora de cierre:</p>
                 </div>
 
             </div>
@@ -141,14 +154,14 @@
 
                 <!-- caja donde se selecciona una hora de apertura -->
                 <div id="input-apertura-prog" class="d-flex flex-column-reverse col-sm-2">
-                    <input id="aper-borrar" [(ngModel)]="editarFin" type="time" class="input-group-text fw-bold">
-                    <p class="h6 fw-bold">Indique la hora de apertura:</p>
+                    <input disabled id="aper-borrar" [(ngModel)]="editarFin" type="time" class="input-group-text fw-bold">
+                    <p class="h6 fw-bold">Hora de apertura:</p>
                 </div>
 
                 <!-- caja donde se selecciona una hora de cierre -->
                 <div id="input-cierre-prog" class="d-flex flex-column-reverse ms-3 col-sm-2">
-                    <input id="cierre-borrar" [(ngModel)]="editarIni" type="time" class="input-group-text fw-bold">
-                    <p class="h6 fw-bold">Indique la hora de cierre:</p>
+                    <input disabled id="cierre-borrar" [(ngModel)]="editarIni" type="time" class="input-group-text fw-bold">
+                    <p class="h6 fw-bold">Hora de cierre:</p>
                 </div>
                 
                 <!-- Caja donde se seleccionan los cierres-->
@@ -158,7 +171,7 @@
                         <option *ngFor="let cierre of cierresByDay" value="{{cierre.id_bloqueo}}">{{cierre.hora_inicio.substring(0,5)}}-{{cierre.hora_fin.substring(0,5)}}
                         </option>
                     </select>
-                    <p class="h6 fw-bold" [ngClass]="{'validacionFallida': valCierre}">Seleccione el cierre a modificar</p>
+                    <p class="h6 fw-bold" [ngClass]="{'validacionFallida': valCierre2}">Seleccione el cierre a modificar</p>
                 </div>
 
                 <div class="d-flex flex-column-reverse col-sm-2">
@@ -172,7 +185,7 @@
                         <option value=6>Viernes</option>
                         <option value=7>Sábado</option>
                     </select>
-                    <p class="h6 fw-bold" [ngClass]="{'validacionFallida': valCierre}" > Indique el día en el que aplica el cierre: </p>
+                    <p class="h6 fw-bold" [ngClass]="{'validacionFallida': valCierre1}" > Indique el día en el que aplica el cierre: </p>
                 </div>
 
             </div>

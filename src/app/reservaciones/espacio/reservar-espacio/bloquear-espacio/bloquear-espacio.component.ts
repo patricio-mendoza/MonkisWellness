@@ -15,7 +15,8 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
   fechaInicio: Date | null;
   fechaFinal: Date | null;
   horaFin: string;
-  horaIni: string;  
+  horaIni: string;
+  hoy = new Date();  
 
   liberar(id:number){
 
