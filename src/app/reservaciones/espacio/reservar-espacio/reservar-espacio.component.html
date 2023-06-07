@@ -15,8 +15,8 @@
             <div class="texto-area">Elige un horario</div>
             <img class="barra-texto" src="../../../assets/assets-elegir-area/barra-texto.png">
         </div>
-        <div class="d-flex flex-row container-right-down">
-            <div class="container-right-down-left">
+        <div class="d-flex flex-row container-right-down align-items-stretch p-0">
+            <div id="espacio-reservacion" class="container-right-down-left align-items-stretch ">
                 <div class="container">
                     <p class="display-selected-time">
                         Fecha Seleccionada:
@@ -42,11 +42,11 @@
                         </div>
                     </div>
                     <button id="id-reservar" (click)="reservar(selectedDate, selectedHourStart, selectedHourEnd)"
-                        class="boton-reserva">Reservar</button>
+                        class="boton-reserva mt-auto">Reservar</button>
                 </div>
             </div>
-            <div class="d-flex flex-column justify-content-center align-items-center">
-                <div *ngIf="isAdmin" class="container-right-down-right">
+            <div id="admin-space" class="d-flex flex-column justify-content-end align-items-center ">
+                <div *ngIf="isAdmin" class="container-right-down-right mb-4 ">
                     <div class="headers">
                         <div class="header">Id</div>
                         <div class="header">Fecha</div>
@@ -68,7 +68,7 @@
                     </div>
                     
                 </div>
-                <div id="id-bloqueos" *ngIf="isAdmin" (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white mt-4">
+                <div id="id-bloqueos" *ngIf="isAdmin" (click)="abrirTarjeta()" class="btn bton border border-2 border-white text-white m-0">
                     Bloquear espacio
                 </div>
             </div>
