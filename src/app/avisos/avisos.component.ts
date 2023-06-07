@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -33,8 +33,10 @@ export class AvisosComponent implements OnInit {
     let id = localStorage.getItem("id")
     let apiURL = `${API_URI}/avisos/${id}`;
 
-    console.log(localStorage.getItem('token'))
-    this.http.get(apiURL).subscribe(res => {
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(apiURL, { headers }).subscribe(res => {
       this.reqData = res;
       this.anuncios = this.reqData.data;
     });

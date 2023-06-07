@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { API_URI } from '../../../../server/server.js';
 import { HomeComponent } from '../home.component';
 import { DatePipe } from '@angular/common';
+import { HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -47,7 +48,6 @@ export class EstadoGymComponent extends HomeComponent {
       this.getHoraC();
       this.getAforo();
     });
-
   }
 
   ngOnDestroy(){
@@ -56,14 +56,20 @@ export class EstadoGymComponent extends HomeComponent {
   
   getEstadoGym() {
     let apiURL = `${API_URI}/gym/estado`;
-    this.http.get(apiURL).subscribe(res => {
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.estado = this.reqData.estado;
     });
   }
   getAforo() {
     let apiURL = `${API_URI}/gym/aforo`;
-    this.http.get(apiURL).subscribe(res => {
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.aforo_max = this.reqData.data.aforo_max;
       this.aforo_actual = this.reqData.data.aforo_actual;
@@ -71,7 +77,10 @@ export class EstadoGymComponent extends HomeComponent {
   }
   getHoraA() {
     let apiURL = `${API_URI}/gym/siguienteAp`;
-    this.http.get(apiURL).subscribe(res => {
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.hora_apertura = this.reqData.data[0].hora_fin;
       this.hora_apertura = this.hora_apertura.substring(0,5);
@@ -79,7 +88,10 @@ export class EstadoGymComponent extends HomeComponent {
   }
   getHoraC() {
     let apiURL = `${API_URI}/gym/siguienteCi`;
-    this.http.get(apiURL).subscribe(res => {
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.hora_cierre = this.reqData.data[0].hora_inicio;
       this.hora_cierre = this.hora_cierre.substring(0,5);

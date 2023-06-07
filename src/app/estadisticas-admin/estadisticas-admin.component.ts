@@ -1,5 +1,5 @@
 import { Component, SimpleChanges} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -33,15 +33,18 @@ export class EstadisticasAdminComponent {
 
   getDataCharts(fecha: Date) {    
     let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
+    
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     // Esta Semana Fetch
-    this.http.get(`${API_URI}/gym/semana/${fechastr}`).subscribe(res => {
+    this.http.get(`${API_URI}/gym/semana/${fechastr}`, {headers}).subscribe(res => {
       this.reqData = res;
       this.dataChartSemanal = this.reqData.data.map(x => x.aforo);
     });
 
     // Esta Historial Fetch
-    this.http.get(`${API_URI}/gym/historial/${fechastr}`).subscribe(res => {
+    this.http.get(`${API_URI}/gym/historial/${fechastr}`, {headers}).subscribe(res => {
       this.reqData = res;
       this.labelsChartHistorial = this.reqData.data.map(x => `${x.hora}:00`)
       this.dataChartHistorial = this.reqData.data.map(x => x.aforo);
@@ -69,7 +72,10 @@ export class EstadisticasAdminComponent {
     let fechaInicioStr = fechaInicio.toISOString().slice(0, 19).replace('T', ' ');
     let fechaFinalStr = fechaFinal.toISOString().slice(0, 19).replace('T', ' ');
 
-    this.http.get(`${API_URI}/gym/descargar_datos/${fechaInicioStr}/${fechaFinalStr}`).subscribe(res => {
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    this.http.get(`${API_URI}/gym/descargar_datos/${fechaInicioStr}/${fechaFinalStr}`, {headers}).subscribe(res => {
       this.reqData = res;
     });
   }

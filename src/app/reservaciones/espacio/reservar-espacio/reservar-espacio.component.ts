@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CompartidovarService } from '../../../home/compartidovar.service';
 import { CardService } from './card.service';
 
@@ -127,7 +127,7 @@ export class ReservarEspacioComponent {
     }
 
     getBloqueos(): void {
-
+        
         const headers = { 'Content-Type': 'application/json' };
         const options = { headers: headers };
 
