@@ -52,19 +52,19 @@
                         <div class="header">Fecha</div>
                         <div class="header">Hora</div>
                     </div>
-                    <div *ngFor="let reservacion of reservaciones" class="reservacion">
+                    <div *ngFor="let reservacion of reservaciones, let i = index" class="reservacion">
                         <div *ngIf="reservaciones.length > 0" class="reservaciones-actuales-left">
                             <div>{{reservacion.dueno}}</div>
                             <div>{{reservacion.fecha}}</div>
                             <div>{{reservacion.hora}}</div>
                         </div>
-                        <div (click)="cancelarReservacion(reservacion.id, reservacion.dueno)"
+                        <div id="{{'boton-cancelar-'+i}}" (click)="cancelarReservacion(reservacion.id, reservacion.dueno)"
                             class="reservaciones-actuales-right">
                             X
                         </div>
                     </div>
                     <div *ngIf="reservaciones.length === 0" class="no-reservations">
-                        <div>NO HAY RESERVACIONES POR EL MOMENTO</div>
+                        <div id="no-reservaciones">NO HAY RESERVACIONES POR EL MOMENTO</div>
                     </div>
                     
                 </div>

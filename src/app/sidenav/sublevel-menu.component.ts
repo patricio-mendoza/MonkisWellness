@@ -27,7 +27,7 @@ import { fadeInOut, INavbarData } from './helper';
               [ngClass]="!item.expanded ? 'fal fa-angle-right' : 'fal fa-angle-down'"
             ></i>
           </a>
-          <a class="sublevel-nav-link"
+          <a id="{{item.label}}" class="sublevel-nav-link"
             *ngIf="!item.items || (item.items && item.items.length === 0)"
             [routerLink]="[item.routeLink]"
             routerLinkActive="active-sublevel"

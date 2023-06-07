@@ -366,10 +366,10 @@ server.get("/api/reservaciones/bloqueadas/:id/:fecha_inicio/:fecha_fin", (req, r
 
 server.get("/api/reservaciones/bloqueos_espacio/:id", (req,res) => {
     let id = req.params.id;
-    let sql = `select id_bloqueo, fecha_inicio, hora_inicio, hora_fin from bloqueo where id_espacio = ${id};`;
+    let sql = `select id_bloqueo, fecha_inicio, hora_inicio, hora_fin from bloqueo where id_espacio = ${id} order by fecha_inicio, hora_inicio;`;
 
     db.query(sql, function (error, result) {
-        if (error) console.log("Error retrieving the data")
+        if (error) console.log(error)
         else res.send({ data: result });    
     });
 });

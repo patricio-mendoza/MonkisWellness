@@ -22,34 +22,26 @@
                 <div class="text-white h3">
                     Hora de fin:
                 </div>
-                <input [(ngModel)]="horaFin" type="time" class="input-group-text">
+                <input id="hora-fin-bloqueo" [(ngModel)]="horaFin" type="time" class="input-group-text">
             </div>
 
             <div class="d-flex flex-column col-sm-2 mt-auto">
                 <div class="text-white h3">
                     Hora de inicio:
                 </div>
-                <input [(ngModel)]="horaIni" type="time" class="input-group-text">
+                <input id="hora-inicio-bloqueo" [(ngModel)]="horaIni" type="time" class="input-group-text">
             </div>
 
-            <div class="d-flex flex-column col-sm-2 mt-auto">
-                <div class="text-white h3">Fecha de fin:</div>
+            <div class="d-flex flex-column col-sm-4 mt-auto">
                 <mat-form-field class="date-picker">
-                    <mat-label>Elige una fecha</mat-label>
-                    <input matInput [matDatepicker]="picker" [(ngModel)]="fechaFinal">
-                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-            </div>
-
-            <div class="d-flex flex-column col-sm-2 mt-auto">
-                <div class="text-white h3">Fecha de inicio:</div>
-                <mat-form-field class="date-picker">
-                    <mat-label>Elige una fecha</mat-label>
-                    <input matInput [matDatepicker]="picker2" [(ngModel)]="fechaInicio">
+                    <mat-label>Elige un rango de fecha</mat-label>
+                    <mat-date-range-input [rangePicker]="picker2" id="id-input-range">
+                      <input id="id-input-1" matStartDate placeholder="Start date" [(ngModel)]="fechaInicio" [min]="hoy">
+                      <input id="id-input-2" matEndDate placeholder="End date" [(ngModel)]="fechaFinal" [min]="hoy">
+                    </mat-date-range-input>
                     <mat-datepicker-toggle matIconSuffix [for]="picker2"></mat-datepicker-toggle>
-                    <mat-datepicker #picker2></mat-datepicker>
-                </mat-form-field>
+                    <mat-date-range-picker #picker2></mat-date-range-picker>
+                  </mat-form-field>
             </div>
             
         </div>
@@ -62,11 +54,11 @@
         <p class="text-white"> Quitar el bloqueo de un espacio</p>
 
         <div id="caja-bloqueos" class="d-flex flex-column">
-            <div class="d-flex flex-column" *ngFor="let item of bloqueosEspacio" >
-                <div class="d-flex flex-row justify-content-between bg-primary rounded border border-2 border-white mb-1">
+            <div class="d-flex flex-column" *ngFor="let item of bloqueosEspacio, let i = index" >
+                <div class="d-flex flex-row justify-content-between bg-primary rounded border border-2 border-white mb-1"> 
                     <div class="text-white" >{{item.fecha_inicio.substring(0,10)}}</div>
                     <div class="text-white">{{item.hora_inicio.substring(0,5)}} - {{item.hora_fin.substring(0,5)}}</div>
-                    <div class="btn bton border border-1 border-white text-white" (click)="liberar(item.id_bloqueo)" >Liberar</div>
+                    <div id="{{'boton-liberar-'+i}}" class="btn bton border border-1 border-white text-white" (click)="liberar(item.id_bloqueo)" >Liberar</div>
                 </div>
                 
             </div>
