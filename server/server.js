@@ -13,7 +13,7 @@ server.use(cors());
 
 // Conexion con base de datos
 var config = {
-    host: "monkisserverdb.mysql.database.azure.com",
+    host: "monkis-db-server.mysql.database.azure.com",
     user: "pato",
     password: "supercontra123!",
     database: "Monkis_DB",
@@ -351,7 +351,6 @@ server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', verifyToken, (req, res
     let fechaFinal = req.params.fechaFinal;
 
     let sql = `SELECT tiempo, aforo FROM Historial WHERE tiempo > '${fechaInicio}' AND tiempo < '${fechaFinal}';`
-    console.log(sql)
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
@@ -537,7 +536,7 @@ server.get("/api/bloqueos/espacio/:id", verifyToken, (req, res) => {
     let id = req.params.id;
 
     let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id} ORDER BY hora_entrada`;
-    
+    console.log(sql);
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
@@ -571,6 +570,7 @@ server.get('/api/instalacion/datos/:id', verifyToken, (req, res) => {
     numDia = dia.getDay() === 0 ? 7 : dia.getDay();
 
     let sql = `SELECT es.nombre as nombre, ins.id_instalacion as inst_id, ins.nombre as nombreInstalacion FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
+    console.log(sql);
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
@@ -638,21 +638,19 @@ server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_inte
     let fecha = req.params.fecha;
     let time_interval = req.params.time_interval;
     
-    let sql = `SELECT * FROM (
-        SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
-            FROM (
-                SELECT TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval
-                FROM
-                    (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t1,
-                    (SELECT 0 AS num UNION ALL SELECT 10 UNION ALL SELECT 20 UNION ALL SELECT 30 UNION ALL SELECT 40 UNION ALL SELECT 50) t2,
-                    (SELECT 0 AS num UNION ALL SELECT 100 UNION ALL SELECT 200 UNION ALL SELECT 300 UNION ALL SELECT 400 UNION ALL SELECT 500) t3,
-                    (SELECT STR_TO_DATE(CONCAT('2023-05-31', hora_apertura), '%Y-%m-%d %H:%i') AS start_time, STR_TO_DATE(CONCAT('2023-05-31', hora_cierre), '%Y-%m-%d %H:%i') AS end_time
-                    FROM Horario WHERE id_instalacion=${id_instalacion} AND dia=dayofweek("${fecha}")) params
-                WHERE TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) <= end_time
-            ) intervals
-            ORDER BY hora) res
-            WHERE "${fecha}" = CURDATE() + INTERVAL 1 DAY OR ("${fecha}" = CURDATE() AND TIME(res.hora) >= CURTIME());`
-
+    let sql = `SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
+                    FROM (                 
+                        SELECT TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval                 
+                        FROM                     
+                            (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t1,
+                            (SELECT 0 AS num UNION ALL SELECT 10 UNION ALL SELECT 20 UNION ALL SELECT 30 UNION ALL SELECT 40 UNION ALL SELECT 50) t2,
+                            (SELECT 0 AS num UNION ALL SELECT 100 UNION ALL SELECT 200 UNION ALL SELECT 300 UNION ALL SELECT 400 UNION ALL SELECT 500) t3,
+                            (SELECT STR_TO_DATE(CONCAT('2023-05-31', hora_apertura), '%Y-%m-%d %H:%i') AS start_time, STR_TO_DATE(CONCAT('2023-05-31', hora_cierre), '%Y-%m-%d %H:%i') AS end_time
+                            FROM Horario WHERE id_instalacion=1 AND dia=dayofweek("2023-06-07")) params
+                            WHERE TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) <= end_time
+                            ) intervals
+                ORDER BY hora;`
+        console.log(sql)
         db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    

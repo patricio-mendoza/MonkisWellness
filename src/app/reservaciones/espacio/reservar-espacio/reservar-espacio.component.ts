@@ -27,6 +27,11 @@ interface Hora {
     is_available: boolean;
 }
 
+function isEqualDate(date1: Date, date2: Date): boolean {
+    return (date1.getFullYear() === date2.getFullYear() && 
+            date1.getMonth() === date2.getMonth() && 
+            date1.getDate() === date2.getDate());
+}
 
 @Component({
   selector: 'app-reservar-espacio',
@@ -90,10 +95,15 @@ export class ReservarEspacioComponent {
             this._selectedDate = value;
             this.selectedHourStart = null;
             this.selectedHourEnd = null;
-            this.getHorasDisponibles(value);
+
+            if (isEqualDate(value, this.today) || isEqualDate(value, this.tomorrow)) {
+                this.getHorasDisponibles(value);
+            } else {
+                this.horas = [];
+            }
         }
     }
-    
+
     sumMinutesToHour(hora: string, minutes: number) {
         const [hour, minute] = hora.split(":").map(Number);
         const totalMinutes = hour * 60 + minute + minutes;
@@ -212,7 +222,23 @@ export class ReservarEspacioComponent {
         this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${this.miServicio.TIME_INTERVAL_FOR_RESERVA}`, {headers}).subscribe({
             next: (res) => {
                 this.reqData = res
-                this.horas = this.reqData.data;
+                const horasNoFiltradas = this.reqData.data;
+
+                if (isEqualDate(this.today, dia)) {
+                    const date = new Date();
+                    const hour = date.getHours();
+                    const minutes = date.getMinutes();
+
+                    const formattedHour = hour.toString().padStart(2, '0');
+                    const formattedMinutes = minutes.toString().padStart(2, '0');
+
+                    const currentTime = `${formattedHour}:${formattedMinutes}`;
+                    this.horas = horasNoFiltradas.filter(hora => {
+                        return this.hourIsBigger(hora.hora, currentTime);
+                    });
+                } else {
+                    this.horas = horasNoFiltradas;
+                }
             },
             complete: () => {
                 this.getBloqueosActivos();
