@@ -93,7 +93,7 @@ server.get("/api/user/reservaciones/:id", verifyToken, (req, res) => {
         WHERE ("${id}" = matricula OR "${id}" = num_nomina)
     ) sub
     WHERE sub.row_num = 1
-    ORDER BY sub.estatus, sub.hora_entrada`;
+    ORDER BY sub.hora_entrada DESC, sub.estatus`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -250,7 +250,7 @@ server.get("/api/gym/aforo", verifyToken, (req, res) => {
         }
     });
     let sql = `SELECT aforo_max, aforo_actual FROM Wellness WHERE id = 1`;
-
+    
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result[0] });    
