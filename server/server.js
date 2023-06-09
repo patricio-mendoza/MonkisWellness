@@ -570,7 +570,7 @@ server.get("/api/bloqueos/espacio/:id", verifyToken, (req, res) => {
     let id = req.params.id;
 
     let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id} ORDER BY hora_entrada`;
-    console.log(sql);
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
@@ -604,7 +604,7 @@ server.get('/api/instalacion/datos/:id', verifyToken, (req, res) => {
     numDia = dia.getDay() === 0 ? 7 : dia.getDay();
 
     let sql = `SELECT es.nombre as nombre, ins.id_instalacion as inst_id, ins.nombre as nombreInstalacion FROM Horario ho JOIN Instalacion ins ON ins.id_instalacion = ho.id_instalacion JOIN Espacio es ON ins.id_instalacion = es.id_instalacion WHERE es.id_espacio=${id} AND dia=${numDia}`
-    console.log(sql);
+
     db.query(sql, function (error, result) {
         if (error) console.log("Error")
         else res.send({ data: result });
@@ -684,7 +684,7 @@ server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_inte
                             WHERE TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) <= end_time
                             ) intervals
                 ORDER BY hora;`
-        console.log(sql)
+
         db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
