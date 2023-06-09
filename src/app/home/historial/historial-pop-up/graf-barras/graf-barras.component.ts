@@ -1,5 +1,6 @@
 import { Component,Input, SimpleChanges } from '@angular/core';
-import Chart from 'chart.js/auto';
+import Chart, { Colors } from 'chart.js/auto';
+
 @Component({
   selector: 'app-graf-barras',
   templateUrl: './graf-barras.component.html',
@@ -8,6 +9,12 @@ import Chart from 'chart.js/auto';
 export class GrafBarrasComponent {
   @Input() data: number[] ;
   public chart: any;
+
+  constructor(){
+    Chart.defaults.backgroundColor = 'white';
+    Chart.defaults.borderColor = 'white';  
+    Chart.defaults.color = 'white';
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.chart) {
@@ -26,7 +33,8 @@ export class GrafBarrasComponent {
           {
             label: "Personas por hora",
             data: this.data,
-            backgroundColor: 'white'
+            backgroundColor: 'white',
+
           }
         ]
       },

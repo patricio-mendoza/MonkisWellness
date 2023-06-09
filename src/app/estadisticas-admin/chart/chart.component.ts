@@ -15,6 +15,12 @@ export class ChartComponent {
 
   public chart: any;
 
+  constructor(){
+    Chart.defaults.backgroundColor = 'lightgray';
+    Chart.defaults.borderColor = 'lightgray';  
+    Chart.defaults.color = 'black';
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (this.chart) {
       this.chart.destroy();

@@ -48,6 +48,40 @@ function verifyToken(req, res, next) {
     }
 }
 
+
+// TESTS
+server.get("/api/test/estado", (req, res) => {
+    let sql = `SELECT estado FROM Wellness WHERE id = 1`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ estado: result[0].estado });    
+    });
+});
+
+server.get("/api/test/aforo", (req, res) => {
+    
+    let sql = `SELECT aforo_max, aforo_actual FROM Wellness WHERE id = 1`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result[0] });    
+    });
+});
+
+server.post("/api/read/aforo/:newAforo", (req, res) => {
+    const newAforo = req.params.newAforo;
+    const sql = "UPDATE wellness SET aforo_actual = ? WHERE id = 1";
+  
+    db.query(sql, [newAforo], function (error, result) {
+      if (error) {
+        console.log(error)
+      } else {
+        res.send(result)
+      }
+    });
+  });
+
 // USERS
 server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id

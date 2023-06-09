@@ -1,5 +1,8 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import Chart from 'chart.js/auto';
+import Chart, {Colors} from 'chart.js/auto';
+
+Chart.register(Colors);
+
 
 @Component({
   selector: 'app-bar-chart',
@@ -9,6 +12,12 @@ import Chart from 'chart.js/auto';
 export class BarChartComponent {
   @Input() data: number[];
   public chart: any;
+
+  constructor(){
+    Chart.defaults.backgroundColor = 'white';
+    Chart.defaults.borderColor = 'white';  
+    Chart.defaults.color = 'white';
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (this.chart) {
