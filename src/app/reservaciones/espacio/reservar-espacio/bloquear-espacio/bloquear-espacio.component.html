@@ -11,28 +11,31 @@
 
         <div class="d-flex flex-row-reverse justify-content-evenly">
 
-            <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 mt-auto">
+            <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 mt-0">
                 <div (click)="bloquear()" id=""
                     class="btn bton fw-bold border border-white border-1 text-white shadow-lg">Aplicar
                 </div>
                 <br>
             </div>
 
-            <div class="d-flex flex-column col-sm-2 mt-auto">
-                <div class="text-white h3">
+            <div class="d-flex flex-column col-sm-2 mt-0">
+                <div class="text-white h6">
                     Hora de fin:
                 </div>
-                <input id="hora-fin-bloqueo" [(ngModel)]="horaFin" type="time" class="input-group-text">
+                <input id="hora-fin-bloqueo" [(ngModel)]="horaFin" type="time" class="input-group-text hora">
             </div>
 
-            <div class="d-flex flex-column col-sm-2 mt-auto">
-                <div class="text-white h3">
+            <div class="d-flex flex-column col-sm-2 mt-0">
+                <div class="text-white h6">
                     Hora de inicio:
                 </div>
-                <input id="hora-inicio-bloqueo" [(ngModel)]="horaIni" type="time" class="input-group-text">
+                <input id="hora-inicio-bloqueo" [(ngModel)]="horaIni" type="time" class="input-group-text hora">
             </div>
 
             <div class="d-flex flex-column col-sm-4 mt-auto">
+                <div class="text-white h6">
+                    Elige los días donde se cerrará el espacio:
+                </div>
                 <mat-form-field class="date-picker">
                     <mat-label>Elige un rango de fecha</mat-label>
                     <mat-date-range-input [rangePicker]="picker2" id="id-input-range">
