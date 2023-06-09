@@ -67,10 +67,14 @@ export class CierresComponent extends HomeComponent {
   }
 
   cancelarCierresM() {
-    let apiURL = `${API_URI}/gym/cancelarCierresM`
-    let token = localStorage.getItem('token')
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    this.http.put(apiURL, {headers}).subscribe();
+    let apiURL = `${API_URI}/gym/cancelarCierresM`;
+    let token = localStorage.getItem('token');
+    const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
+    const options = { headers: headers };
+
+    this.http.put(apiURL, [], options).subscribe();
   }
 
   // Función para registrar el cierre en la base de datos
@@ -129,9 +133,12 @@ export class CierresComponent extends HomeComponent {
     if (this.registrarCambio()) {
       let apiURL = `${API_URI}/gym/estado/abrir`;
       let token = localStorage.getItem('token');
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    const headers = new HttpHeaders()
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
+    const options = { headers: headers };
 
-      this.http.put(apiURL, {headers}).subscribe();
+      this.http.put(apiURL, [], options).subscribe();
       this.getEstadoGym();
       this.miServicio.cambiarEstado(this.estado);
       this.miServicio.isClosing = !this.miServicio.isClosing;
