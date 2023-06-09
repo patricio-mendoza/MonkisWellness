@@ -1,0 +1,27 @@
+<div *ngIf="miServicio.isCheckingHistorial" class="blur">
+    <div class="container">
+        <div id="cuadroA"></div>
+       <button (click)="closeEstaSemanaTab()" class="close-btn">X</button>
+        <div class="header">
+            <p class="title">Historial</p>
+        </div>
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <div class="d-flex flex-row align-items-center">
+                <div id="flechai">
+                    <div *ngIf="isDomingo" id="flechaI" style="opacity: 0.5;" class="btn"><img src="../../../assets/flechaIzq.png" class="img-fluid" alt="..." /></div>
+                    <div *ngIf="!isDomingo" id="flechaI" class="btn" (click)="cambiarDia(-1)"><img src="../../../assets/flechaIzq.png" class="img-fluid" alt="..." /></div>
+                </div>
+                <div id="textoEntreFlechas">
+                    <span>{{ dias[historialDia] }}</span>
+                  </div>
+        
+                <div id="flechad">
+                    <div *ngIf="isInFechaActual" id="flechad" style="opacity: 0.5;" class="btn"><img src="../../../assets/flechaD.png" class="img-fluid" alt="..." /></div>
+                    <div *ngIf="!isInFechaActual" id="flechad" class="btn" (click)="cambiarDia(1)" ><img src="../../../assets/flechaD.png" class="img-fluid" alt="..." /></div>
+                </div>
+            </div>
+            <div class="chart-container">
+                <app-graf-barras [data]="mapAforo"> </app-graf-barras>
+            </div>
+        </div>
+    </div>

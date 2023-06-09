@@ -17,6 +17,7 @@ export class CompartidovarService {
   isClosing: boolean = false;
   isLogged: boolean = false;
   isAdmin: boolean = false;
+  isCheckingHistorial: boolean = false;
 
   reqData: any;
 

@@ -3,8 +3,6 @@ import { CompartidovarService } from './compartidovar.service';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-const API_URI = 'http://localhost:8888/api';
-
 const dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 
 @Component({
@@ -20,7 +18,8 @@ export class HomeComponent {
   time = new Date();
   dia: string = dias[this.time.getDay()];
 
-  constructor(public location: Location, public http: HttpClient, public miServicio : CompartidovarService){}
+  constructor(public location: Location, public http: HttpClient, public miServicio : CompartidovarService){
+  }
 
   ocultar(){
     this.miServicio.isModifyingAforo = !this.miServicio.isModifyingAforo;
@@ -32,5 +31,9 @@ export class HomeComponent {
 
   openEstaSemanaTab() {
     this.miServicio.isCheckingEstaSemana = true;
+  }
+
+  openHistorial(){
+    this.miServicio.isCheckingHistorial = true;
   }
 }

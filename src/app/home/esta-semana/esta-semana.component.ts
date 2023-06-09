@@ -8,6 +8,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./esta-semana.component.scss']
 })
 export class EstaSemanaComponent {
+  reqData:any;
+
   constructor(private http: HttpClient, public miServicio : CompartidovarService){}
 
   openTab() {
