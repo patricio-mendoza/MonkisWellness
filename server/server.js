@@ -69,6 +69,18 @@ server.get("/api/test/aforo", (req, res) => {
     });
 });
 
+server.post("/api/read/aforo/:newAforo", (req, res) => {
+    const newAforo = req.params.newAforo;
+    const sql = "UPDATE wellness SET aforo_actual = ? WHERE id = 1";
+  
+    db.query(sql, [newAforo], function (error, result) {
+      if (error) {
+        console.log(error)
+      } else {
+      }
+    });
+  });
+
 // USERS
 server.get("/api/user/:id", (req, res) => {    
     let id = req.params.id

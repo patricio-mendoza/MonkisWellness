@@ -37,6 +37,8 @@
 
             <!-- Inputs del usuario -->
             <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-0 pt-0">
+
+                <!-- Botón de cambio de estado -->
                 <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 m-1 ms-3">
                     <div *ngIf="estado" (click)="cerrar()" id="cerrar_manual"
                         class="btn bton fw-bold border border-white border-1 text-white shadow-lg">Cerrar
@@ -46,6 +48,8 @@
                     </div>
                     <br>
                 </div>
+
+                <!-- Hora de regreso al estado actual -->
                 <div id="input-cierre" class="d-flex flex-column col-sm-5 mr-5 text-center">
                     <p class="h6">Indique la hora de {{!estado? 'cierre': 'apertura'}}:</p>
                     <input id="hora-cambio" [(ngModel)]="hora" type="time" [ngClass]="{'bg-danger': warning}" class="input-group-text"
@@ -73,6 +77,7 @@
                     adelante en la hora y fecha indicada. </p>
             </div>
 
+            <!-- Input del usuario -->
             <div id="input-usuario-cm" class="d-flex flex-row-reverse text-white pb-1 pt-0">
 
                 <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 ms-3">
