@@ -82,8 +82,10 @@ export class EstadoGymComponent extends HomeComponent {
 
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
-      this.hora_apertura = this.reqData.data[0].hora_fin;
-      this.hora_apertura = this.hora_apertura.substring(0,5);
+      if (this.reqData.data[0] > 0) { 
+        this.hora_apertura = this.reqData.data[0].hora_fin;
+        this.hora_apertura = this.hora_apertura.substring(0,5);
+      }
     });
   }
   getHoraC() {
@@ -93,9 +95,10 @@ export class EstadoGymComponent extends HomeComponent {
 
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
-      this.hora_cierre = this.reqData.data[0].hora_inicio;
-      this.hora_cierre = this.hora_cierre.substring(0,5);
-      
+      if (this.reqData.data[0] > 0) { 
+        this.hora_apertura = this.reqData.data[0].hora_fin;
+        this.hora_apertura = this.hora_apertura.substring(0,5);
+      }
     });
   }
 }
