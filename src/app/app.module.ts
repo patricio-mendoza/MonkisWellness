@@ -42,6 +42,8 @@ import { BarChartComponent } from './home/esta-semana/esta-semana-pop-up/bar-cha
 import { EstadisticasAdminComponent } from './estadisticas-admin/estadisticas-admin.component';
 import { ChartComponent } from './estadisticas-admin/chart/chart.component';
 import { BloquearEspacioComponent } from './reservaciones/espacio/reservar-espacio/bloquear-espacio/bloquear-espacio.component';
+import { HistorialPopUpComponent } from './home/historial/historial-pop-up/historial-pop-up.component';
+import { GrafBarrasComponent } from './home/historial/historial-pop-up/graf-barras/graf-barras.component';
 
 registerLocaleData(localeEs, 'es');
 @NgModule({
@@ -70,7 +72,9 @@ registerLocaleData(localeEs, 'es');
     BarChartComponent,
     EstadisticasAdminComponent,
     ChartComponent,
-    BloquearEspacioComponent
+    BloquearEspacioComponent,
+    HistorialPopUpComponent,
+    GrafBarrasComponent
   ],
   imports: [  
     BrowserModule,
