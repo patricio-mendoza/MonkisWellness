@@ -13,6 +13,8 @@ const API_URI = 'http://localhost:8888/api';
 
 export class ModifAforoComponent extends HomeComponent{
 
+  newAforo: string; // Variable que 
+
   saveNewAforo() {
     if (this.newAforo.length === 0) { return }
     
