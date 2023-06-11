@@ -31,13 +31,18 @@
                             <mat-calendar [(selected)]="selectedDate"></mat-calendar>
                         </mat-card>
                         <div class="hour-selector">
-                            <div id="{{'hora' + i}}" (click)="selectHora(hora)" *ngFor="let hora of horas; let i = index" class="hour"
+                            <div *ngFor="let hora of horas; let i = index">
+                                <div id="{{'hora' + i}}" (click)="selectHora(hora)" *ngIf="i < horas.length - 1" class="hour"
                                 [ngClass]="{
                                     'selected': hora.is_selected,
                                     'available': hora.is_available,
                                     'disabled': hora.is_disabled,
                                 }">
-                                {{horas[i+1] ? horas[i].hora : ""}} - {{horas[i+1] ? horas[i+1].hora : ""}}
+                                    {{horas[i].hora}} - {{horas[i+1] ? horas[i+1].hora : ""}}
+                                </div>
+                            </div>
+                            <div *ngIf="horas.length === 0" class="no-horas">
+                                No hay horarios disponibles para esta fecha
                             </div>
                         </div>
                     </div>

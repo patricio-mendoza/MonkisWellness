@@ -151,7 +151,7 @@ server.get("/api/avisos/:id", verifyToken, (req, res) => {
                 avi.id_anuncio as id_anuncio
             FROM Reservacion res JOIN Anuncio avi ON avi.id_reservacion = res.id_reservacion JOIN Espacio esp ON esp.id_espacio = res.id_espacio
             WHERE avi.matricula="${id}"
-            ORDER BY avi.tiempo DESC`;
+            ORDER BY avi.tiempo DESC LIMIT 10`;
     console.log('b')
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -674,18 +674,18 @@ server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_inte
     
     let sql = `SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
                     FROM (                 
-                        SELECT TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval                 
+                        SELECT TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval                 
                         FROM                     
                             (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t1,
                             (SELECT 0 AS num UNION ALL SELECT 10 UNION ALL SELECT 20 UNION ALL SELECT 30 UNION ALL SELECT 40 UNION ALL SELECT 50) t2,
                             (SELECT 0 AS num UNION ALL SELECT 100 UNION ALL SELECT 200 UNION ALL SELECT 300 UNION ALL SELECT 400 UNION ALL SELECT 500) t3,
                             (SELECT STR_TO_DATE(CONCAT('2023-05-31', hora_apertura), '%Y-%m-%d %H:%i') AS start_time, STR_TO_DATE(CONCAT('2023-05-31', hora_cierre), '%Y-%m-%d %H:%i') AS end_time
-                            FROM Horario WHERE id_instalacion=1 AND dia=dayofweek("2023-06-07")) params
-                            WHERE TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) <= end_time
+                            FROM Horario WHERE id_instalacion=${id_instalacion} AND dia=dayofweek("${fecha}")) params
+                            WHERE TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) <= end_time
                             ) intervals
                 ORDER BY hora;`
 
-        db.query(sql, function (error, result) {
+    db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
     });
