@@ -55,7 +55,6 @@ export class ReservacionesComponent implements OnInit {
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.deportesBloqueados = this.reqData.data.map(x => x.id_deporte)
-      console.log(this.deportesBloqueados)
     });
   }
 
