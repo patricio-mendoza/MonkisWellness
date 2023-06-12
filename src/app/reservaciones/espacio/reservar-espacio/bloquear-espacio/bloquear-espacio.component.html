@@ -4,7 +4,7 @@
     <div id="cierre-box" class="d-flex flex-column rounded border border-white border-5 ms-5 pt-1 p-3">
         <div class="d-flex flex-row justify-content-between">
             <p id="titulo-cierre-manual" class="text-white h1"> Bloquear espacio </p>
-            <div (click)="cerrarTarjeta()" class="btn bg-transparent text-white">x</div>
+            <div (click)="cerrarTarjeta()" id="cerrar-tarjeta" class="btn bg-transparent text-white">x</div>
         </div>
 
         <p class="text-white"> Cerrar el espacio durante varios días a la misma hora</p>
@@ -12,7 +12,7 @@
         <div class="d-flex flex-row-reverse justify-content-evenly">
 
             <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 mt-0">
-                <div (click)="bloquear()" id=""
+                <div (click)="bloquear()" id="boton-bloqueo"
                     class="btn bton fw-bold border border-white border-1 text-white shadow-lg">Aplicar
                 </div>
                 <br>

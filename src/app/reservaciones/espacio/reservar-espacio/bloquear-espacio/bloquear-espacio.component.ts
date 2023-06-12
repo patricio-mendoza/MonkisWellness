@@ -62,7 +62,11 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
   }
 
   bloquear() {
-    confirm("Está seguro de que desea aplicar este bloqueo?")
+
+    let confirmar = window.confirm("Está seguro de que desea aplicar este bloqueo?")
+    if (!confirmar) {
+      return;
+    }
 
     let rango = (this.fechaFinal.getTime() - this.fechaInicio.getTime()) / (1000 * 60 * 60 * 24)
 

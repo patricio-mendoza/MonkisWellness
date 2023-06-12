@@ -152,7 +152,6 @@ server.get("/api/avisos/:id", verifyToken, (req, res) => {
             FROM Reservacion res JOIN Anuncio avi ON avi.id_reservacion = res.id_reservacion JOIN Espacio esp ON esp.id_espacio = res.id_espacio
             WHERE avi.matricula="${id}"
             ORDER BY avi.tiempo DESC`;
-    console.log('b')
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    

@@ -1,12 +1,12 @@
 <div class="container">
-    <div *ngFor="let anuncio of anuncios" [ngClass]="anuncio.tituloNofif == 'Reservacion Confirmada' ? 'Guardada' : 'Cancelada'">
+    <div id="{{'aviso-'+i}}" *ngFor="let anuncio of anuncios, let i = index" [ngClass]="anuncio.tituloNofif == 'Reservacion Confirmada' ? 'Guardada' : 'Cancelada'">
         <div class="tituloNotif">{{anuncio.cancha}}</div>
-        <div class="encabezado"> {{anuncio.tituloNofif}}</div>
+        <div id="{{'encabezado-'+i}}" class="encabezado"> {{anuncio.tituloNofif}}</div>
         <div class="horaNotif">
             <div class="tiempoNotif">{{anuncio.tiempoNotif}}</div>
             <div class="fechaNotif">{{anuncio.fechaNotif}}</div>
         </div>
-        <div class="msjNotif">{{anuncio.textoAnuncio}}</div>
+        <div id="{{'mensaje-'+i}}" class="msjNotif">{{anuncio.textoAnuncio}}</div>
         <div class="imgContainer">
             <img class="image" src="../../assets/campoAmericano.png"/> 
         </div>
