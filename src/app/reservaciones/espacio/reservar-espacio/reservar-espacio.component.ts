@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CompartidovarService } from '../../../home/compartidovar.service';
 import { CardService } from './card.service';
-import { set } from 'mongoose';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -66,7 +65,8 @@ export class ReservarEspacioComponent {
                 public datepipe: DatePipe,
                 private route: ActivatedRoute, 
                 public http: HttpClient,
-                public miServicio : CompartidovarService) 
+                public miServicio : CompartidovarService,
+                private router : Router) 
     {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);

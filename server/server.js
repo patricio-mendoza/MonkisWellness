@@ -127,7 +127,7 @@ server.get("/api/user/reservaciones/:id", verifyToken, (req, res) => {
         WHERE ("${id}" = matricula OR "${id}" = num_nomina)
     ) sub
     WHERE sub.row_num = 1
-    ORDER BY sub.hora_entrada DESC, sub.estatus`;
+    ORDER BY sub.estatus, sub.hora_entrada DESC`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -514,6 +514,23 @@ server.get("/api/deportes/cancha/:id", verifyToken, (req, res) => {
     FROM Espacio esp JOIN Instalacion ins ON esp.id_instalacion = ins.id_instalacion JOIN EspacioDeporte espdep ON esp.id_espacio = espdep.id_espacio JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
     WHERE espdep.id_deporte = ${id}
     ORDER BY esp.id_espacio`
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
+server.get("/api/deportes/bloqueados/:id", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
+    let id = req.params.id;
+    let sql = `SELECT DISTINCT(id_deporte)
+    FROM EspacioDeporte espdep JOIN Reservacion res ON res.id_espacio = espdep.id_espacio
+    WHERE res.estatus=1 AND (matricula="${id}" OR num_nomina="${id}")`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
