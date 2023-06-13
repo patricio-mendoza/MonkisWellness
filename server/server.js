@@ -197,7 +197,9 @@ server.get('/api/reservacionesActivas/espacio/:id', verifyToken, (req, res) => {
         }
     });
     let id = req.params.id;
-    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
+    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha 
+    FROM Reservacion 
+    WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -260,7 +262,6 @@ server.put("/api/gym/estado/cerrar", (req,res) => {
     });
 
 });
-
 server.put("/api/gym/updateAforo/:newAforo", verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) { 
@@ -292,7 +293,6 @@ server.get("/api/gym/aforo", verifyToken, (req, res) => {
 });
 
 // Programar nuevos cierres
-
 server.post('/api/bloqueo/', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) { 
@@ -307,8 +307,6 @@ server.post('/api/bloqueo/', verifyToken, (req, res) => {
         else res.send({ status: true });
     });
 });
-
-
 server.get('/api/gym/estimaciones', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) { 
@@ -555,17 +553,17 @@ server.get("/api/reservaciones/bloqueadas/:id/:fecha_inicio/:fecha_fin", verifyT
         else res.send({ data: result });    
     });
 });
-
 server.get("/api/reservaciones/bloqueos_espacio/:id", (req,res) => {
     let id = req.params.id;
-    let sql = `select id_bloqueo, fecha_inicio, hora_inicio, hora_fin from bloqueo where id_espacio = ${id} order by fecha_inicio, hora_inicio;`;
+    let sql = `select id_bloqueo, fecha_inicio, hora_inicio, hora_fin 
+    from bloqueo
+    where id_espacio = ${id} order by fecha_inicio, hora_inicio;`;
 
     db.query(sql, function (error, result) {
         if (error) console.log(error)
         else res.send({ data: result });    
     });
 });
-
 server.put("/api/reservaciones/liberar_espacio/:id", (req,res) => {
     let id = req.params.id;
     let sql = `delete from bloqueo where id_bloqueo = ${id};`;
@@ -575,7 +573,6 @@ server.put("/api/reservaciones/liberar_espacio/:id", (req,res) => {
         else res.send({data: result });
     });
 });
-
 //ESPACIOS
 server.get("/api/bloqueos/espacio/:id", verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
@@ -586,7 +583,14 @@ server.get("/api/bloqueos/espacio/:id", verifyToken, (req, res) => {
     });
     let id = req.params.id;
 
-    let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id} ORDER BY hora_entrada`;
+    let sql = `SELECT res.hora_entrada as start, res.hora_salida as end 
+        FROM Reservacion res
+        WHERE res.estatus=1 AND res.id_espacio=${id} 
+    UNION 
+    SELECT blo.fecha_inicio as start, blo. fecha_final as end
+        FROM Bloqueo blo
+        WHERE blo.id_espacio=${id}
+    ORDER BY start;`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -677,7 +681,6 @@ server.post('/api/bloquea/:id', (req,res)=>{
     });
 
 });
-
 server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_interval', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) { 
