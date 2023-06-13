@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CompartidovarService } from '../compartidovar.service';
+import { CompartidovarService } from '../compartidorvar-service/compartidovar.service';
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-historial',
