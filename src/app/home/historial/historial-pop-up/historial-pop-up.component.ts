@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
-interface registro{
+interface Registro{
   aforo:number;
   tiempo:string;
   dia:string;
@@ -18,7 +18,7 @@ interface registro{
   styleUrls: ['./historial-pop-up.component.scss']
 })
 export class HistorialPopUpComponent extends HomeComponent {
-  datos:registro[];
+  datos:Registro[];
   
   diaActual:number = 0;
   historialDia:number = 0;
