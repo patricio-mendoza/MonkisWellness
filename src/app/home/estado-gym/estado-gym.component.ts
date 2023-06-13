@@ -15,6 +15,7 @@ const API_URI = 'http://localhost:8888/api';
 export class EstadoGymComponent extends HomeComponent {
 
   intervalId;
+  intervaloAforo;
   datePipe = new DatePipe('en-Us');
 
   administrador:string;
@@ -37,6 +38,10 @@ export class EstadoGymComponent extends HomeComponent {
     this.intervalId = setInterval(()=>{
       this.time = new Date();
     }, 1000);
+    
+    this.intervaloAforo = setInterval(() =>{
+      this.getAforo();
+    }, 600000)
 
     // Define el estado del servicio como el que está en la base de datos
     this.miServicio.cambiarEstado(this.estado);

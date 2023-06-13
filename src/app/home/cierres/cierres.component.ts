@@ -79,7 +79,6 @@ export class CierresComponent extends HomeComponent {
 
   // Función para registrar el cierre en la base de datos
   registrarCambio(): boolean {
-    this.cancelarCierresM();
 
     // Hora a la que se aplicó el cierre
     let ahora: string = this.datePipe.transform(new Date(), 'HH:mm')
@@ -107,7 +106,8 @@ export class CierresComponent extends HomeComponent {
     if (!confirmar) {
       return false;
     }
-
+    
+    this.cancelarCierresM();
     // Envió a la base de datos
     let token = localStorage.getItem('token')
     const headers = new HttpHeaders()
@@ -260,7 +260,7 @@ export class CierresComponent extends HomeComponent {
 
   }
 
-  obtenerCierre() {
+  mostrarCierre() {
     this.editarFin = "";
     this.editarIni = "";
 
@@ -270,12 +270,7 @@ export class CierresComponent extends HomeComponent {
     this.editarIni = cierre_actual.hora_inicio;
 
   }
-
-  wait(ms: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
+  
 
   reiniciarInput() {
     this.cierre_act = -1;
@@ -319,5 +314,5 @@ export class CierresComponent extends HomeComponent {
     }
   }
 
-
+  
 }
