@@ -152,7 +152,7 @@ server.get("/api/avisos/:id", verifyToken, (req, res) => {
             FROM Reservacion res JOIN Anuncio avi ON avi.id_reservacion = res.id_reservacion JOIN Espacio esp ON esp.id_espacio = res.id_espacio
             WHERE avi.matricula="${id}"
             ORDER BY avi.tiempo DESC LIMIT 10`;
-    console.log('b')
+    
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
         else res.send({ data: result });    
@@ -165,10 +165,14 @@ server.post('/api/generar/aviso', verifyToken, (req, res) => {
             return;
         }
     });
+    if (req.body.matricula[0] === 'L') { return; }
+    
     let sql = `INSERT INTO Anuncio(matricula, encabezado, texto, tiempo, id_reservacion) VALUES ('${req.body.matricula}', '${req.body.encabezado}', '${req.body.texto}', now(), ${req.body.id_reservacion})`;
 
     db.query(sql, function (error, result) {
-        if (error) console.log("Error retrieving the data")
+        if (error) {
+            console.log("Error retrieving the data")
+        } 
     });
 });
 server.delete('/api/delete/aviso/:id', verifyToken, (req, res) => {
@@ -217,7 +221,9 @@ server.delete('/api/reservacion/delete/:id', verifyToken, (req, res) => {
     let sql = `UPDATE Reservacion SET estatus=3 WHERE id_reservacion=${id}`;
 
     db.query(sql, function (error, result) {
-        if (error) console.log("Error retrieving the data")
+        if (error){
+            console.log("Error retrieving the data");
+        }
         else{
             res.send({ data: true });
         } 

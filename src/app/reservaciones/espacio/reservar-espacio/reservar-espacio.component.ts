@@ -358,6 +358,8 @@ export class ReservarEspacioComponent {
                 alert("Reservación Confirmada");
                 if (!this.isAdmin) {
                     this.router.navigate(['/reservaciones']);
+                } else {
+                    window.location.replace(this.location.path());
                 }
             }
         });
