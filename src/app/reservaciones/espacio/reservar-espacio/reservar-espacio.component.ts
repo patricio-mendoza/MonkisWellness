@@ -355,8 +355,10 @@ export class ReservarEspacioComponent {
         this.http.post(`${API_URI}/reservar/espacio`, JSON.stringify(body), options).subscribe(res => {
             this.reqData = res;
             if (this.reqData.status) {
-                // get most current reservation and compare to avoid conflicts
-                window.location.replace(this.location.path());
+                alert("Reservación Confirmada");
+                if (!this.isAdmin) {
+                    this.router.navigate(['/reservaciones']);
+                }
             }
         });
         const bodyAviso = {
