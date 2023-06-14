@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CompartidovarService } from '../../../home/compartidovar.service';
-import { CardService } from './card.service';
+import { CompartidovarService } from '../../../home/compartidorvar-service/compartidovar.service';
+import { CardService } from './bloquear-espacio/card-service/card.service';
 import { set } from 'mongoose';
 
 const API_URI = 'http://localhost:8888/api';
@@ -114,6 +114,7 @@ export class ReservarEspacioComponent {
 
         return `${formattedHour}:${formattedMinute}`;
     }
+    
     hourIsBigger(hour1: string, hour2: string) {
         const [firstHourValue, firstMinuteValue] = hour1.split(":").map(Number);
         const [secondHourValue, secondMinuteValue] = hour2.split(":").map(Number);

@@ -1,5 +1,5 @@
 import { Component, SimpleChanges } from '@angular/core';
-import { CompartidovarService } from './home/compartidovar.service';
+import { CompartidovarService } from './home/compartidorvar-service/compartidovar.service';
 
 interface SideNavToggle {
   screenWidth: number;

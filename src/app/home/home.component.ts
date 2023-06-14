@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CompartidovarService } from './compartidovar.service';
+import { CompartidovarService } from './compartidorvar-service/compartidovar.service';
 import { Location } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
