@@ -108,6 +108,7 @@ export class CierresComponent extends HomeComponent {
     }
     
     this.cancelarCierresM();
+
     // Envió a la base de datos
     let token = localStorage.getItem('token')
     const headers = new HttpHeaders()

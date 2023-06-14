@@ -87,12 +87,13 @@ export class EstadoGymComponent extends HomeComponent {
 
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
-      if (this.reqData.data[0] > 0) { 
+      if (this.reqData.data[0]) { 
         this.hora_apertura = this.reqData.data[0].hora_fin;
         this.hora_apertura = this.hora_apertura.substring(0,5);
       }
     });
   }
+  
   getHoraC() {
     let apiURL = `${API_URI}/gym/siguienteCi`;
     let token = localStorage.getItem('token');
@@ -100,9 +101,9 @@ export class EstadoGymComponent extends HomeComponent {
 
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
-      if (this.reqData.data[0] > 0) { 
-        this.hora_apertura = this.reqData.data[0].hora_fin;
-        this.hora_apertura = this.hora_apertura.substring(0,5);
+      if (this.reqData.data[0]) { 
+        this.hora_cierre = this.reqData.data[0].hora_inicio;
+        this.hora_cierre = this.hora_cierre.substring(0,5);
       }
     });
   }
