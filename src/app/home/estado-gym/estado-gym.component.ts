@@ -15,6 +15,7 @@ const API_URI = 'http://localhost:8888/api';
 export class EstadoGymComponent extends HomeComponent {
 
   intervalId;
+  intervaloAforo;
   datePipe = new DatePipe('en-Us');
 
   administrador:string;
@@ -37,6 +38,10 @@ export class EstadoGymComponent extends HomeComponent {
     this.intervalId = setInterval(()=>{
       this.time = new Date();
     }, 1000);
+    
+    this.intervaloAforo = setInterval(() =>{
+      this.getAforo();
+    }, 600000)
 
     // Define el estado del servicio como el que está en la base de datos
     this.miServicio.cambiarEstado(this.estado);
@@ -82,12 +87,13 @@ export class EstadoGymComponent extends HomeComponent {
 
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
-      if (this.reqData.data[0] > 0) { 
+      if (this.reqData.data[0]) { 
         this.hora_apertura = this.reqData.data[0].hora_fin;
         this.hora_apertura = this.hora_apertura.substring(0,5);
       }
     });
   }
+  
   getHoraC() {
     let apiURL = `${API_URI}/gym/siguienteCi`;
     let token = localStorage.getItem('token');
@@ -95,9 +101,9 @@ export class EstadoGymComponent extends HomeComponent {
 
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
-      if (this.reqData.data[0] > 0) { 
-        this.hora_apertura = this.reqData.data[0].hora_fin;
-        this.hora_apertura = this.hora_apertura.substring(0,5);
+      if (this.reqData.data[0]) { 
+        this.hora_cierre = this.reqData.data[0].hora_inicio;
+        this.hora_cierre = this.hora_cierre.substring(0,5);
       }
     });
   }
