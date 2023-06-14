@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { CompartidovarService } from '../../../home/compartidovar.service';
-import { CardService } from './card.service';
+import { CompartidovarService } from '../../../home/compartidorvar-service/compartidovar.service';
+import { CardService } from './bloquear-espacio/card-service/card.service';
+import { set } from 'mongoose';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -27,15 +28,15 @@ interface Hora {
 }
 
 function isEqualDate(date1: Date, date2: Date): boolean {
-    return (date1.getFullYear() === date2.getFullYear() && 
-            date1.getMonth() === date2.getMonth() && 
-            date1.getDate() === date2.getDate());
+    return (date1.getFullYear() === date2.getFullYear() &&
+        date1.getMonth() === date2.getMonth() &&
+        date1.getDate() === date2.getDate());
 }
 
 @Component({
-  selector: 'app-reservar-espacio',
-  templateUrl: './reservar-espacio.component.html',
-  styleUrls: ['./reservar-espacio.component.scss']
+    selector: 'app-reservar-espacio',
+    templateUrl: './reservar-espacio.component.html',
+    styleUrls: ['./reservar-espacio.component.scss']
 })
 export class ReservarEspacioComponent {
     isAdmin = localStorage.getItem('isAdmin') === "true";
@@ -58,7 +59,7 @@ export class ReservarEspacioComponent {
     reservaciones: Reservacion[] = [];
     bloqueosEspacio: any[] = [];
 
-    bloqueosCargados:boolean = false;
+    bloqueosCargados: boolean = false;
 
     constructor(public tarjeta: CardService,
                 private location: Location, 
@@ -71,8 +72,6 @@ export class ReservarEspacioComponent {
       this.tomorrow.setDate(this.today.getDate() + 1);
       this.tomorrow.setHours(22, 0, 0);
       this.bloqueosCargados = false;
-
-    
       if (this.today.getHours() > 22) this.today.setHours(24);
     }
 
@@ -89,7 +88,7 @@ export class ReservarEspacioComponent {
     get selectedDate(): Date {
         return this._selectedDate;
     }
-    
+
     set selectedDate(value: Date) {
         if (value !== this._selectedDate) {
             this._selectedDate = value;
@@ -115,6 +114,7 @@ export class ReservarEspacioComponent {
 
         return `${formattedHour}:${formattedMinute}`;
     }
+    
     hourIsBigger(hour1: string, hour2: string) {
         const [firstHourValue, firstMinuteValue] = hour1.split(":").map(Number);
         const [secondHourValue, secondMinuteValue] = hour2.split(":").map(Number);
@@ -140,8 +140,8 @@ export class ReservarEspacioComponent {
     getBloqueos(): void {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders()
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json');
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', 'application/json');
         const options = { headers: headers };
 
         this.http.get(`${API_URI}/reservaciones/bloqueos_espacio/${this.id_espacio}`, options).subscribe(res => {
@@ -152,14 +152,14 @@ export class ReservarEspacioComponent {
     }
 
     selectHora(horaSeleccionada: Hora) {
-        if (horaSeleccionada.is_disabled) {return;}
+        if (horaSeleccionada.is_disabled) { return; }
 
         let checkOverlap = false;
 
         if (!this.selectedHourStart && !this.selectedHourEnd) {
             // seleccionar hora de entrada y salida
             this.selectedHourStart = horaSeleccionada;
-            horaSeleccionada.is_selected = true; 
+            horaSeleccionada.is_selected = true;
 
             checkOverlap = true;
 
@@ -169,9 +169,9 @@ export class ReservarEspacioComponent {
             this.selectedHourStart = horaSeleccionada;
             horaSeleccionada.is_selected = true;
             // borrar hora de salida
-            if (this.selectedHourEnd) { 
+            if (this.selectedHourEnd) {
                 this.selectedHourEnd.is_selected = false;
-                this.selectedHourEnd = null; 
+                this.selectedHourEnd = null;
             }
             checkOverlap = true;
 
@@ -180,7 +180,7 @@ export class ReservarEspacioComponent {
             // seleccionar hora fin
             this.selectedHourEnd = horaSeleccionada;
             this.selectedHourEnd.is_selected = true;
-        } else if (this.selectedHourStart && this.selectedHourEnd) { 
+        } else if (this.selectedHourStart && this.selectedHourEnd) {
             // si hora_seleccionada es la hora de salida, reemplazar hora de entrada
             if (horaSeleccionada == this.selectedHourEnd) {
                 this.selectedHourStart.is_selected = false;
@@ -198,7 +198,7 @@ export class ReservarEspacioComponent {
         if (checkOverlap) {
             // checar las horas que se pueden seleccionar
             let overlap = false;
-            for(let i = 0; i < this.horas.length; i++) {
+            for (let i = 0; i < this.horas.length; i++) {
                 if (!(this.hourIsBigger(horaSeleccionada.hora, this.horas[i].hora) || this.hourIsBigger(this.horas[i].hora, this.sumMinutesToHour(horaSeleccionada.hora, this.miServicio.MAXIMO_TIEMPO_RESERVA - this.miServicio.TIME_INTERVAL_FOR_RESERVA)))) {
                     // revisar que no haya una reservacion entre la hora seleccionada y las posibles horas disponibles
                     if (!this.horas[i].is_disabled && !overlap) {
@@ -218,8 +218,8 @@ export class ReservarEspacioComponent {
         let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd');
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        
-        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${this.miServicio.TIME_INTERVAL_FOR_RESERVA}`, {headers}).subscribe({
+
+        this.http.get(`${API_URI}/instalacion/horas_disponibles/${this.idInstalacion}/${diaFormateado}/${this.miServicio.TIME_INTERVAL_FOR_RESERVA}`, { headers }).subscribe({
             next: (res) => {
                 this.reqData = res
                 const horasNoFiltradas = this.reqData.data;
@@ -253,7 +253,7 @@ export class ReservarEspacioComponent {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-        this.http.get(`${API_URI}/bloqueos/espacio/${this.id_espacio}`, {headers}).subscribe( (res) => {
+        this.http.get(`${API_URI}/bloqueos/espacio/${this.id_espacio}`, { headers }).subscribe((res) => {
             this.reqData = res
             this.bloqueos = this.reqData.data.map((obj) => {
                 return {
@@ -291,7 +291,7 @@ export class ReservarEspacioComponent {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-        this.http.get(`${API_URI}/instalacion/datos/${this.id_espacio}`, {headers}).subscribe({
+        this.http.get(`${API_URI}/instalacion/datos/${this.id_espacio}`, { headers }).subscribe({
             next: (res) => {
                 this.reqData = res
                 this.nombreEspacio = this.reqData.data[0].nombre;
@@ -308,7 +308,7 @@ export class ReservarEspacioComponent {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-        this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`, {headers}).subscribe(res => {
+        this.http.get(`${API_URI}/reservacionesActivas/espacio/${this.id_espacio}`, { headers }).subscribe(res => {
             this.reqData = res;
             this.reservaciones = this.reqData.data;
         });
@@ -319,8 +319,8 @@ export class ReservarEspacioComponent {
             alert("Selecciona un horario valido para tu reservación.");
             return;
         } else {
-            if (!confirm("Seguro que quieres confirmar la reservación")){
-                return ;
+            if (!confirm("Seguro que quieres confirmar la reservación")) {
+                return;
             }
         }
 
@@ -328,7 +328,7 @@ export class ReservarEspacioComponent {
         let dateTimeEntrada = diaFormateado + " " + hora_entrada.hora;
         let dateTimeSalida = diaFormateado + " ";
 
-        if (hora_salida) { 
+        if (hora_salida) {
             dateTimeSalida += this.sumMinutesToHour(hora_salida.hora, this.miServicio.TIME_INTERVAL_FOR_RESERVA);
         } else {
             dateTimeSalida += this.sumMinutesToHour(hora_entrada.hora, this.miServicio.TIME_INTERVAL_FOR_RESERVA);
@@ -336,18 +336,18 @@ export class ReservarEspacioComponent {
 
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders()
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json');
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', 'application/json');
 
         const options = { headers: headers };
         const body = {
-            matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
-            num_nomina : localStorage.getItem('isAdmin') === 'true' ? localStorage.getItem('id') : null,
-            id_espacio : this.id_espacio,
-            hora_entrada : dateTimeEntrada,
-            hora_salida : dateTimeSalida,
-            prioridad : localStorage.getItem('isAdmin') === 'true' ? 1 : 2,
-            estatus : 1,
+            matricula: localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
+            num_nomina: localStorage.getItem('isAdmin') === 'true' ? localStorage.getItem('id') : null,
+            id_espacio: this.id_espacio,
+            hora_entrada: dateTimeEntrada,
+            hora_salida: dateTimeSalida,
+            prioridad: localStorage.getItem('isAdmin') === 'true' ? 1 : 2,
+            estatus: 1,
             nombreEspacio: this.nombreEspacio,
             nombreInstalacion: this.nombreInstalacion
         };
@@ -364,19 +364,21 @@ export class ReservarEspacioComponent {
             }
         });
         const bodyAviso = {
-            matricula : localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
+            matricula: localStorage.getItem('isAdmin') === 'false' ? localStorage.getItem('id') : null,
             encabezado: 'Reservacion Confirmada',
             texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido confirmada.`,
             id_reservacion: 'LAST_INSERT_ID()'
         }
-        this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(bodyAviso), options).subscribe();
+        if (bodyAviso.matricula) {
+            this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(bodyAviso), options).subscribe();
+        }
     }
 
     cancelarReservacion(id: number, dueno: string) {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders()
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json');
+            .set('Authorization', `Bearer ${token}`)
+            .set('Content-Type', 'application/json');
 
         const options = { headers: headers };
         const body = {
@@ -385,9 +387,12 @@ export class ReservarEspacioComponent {
             texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido cancelada por un administrador.`,
             id_reservacion: id
         };
-      
-        this.http.delete(`${API_URI}/reservacion/delete/${id}`, {headers}).subscribe();
-        this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
+
+        this.http.delete(`${API_URI}/reservacion/delete/${id}`, { headers }).subscribe();
+
+        if (body.matricula[0] == "A" || body.matricula[0] == "a") {
+            this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
+        }
         window.location.replace(this.location.path());
     }
 }

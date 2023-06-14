@@ -16,16 +16,16 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
   fechaFinal: Date | null;
   horaFin: string;
   horaIni: string;
-  hoy = new Date();  
+  hoy = new Date();
 
-  liberar(id:number){
+  liberar(id: number) {
     let token = localStorage.getItem('token');
     const headers = new HttpHeaders()
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json');
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
     const options = { headers: headers };
 
-    this.http.put(`${API_URI}/reservaciones/liberar_espacio/${id}`,[], options).subscribe()
+    this.http.put(`${API_URI}/reservaciones/liberar_espacio/${id}`, [], options).subscribe()
 
     confirm("Está seguro de que desea liberar este espacio?")
 
@@ -36,25 +36,28 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
     let reservasACancelar: any[] = [];
 
     let token = localStorage.getItem('token');
-        const headers = new HttpHeaders()
-        .set('Authorization', `Bearer ${token}`)
-        .set('Content-Type', 'application/json');
+    const headers = new HttpHeaders()
+      .set('Authorization', `Bearer ${token}`)
+      .set('Content-Type', 'application/json');
     const options = { headers: headers };
 
-    this.http.get(`${API_URI}/reservaciones/bloqueadas/${this.id_espacio}/${fechaInicio}/${fechaFin}`,options).subscribe(res => {
+    this.http.get(`${API_URI}/reservaciones/bloqueadas/${this.id_espacio}/${fechaInicio}/${fechaFin}`, options).subscribe(res => {
       this.reqData = res;
       reservasACancelar = this.reqData.data;
 
-      for(let i = 0; i < reservasACancelar.length; i++){
-        const body = {
-          matricula: reservasACancelar[i].matricula,
-          encabezado: 'Reservacion Cancelada',
-          texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido cancelada por un administrador debido a un bloqueo de la instalación.`,
-          id_reservacion: reservasACancelar[i].id_reservacion
-        };
-  
-        this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
-  
+      for (let i = 0; i < reservasACancelar.length; i++) {
+
+        if (reservasACancelar[i].matricula) {
+          const body = {
+            matricula: reservasACancelar[i].matricula,
+            encabezado: 'Reservacion Cancelada',
+            texto: `Tu reservación en la ${this.nombreEspacio} en el ${this.nombreInstalacion} ha sido cancelada por un administrador debido a un bloqueo de la instalación.`,
+            id_reservacion: reservasACancelar[i].id_reservacion
+          };
+
+          this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
+        }
+
       }
 
     });
@@ -62,7 +65,11 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
   }
 
   bloquear() {
-    confirm("Está seguro de que desea aplicar este bloqueo?")
+
+    let confirmar = window.confirm("Está seguro de que desea aplicar este bloqueo?")
+    if (!confirmar) {
+      return;
+    }
 
     let rango = (this.fechaFinal.getTime() - this.fechaInicio.getTime()) / (1000 * 60 * 60 * 24)
 
@@ -88,8 +95,8 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
 
       let token = localStorage.getItem('token');
       const headers = new HttpHeaders()
-      .set('Authorization', `Bearer ${token}`)
-      .set('Content-Type', 'application/json');
+        .set('Authorization', `Bearer ${token}`)
+        .set('Content-Type', 'application/json');
       const options = { headers: headers };
       const body = {
         dia: diaSemana,

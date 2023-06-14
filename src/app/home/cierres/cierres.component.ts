@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { CompartidovarService } from '../compartidovar.service';
+import { CompartidovarService } from '../compartidorvar-service/compartidovar.service';
 import { HomeComponent } from '../home.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormControl } from '@angular/forms';
 const API_URI = 'http://localhost:8888/api';
 
-interface bloqueo {
+interface Bloqueo {
   id_bloqueo: number;
   dia: number;
   hora_inicio: string;
@@ -27,8 +27,8 @@ export class CierresComponent extends HomeComponent {
   form: FormGroup;
   diaSemana: number[] = [];
   diaSemanaM: number = 0;
-  cierres: bloqueo[];
-  cierresByDay: bloqueo[];
+  cierres: Bloqueo[];
+  cierresByDay: Bloqueo[];
   cierre_act: number = -1;
   editarIni: string;
   editarFin: string;
@@ -79,7 +79,6 @@ export class CierresComponent extends HomeComponent {
 
   // Función para registrar el cierre en la base de datos
   registrarCambio(): boolean {
-    this.cancelarCierresM();
 
     // Hora a la que se aplicó el cierre
     let ahora: string = this.datePipe.transform(new Date(), 'HH:mm')
@@ -107,6 +106,8 @@ export class CierresComponent extends HomeComponent {
     if (!confirmar) {
       return false;
     }
+    
+    this.cancelarCierresM();
 
     // Envió a la base de datos
     let token = localStorage.getItem('token')
@@ -248,7 +249,7 @@ export class CierresComponent extends HomeComponent {
     }
   }
 
-  findCierre(cierre_act: number): bloqueo {
+  findCierre(cierre_act: number): Bloqueo {
 
     for (let cierre of this.cierresByDay) {
       if (cierre.id_bloqueo == cierre_act) {
@@ -260,7 +261,7 @@ export class CierresComponent extends HomeComponent {
 
   }
 
-  obtenerCierre() {
+  mostrarCierre() {
     this.editarFin = "";
     this.editarIni = "";
 
@@ -270,12 +271,7 @@ export class CierresComponent extends HomeComponent {
     this.editarIni = cierre_actual.hora_inicio;
 
   }
-
-  wait(ms: number): Promise<void> {
-    return new Promise<void>((resolve) => {
-      setTimeout(resolve, ms);
-    });
-  }
+  
 
   reiniciarInput() {
     this.cierre_act = -1;
@@ -319,5 +315,5 @@ export class CierresComponent extends HomeComponent {
     }
   }
 
-
+  
 }
