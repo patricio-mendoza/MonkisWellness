@@ -113,20 +113,21 @@ server.get("/api/user/reservaciones/:id", verifyToken, (req, res) => {
             res.sendStatus(403);
             return;
         }
-        let id = req.params.id;
-        sql = `SELECT sub.id_reservacion, sub.hora_entrada, sub.hora_salida, sub.estatus, sub.nombre_espacio, sub.nombre_deporte, sub.nombre_instalacion
-        FROM (
-            SELECT res.id_reservacion, DATE_FORMAT(res.hora_entrada, '%Y/%m/%d %H:%i') as hora_entrada, DATE_FORMAT(res.hora_salida, '%Y/%m/%d %H:%i') as hora_salida, res.estatus, esp.nombre as nombre_espacio, dep.nombre as nombre_deporte, ins.nombre AS nombre_instalacion,
-            ROW_NUMBER() OVER (PARTITION BY res.id_reservacion ORDER BY res.id_reservacion) AS row_num
-            FROM Reservacion res
-            JOIN Espacio esp ON res.id_espacio = esp.id_espacio
-            JOIN EspacioDeporte espdep ON espdep.id_espacio = esp.id_espacio
-            JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
-            JOIN Instalacion ins ON ins.id_instalacion = esp.id_instalacion
-            WHERE ("${id}" = matricula OR "${id}" = num_nomina)
-            ) sub
-            WHERE sub.row_num = 1
-            ORDER BY sub.hora_entrada DESC, sub.estatus`;
+    });   
+    let id = req.params.id;
+    sql = `SELECT sub.id_reservacion, sub.hora_entrada, sub.hora_salida, sub.estatus, sub.nombre_espacio, sub.nombre_deporte, sub.nombre_instalacion
+    FROM (
+        SELECT res.id_reservacion, DATE_FORMAT(res.hora_entrada, '%Y/%m/%d %H:%i') as hora_entrada, DATE_FORMAT(res.hora_salida, '%Y/%m/%d %H:%i') as hora_salida, res.estatus, esp.nombre as nombre_espacio, dep.nombre as nombre_deporte, ins.nombre AS nombre_instalacion,
+               ROW_NUMBER() OVER (PARTITION BY res.id_reservacion ORDER BY res.id_reservacion) AS row_num
+        FROM Reservacion res
+        JOIN Espacio esp ON res.id_espacio = esp.id_espacio
+        JOIN EspacioDeporte espdep ON espdep.id_espacio = esp.id_espacio
+        JOIN Deporte dep ON dep.id_deporte = espdep.id_deporte
+        JOIN Instalacion ins ON ins.id_instalacion = esp.id_instalacion
+        WHERE ("${id}" = matricula OR "${id}" = num_nomina)
+    ) sub
+    WHERE sub.row_num = 1
+    ORDER BY sub.estatus, sub.hora_entrada DESC`;
 
         db.query(sql, function (error, result) {
             if (error) console.log("Error retrieving the data")
@@ -140,21 +141,22 @@ server.get("/api/avisos/:id", verifyToken, (req, res) => {
             res.sendStatus(403);
             return;
         }
-        let id = req.params.id;
-        sql = `SELECT CONCAT(DATE_FORMAT(res.hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(res.hora_salida, '%H:%i')) AS tiempoReserva,
-        DATE_FORMAT(avi.tiempo, '%H:%i') AS tiempoNotif,
-        avi.texto AS textoAnuncio,
-        avi.encabezado AS tituloNofif,
-        esp.nombre as cancha,
-        DATE_FORMAT(avi.tiempo, '%Y/%m/%d') AS fechaNotif,
-        avi.id_anuncio as id_anuncio
-        FROM Reservacion res JOIN Anuncio avi ON avi.id_reservacion = res.id_reservacion JOIN Espacio esp ON esp.id_espacio = res.id_espacio
-        WHERE avi.matricula="${id}"
-        ORDER BY avi.tiempo DESC`;
-        db.query(sql, function (error, result) {
-            if (error) console.log("Error retrieving the data")
-            else res.send({ data: result });
-        });
+    });
+    let id = req.params.id;
+    sql = `SELECT CONCAT(DATE_FORMAT(res.hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(res.hora_salida, '%H:%i')) AS tiempoReserva,
+                DATE_FORMAT(avi.tiempo, '%H:%i') AS tiempoNotif,
+                avi.texto AS textoAnuncio,
+                avi.encabezado AS tituloNofif,
+                esp.nombre as cancha,
+                DATE_FORMAT(avi.tiempo, '%Y/%m/%d') AS fechaNotif,
+                avi.id_anuncio as id_anuncio
+            FROM Reservacion res JOIN Anuncio avi ON avi.id_reservacion = res.id_reservacion JOIN Espacio esp ON esp.id_espacio = res.id_espacio
+            WHERE avi.matricula="${id}"
+            ORDER BY avi.tiempo DESC LIMIT 10`;
+    
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
     });
 });
 server.post('/api/generar/aviso', verifyToken, (req, res) => {
@@ -194,8 +196,11 @@ server.get('/api/reservacionesActivas/espacio/:id', verifyToken, (req, res) => {
             res.sendStatus(403);
             return;
         }
-        let id = req.params.id;
-        let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha FROM Reservacion WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
+    });
+    let id = req.params.id;
+    let sql = `SELECT id_reservacion as id, COALESCE(matricula, num_nomina) AS dueno, CONCAT(DATE_FORMAT(hora_entrada, '%H:%i'), ' - ', DATE_FORMAT(hora_salida, '%H:%i')) as hora, DATE_FORMAT(hora_entrada, '%Y/%m/%d') as fecha 
+    FROM Reservacion 
+    WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
 
         db.query(sql, function (error, result) {
             if (error) console.log("Error retrieving the data")
@@ -259,7 +264,6 @@ server.put("/api/gym/estado/cerrar", (req, res) => {
     });
 
 });
-
 server.put("/api/gym/updateAforo/:newAforo", verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) {
@@ -291,7 +295,6 @@ server.get("/api/gym/aforo", verifyToken, (req, res) => {
 });
 
 // Programar nuevos cierres
-
 server.post('/api/bloqueo/', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) {
@@ -306,8 +309,6 @@ server.post('/api/bloqueo/', verifyToken, (req, res) => {
         });
     });
 });
-
-
 server.get('/api/gym/estimaciones', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) {
@@ -523,6 +524,23 @@ server.get("/api/deportes/cancha/:id", verifyToken, (req, res) => {
         });
     });
 });
+server.get("/api/deportes/bloqueados/:id", verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secretkey', (error) => {
+        if (error) { 
+            res.sendStatus(403); 
+            return;
+        }
+    });
+    let id = req.params.id;
+    let sql = `SELECT DISTINCT(id_deporte)
+    FROM EspacioDeporte espdep JOIN Reservacion res ON res.id_espacio = espdep.id_espacio
+    WHERE res.estatus=1 AND (matricula="${id}" OR num_nomina="${id}")`;
+
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
+    });
+});
 
 // Daniel
 // Obtener reservaciones de un espacio de tiempo bloqueado
@@ -544,7 +562,9 @@ server.get("/api/reservaciones/bloqueadas/:id/:fecha_inicio/:fecha_fin", verifyT
 
 server.get("/api/reservaciones/bloqueos_espacio/:id", (req, res) => {
     let id = req.params.id;
-    let sql = `select id_bloqueo, fecha_inicio, hora_inicio, hora_fin from bloqueo where id_espacio = ${id} order by fecha_inicio, hora_inicio;`;
+    let sql = `select id_bloqueo, fecha_inicio, hora_inicio, hora_fin 
+    from bloqueo
+    where id_espacio = ${id} order by fecha_inicio, hora_inicio;`;
 
     db.query(sql, function (error, result) {
         if (error) console.log(error)
@@ -561,7 +581,6 @@ server.put("/api/reservaciones/liberar_espacio/:id", (req, res) => {
         else res.send({ data: result });
     });
 });
-
 //ESPACIOS
 server.get("/api/bloqueos/espacio/:id", verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
@@ -571,7 +590,14 @@ server.get("/api/bloqueos/espacio/:id", verifyToken, (req, res) => {
         }
         let id = req.params.id;
 
-        let sql = `SELECT hora_entrada as start, hora_salida as end FROM Reservacion WHERE estatus=1 AND id_espacio=${id} ORDER BY hora_entrada`;
+    let sql = `SELECT res.hora_entrada as start, res.hora_salida as end 
+        FROM Reservacion res
+        WHERE res.estatus=1 AND res.id_espacio=${id} 
+    UNION 
+    SELECT blo.fecha_inicio as start, blo. fecha_final as end
+        FROM Bloqueo blo
+        WHERE blo.id_espacio=${id}
+    ORDER BY start;`;
 
         db.query(sql, function (error, result) {
             if (error) console.log("Error retrieving the data")
@@ -663,33 +689,33 @@ server.post('/api/bloquea/:id', (req, res) => {
     });
 
 });
-
 server.get('/api/instalacion/horas_disponibles/:id_instalacion/:fecha/:time_interval', verifyToken, (req, res) => {
     jwt.verify(req.token, 'secretkey', (error) => {
         if (error) {
             res.sendStatus(403);
             return;
         }
-        let id_instalacion = req.params.id_instalacion;
-        let fecha = req.params.fecha;
-        let time_interval = req.params.time_interval;
+    });
+    let id_instalacion = req.params.id_instalacion;
+    let fecha = req.params.fecha;
+    let time_interval = req.params.time_interval;
+    
+    let sql = `SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
+                    FROM (                 
+                        SELECT TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval                 
+                        FROM                     
+                            (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t1,
+                            (SELECT 0 AS num UNION ALL SELECT 10 UNION ALL SELECT 20 UNION ALL SELECT 30 UNION ALL SELECT 40 UNION ALL SELECT 50) t2,
+                            (SELECT 0 AS num UNION ALL SELECT 100 UNION ALL SELECT 200 UNION ALL SELECT 300 UNION ALL SELECT 400 UNION ALL SELECT 500) t3,
+                            (SELECT STR_TO_DATE(CONCAT('2023-05-31', hora_apertura), '%Y-%m-%d %H:%i') AS start_time, STR_TO_DATE(CONCAT('2023-05-31', hora_cierre), '%Y-%m-%d %H:%i') AS end_time
+                            FROM Horario WHERE id_instalacion=${id_instalacion} AND dia=dayofweek("${fecha}")) params
+                            WHERE TIMESTAMPADD(MINUTE, (${time_interval} * (t3.num + t2.num + t1.num)), start_time) <= end_time
+                            ) intervals
+                ORDER BY hora;`
 
-        let sql = `SELECT LEFT(TIME(datetime_interval), char_length(TIME(datetime_interval)) -3) AS hora, false as is_selected, false as is_disabled, false as is_available
-        FROM (                 
-            SELECT TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) AS datetime_interval                 
-            FROM                     
-            (SELECT 0 AS num UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) t1,
-            (SELECT 0 AS num UNION ALL SELECT 10 UNION ALL SELECT 20 UNION ALL SELECT 30 UNION ALL SELECT 40 UNION ALL SELECT 50) t2,
-            (SELECT 0 AS num UNION ALL SELECT 100 UNION ALL SELECT 200 UNION ALL SELECT 300 UNION ALL SELECT 400 UNION ALL SELECT 500) t3,
-            (SELECT STR_TO_DATE(CONCAT('2023-05-31', hora_apertura), '%Y-%m-%d %H:%i') AS start_time, STR_TO_DATE(CONCAT('2023-05-31', hora_cierre), '%Y-%m-%d %H:%i') AS end_time
-            FROM Horario WHERE id_instalacion=1 AND dia=dayofweek("2023-06-07")) params
-            WHERE TIMESTAMPADD(MINUTE, (30 * (t3.num + t2.num + t1.num)), start_time) <= end_time
-            ) intervals
-            ORDER BY hora;`
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });    
 
-        db.query(sql, function (error, result) {
-            if (error) console.log("Error retrieving the data")
-            else res.send({ data: result });
-        });
     });
 });

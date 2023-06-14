@@ -63,7 +63,7 @@ export class HistorialPopUpComponent extends HomeComponent {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`) 
 
     let apiURL = `${API_URI}/gym/historial/${fechastr}`;
-    console.log(apiURL)
+
     this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.datos = this.reqData.data;

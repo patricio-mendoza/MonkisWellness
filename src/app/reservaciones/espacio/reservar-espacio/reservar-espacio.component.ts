@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DatePipe, Location } from '@angular/common';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { CompartidovarService } from '../../../home/compartidorvar-service/compartidovar.service';
 import { CardService } from './bloquear-espacio/card-service/card.service';
@@ -62,17 +62,17 @@ export class ReservarEspacioComponent {
     bloqueosCargados: boolean = false;
 
     constructor(public tarjeta: CardService,
-        private location: Location,
-        public datepipe: DatePipe,
-        private route: ActivatedRoute,
-        public http: HttpClient,
-        public miServicio: CompartidovarService) {
-        this.tomorrow.setDate(this.today.getDate() + 1);
-        this.tomorrow.setHours(22, 0, 0);
-        this.bloqueosCargados = false;
-
-
-        if (this.today.getHours() > 22) this.today.setHours(24);
+                private location: Location, 
+                public datepipe: DatePipe,
+                private route: ActivatedRoute, 
+                public http: HttpClient,
+                public miServicio : CompartidovarService,
+                private router : Router) 
+    {
+      this.tomorrow.setDate(this.today.getDate() + 1);
+      this.tomorrow.setHours(22, 0, 0);
+      this.bloqueosCargados = false;
+      if (this.today.getHours() > 22) this.today.setHours(24);
     }
 
 
@@ -355,8 +355,12 @@ export class ReservarEspacioComponent {
         this.http.post(`${API_URI}/reservar/espacio`, JSON.stringify(body), options).subscribe(res => {
             this.reqData = res;
             if (this.reqData.status) {
-                // get most current reservation and compare to avoid conflicts
-                window.location.replace(this.location.path());
+                alert("Reservación Confirmada");
+                if (!this.isAdmin) {
+                    this.router.navigate(['/reservaciones']);
+                } else {
+                    window.location.replace(this.location.path());
+                }
             }
         });
         const bodyAviso = {
