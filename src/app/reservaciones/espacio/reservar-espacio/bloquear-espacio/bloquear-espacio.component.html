@@ -60,7 +60,7 @@
             <div class="d-flex flex-column" *ngFor="let item of bloqueosEspacio, let i = index" >
                 <div class="d-flex flex-row justify-content-between bg-primary rounded border border-2 border-white mb-1"> 
                     <div class="text-white" >{{item.fecha_inicio.substring(0,10)}}</div>
-                    <div class="text-white">{{item.hora_inicio.substring(0,5)}} - {{item.hora_fin.substring(0,5)}}</div>
+                    <div id="{{'hora-liberar-'+i}}" class="text-white">{{item.hora_inicio.substring(0,5)}} - {{item.hora_fin.substring(0,5)}}</div>
                     <div id="{{'boton-liberar-'+i}}" class="btn bton border border-1 border-white text-white" (click)="liberar(item.id_bloqueo)" >Liberar</div>
                 </div>
                 
