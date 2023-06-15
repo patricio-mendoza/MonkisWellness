@@ -64,19 +64,70 @@ export class EstadisticasAdminComponent {
 
   descargarDatos(fechaInicio: Date, fechaFinal: Date) {
     if (fechaInicio === undefined || fechaFinal === undefined) { 
-      if (fechaInicio === undefined) { alert("Selecciona un rango de fecha para descargar."); }
-      else { alert("Selecciona un final al rango de fecha para descargar."); }
+      alert("Selecciona un rango de fecha valido para descargar.");
       return;
     }
-  
-    let fechaInicioStr = fechaInicio.toISOString().slice(0, 19).replace('T', ' ');
-    let fechaFinalStr = fechaFinal.toISOString().slice(0, 19).replace('T', ' ');
+
+    if (fechaInicio > new Date() || fechaFinal > new Date()) {
+      alert("No se pueden descargar datos futuros. \nSelecciona un rango de recha valido.");
+      return;
+    }
+
+    let fechaInicioStr = fechaInicio.toISOString().slice(0, 10).replace('T', ' ');
+    let fechaFinalStr = fechaFinal.toISOString().slice(0, 10).replace('T', ' ');
 
     let token = localStorage.getItem('token')
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    this.http.get(`${API_URI}/gym/descargar_datos/${fechaInicioStr}/${fechaFinalStr}`, {headers}).subscribe(res => {
+    
+    this.http.get(`${API_URI}/gym/descargar/${fechaInicioStr}/${fechaFinalStr}`, {headers}).subscribe(res => {
       this.reqData = res;
+
+      const data = this.reqData.data;
+      console.log(data)
+      const csvContent = this.convertToCSV(data);
+
+      this.downloadCSV(csvContent, 'datos_gimnasio.csv');
     });
+  }
+
+  convertToCSV(data: any[]): string {
+    const separator = ',';
+    const keys = Object.keys(data[0]);
+
+    const headerRow = keys.join(separator);
+    const rows = data.map(row => {
+      const values = keys.map(key => row[key]);
+      return values.join(separator);
+    });
+
+    return `${headerRow}\n${rows.join('\n')}`;
+  }
+
+  downloadCSV(content: string, filename: string) {
+    const element = document.createElement('a');
+  const csvData = new Blob([content], { type: 'text/csv' });
+
+  if ((navigator as any).msSaveBlob) {
+    // For IE and Edge
+    (navigator as any).msSaveBlob(csvData, filename);
+  } else {
+    // For other browsers
+    const csvUrl = URL.createObjectURL(csvData);
+    element.href = csvUrl;
+    element.download = filename;
+
+    // Check if the browser supports the "download" attribute
+    if (element.download) {
+      element.click();
+    } else {
+      // For Safari and other browsers that do not support the "download" attribute
+      const windowRef = window.open(csvUrl);
+      const htmlContent = '<pre>' + content + '</pre>';
+      windowRef.document.write(htmlContent);
+      windowRef.document.close();
+    }
+
+    URL.revokeObjectURL(csvUrl);
+  }
   }
 }

@@ -127,7 +127,7 @@ server.get("/api/user/reservaciones/:id", verifyToken, (req, res) => {
         WHERE ("${id}" = matricula OR "${id}" = num_nomina)
     ) sub
     WHERE sub.row_num = 1
-    ORDER BY sub.estatus, sub.hora_entrada DESC`;
+    ORDER BY sub.estatus, sub.hora_entrada DESC LIMIT 10`;
 
     db.query(sql, function (error, result) {
         if (error) console.log("Error retrieving the data")
@@ -387,7 +387,7 @@ server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', verifyToken, (req, res
         let fechaInicio = req.params.fechaInicio;
         let fechaFinal = req.params.fechaFinal;
 
-        let sql = `SELECT tiempo, aforo FROM Historial WHERE tiempo > '${fechaInicio}' AND tiempo < '${fechaFinal}';`
+        let sql = `SELECT CONCAT(DAY(tiempo), "/", MONTH(tiempo), "/", YEAR(tiempo)) AS Fecha, TIME(tiempo) AS Hora, aforo AS Aforo FROM Historial WHERE tiempo >= '${fechaInicio}' AND tiempo < '${fechaFinal}';`
 
         db.query(sql, function (error, result) {
             if (error) console.log("Error")
