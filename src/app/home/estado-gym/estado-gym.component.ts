@@ -41,7 +41,7 @@ export class EstadoGymComponent extends HomeComponent {
     
     this.intervaloAforo = setInterval(() =>{
       this.getAforo();
-    }, 600000)
+    }, 5000)
 
     // Define el estado del servicio como el que está en la base de datos
     this.miServicio.cambiarEstado(this.estado);

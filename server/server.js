@@ -126,7 +126,7 @@ server.get("/api/user/reservaciones/:id", verifyToken, (req, res) => {
             WHERE ("${id}" = matricula OR "${id}" = num_nomina)
             ) sub
             WHERE sub.row_num = 1
-            ORDER BY sub.estatus, sub.hora_entrada DESC`;
+            ORDER BY sub.estatus, sub.hora_entrada DESC LIMIT 10`;
 
         db.query(sql, function (error, result) {
             if (error) console.log("Error retrieving the data")
