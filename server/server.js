@@ -128,10 +128,9 @@ server.get("/api/user/reservaciones/:id", verifyToken, (req, res) => {
             WHERE sub.row_num = 1
             ORDER BY sub.estatus, sub.hora_entrada DESC`;
 
-        db.query(sql, function (error, result) {
-            if (error) console.log("Error retrieving the data")
-            else res.send({ data: result });
-        });
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });
     });
 });
 
@@ -202,10 +201,9 @@ server.get('/api/reservacionesActivas/espacio/:id', verifyToken, (req, res) => {
     FROM Reservacion 
     WHERE "${id}" = id_espacio AND estatus=1 ORDER BY hora_entrada`;
 
-        db.query(sql, function (error, result) {
-            if (error) console.log("Error retrieving the data")
-            else res.send({ data: result });
-        });
+    db.query(sql, function (error, result) {
+        if (error) console.log("Error retrieving the data")
+        else res.send({ data: result });
     });
 });
 
