@@ -387,7 +387,9 @@ server.get('/api/gym/descargar/:fechaInicio/:fechaFinal', verifyToken, (req, res
         let fechaInicio = req.params.fechaInicio;
         let fechaFinal = req.params.fechaFinal;
 
-        let sql = `SELECT CONCAT(DAY(tiempo), "/", MONTH(tiempo), "/", YEAR(tiempo)) AS Fecha, TIME(tiempo) AS Hora, aforo AS Aforo FROM Historial WHERE tiempo >= '${fechaInicio}' AND tiempo < '${fechaFinal}';`
+        let sql = `SELECT CONCAT(DAY(tiempo), "/", MONTH(tiempo), "/", YEAR(tiempo)) AS Fecha, TIME(tiempo) AS Hora, aforo AS Aforo 
+        FROM Historial 
+        WHERE tiempo >= '${fechaInicio}' AND DATE(tiempo) <= '${fechaFinal}' AND tiempo < now();`
 
         db.query(sql, function (error, result) {
             if (error) console.log("Error")
