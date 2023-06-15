@@ -7,9 +7,9 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 })
 export class EstimacionesComponent {
   @Input() num_personas: number;
+  @Input()aforo_max: number;
   @Input() lugar: number;
 
-  aforo_max: number;
   porcentaje: number;
   porcentaje_redondeado: string;
   porcentaje_actual: string;

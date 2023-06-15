@@ -1,5 +1,5 @@
+<div *ngIf="!isAdmin" class="spacer"></div>
 <div class="upper-container">
-    
     <div class="estado-gym flex-box"><app-estado-gym></app-estado-gym></div>
     <span id="botonAforo" *ngIf="isAdmin" (click)="ocultar()"  class=" botonAforo">
         <img src="../../../../assets/Vector.png" class="img-fluid" alt="..." />
