@@ -1,3 +1,8 @@
+// cierres.component.ts
+// Funciones de la tarjeta de cierres
+// Daniel Evaristo Escalera Bonilla
+// 15/05/2023
+
 import { Component } from '@angular/core';
 import { CompartidovarService } from '../compartidorvar-service/compartidovar.service';
 import { HomeComponent } from '../home.component';

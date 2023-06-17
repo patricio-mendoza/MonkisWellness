@@ -2,6 +2,7 @@
 // Componente base que se despliega en todas las paginas y actua de forma de "contenedor" para otros componentes.
 // Autores:
 // Patricio Mendoza Pasapera
+// 17/04/2023
 
 import { Component, Input } from '@angular/core';
 

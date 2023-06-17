@@ -2,6 +2,7 @@
 // Componente que se muestra en el header de cada pagina para mayudar al usuario con la navegación.
 // Autores:
 // Patricio Mendoza Pasapera
+// 18/04/2023
 
 import { Component, SimpleChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';

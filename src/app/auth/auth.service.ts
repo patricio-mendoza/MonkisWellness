@@ -1,3 +1,8 @@
+// auth.service.ts
+// Servicio para autorización de usuarios
+// Autor: Patricio Mendoza Pasapera
+// 20/04/2023
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
@@ -14,6 +19,7 @@ export class AuthService {
 
    constructor( private http: HttpClient) { }
 
+   // Función para iniciar sesión
    login(matricula: string) {
       // obtener desde la API
       let promise = new Promise((resolve, reject) => {         

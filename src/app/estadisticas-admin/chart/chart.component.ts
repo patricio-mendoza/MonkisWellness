@@ -1,3 +1,8 @@
+// chart.component.ts
+// Componente secundario que despliega la gráfica
+// Autor: Patricio Mendoza Pasapera
+// 26/05/2023
+
 import { Component, Input, SimpleChanges } from '@angular/core';
 import Chart, { ChartType } from 'chart.js/auto';
 
@@ -28,6 +33,7 @@ export class ChartComponent {
     this.createChart();
   }
 
+  // Crea la gráfica con los datos enviados por la página de estadíticas
   createChart() {
     this.chart = new Chart(this.my_id, {
       type: this.type,

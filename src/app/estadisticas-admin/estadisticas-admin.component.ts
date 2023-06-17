@@ -2,6 +2,7 @@
 // Componente en el que se despliegan las estadisticas mas detalladas sobre el gimnasio para el administrador
 // Autores:
 // Patricio Mendoza Pasapera
+// 26/05/2023
 
 import { Component, SimpleChanges} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';

@@ -1,5 +1,7 @@
-<!-- 15/05/2023 Daniel Evaristo Escalera Bonilla Tarjeta de cierre -->
-
+<!-- cierres.component.html-->
+<!-- Tarjeta donde se aplican los cierres manuales y programados -->
+<!-- Daniel Evaristo Escalera Bonilla -->
+<!-- 14/05/2023 -->
 
 <!-- 14/05/2023 Creación del componente 2 horas -->
 <!-- 15/05/2023 Función cierre manual 3.5 horas -->
@@ -82,6 +84,7 @@
                     <br>
                 </div>
 
+                <!-- Checkbox días donde se aplica el cierre -->
                 <div class="d-flex flex-column-reverse col-sm-3">
                     <div class="d-flex flex-row input-group-text fw-bold justify-content-center">
                         <label class="ms-1">
@@ -173,7 +176,7 @@
                     </select>
                     <p class="h6 fw-bold" [ngClass]="{'validacionFallida': valCierre2}">Seleccione el cierre a modificar</p>
                 </div>
-
+                <!-- Caja donde se seleccionan el dia de los cierres -->
                 <div class="d-flex flex-column-reverse col-sm-2">
                     <select id="dia-borrar" [(ngModel)]="diaSemanaM" (ngModelChange)="generarLista()" class="d-inline-block input-group-text fw-bold">
                         <option value=0 disabled hidden selected>Seleccione día</option>
