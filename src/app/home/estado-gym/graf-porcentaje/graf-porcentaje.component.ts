@@ -1,3 +1,14 @@
+/*
+
+Grafica de porcentaje
+
+Autores: Nora Villarreal y Patricio Mendoza
+
+Este componente se creo para mostrar una grafica circular de porcentaje en la pagina 
+principal. Esta grafica muestra el aforo en tiempo real del gimnasio del 
+Wellness Center.
+
+*/
 import { Component, Input, SimpleChanges } from '@angular/core';
 
 @Component({

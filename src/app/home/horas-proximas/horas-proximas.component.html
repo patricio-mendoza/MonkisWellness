@@ -1,43 +1,16 @@
-<div class="titulo-proximashoras">Horas próximas</div>
-<div class="separator"></div>
-
-<img src="../../../assets/bg-horasproximas.png" class="img-fluid" alt="..." />
-
+<!-- horas-proximas.component.ts -->
+<!-- Autor:Omar Cota -->
+<!-- Componente que muestra que muestra estimaciones de personas en horas futuras. Cada estimación se representa mediante el componente app-estimaciones y se le pasan propiedades como el número de personas, el aforo máximo permitido -->
+<!-- 20/04/2023 -->
 <div class="container">
-    <div class="container-left">
-        <div class="separator4"></div>
-        <div class="separator4"></div>
-        <div class="separator4"></div>
+    <div class="titulo">
+        <div class="texto">Horas próximas</div>
+        <div class="separator"></div>
     </div>
-    <div class ="container-middle">
-        <div class="hora">
-            <span>{{ currentDateTime.getHours() +1 }}</span>
-            <span>:</span>
-            <span>00</span>
-        </div>
-        <div class="hora">
-            <span>{{ currentDateTime.getHours() +2 }}</span>
-            <span>:</span>
-            <span>00</span>
-        </div>
-        <div class="hora">
-            <span>{{ currentDateTime.getHours() +3 }}</span>
-            <span>:</span>
-            <span>00</span>
-        </div>
-    </div>
-    <div class="container-right">
-        <app-estimaciones [num_personas]="estimacionEn1Horas" [lugar]="1"></app-estimaciones>
-        <app-estimaciones [num_personas]="estimacionEn2Horas" [lugar]="2"></app-estimaciones>
-        <app-estimaciones [num_personas]="estimacionEn3Horas" [lugar]="3"></app-estimaciones>
-    </div>
-    <!-- <img src="../../../assets/bg-horasproximas.png" class="img-fluid" alt="..." />
-    <div class="separator2"></div>
-    <div class="separator3"></div>
-    <div *ngIf="false" class="separator4"></div>
-    <app-estimaciones [num_personas]="estimacionEn1Horas" [lugar]="1"></app-estimaciones>
-    <app-estimaciones [num_personas]="estimacionEn2Horas" [lugar]="2"></app-estimaciones>
 
-    <app-estimaciones [num_personas]="estimacionEn3Horas" [lugar]="3"></app-estimaciones> -->
+    <div class="estimaciones-wrapper">
+        <app-estimaciones class="estimacion" [num_personas]="estimacionEn1Horas" [aforo_max]="280" [lugar]="1"></app-estimaciones>
+        <app-estimaciones class="estimacion" [num_personas]="estimacionEn2Horas" [aforo_max]="280" [lugar]="2"></app-estimaciones>
+        <app-estimaciones class="estimacion" [num_personas]="estimacionEn3Horas" [aforo_max]="280" [lugar]="3"></app-estimaciones>
+    </div>
 </div>
-

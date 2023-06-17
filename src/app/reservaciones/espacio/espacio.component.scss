@@ -44,13 +44,10 @@
             margin-top: 53vh;
             text-align: right;
             
-            //font-size-adjust: 0.8;
             .sport-texto{
                 font-family: 'Poppins', sans-serif;
-                font-size: 5vh;
-                
+                font-size: 4vmin;
                 line-height: 5vh;
-                
                 letter-spacing: 00.03em;
                 color: #ffffff;
                 position: absolute;
@@ -92,8 +89,6 @@
     height: 15%;
     // background-color: rgb(100, 185, 219);
 
-
-    
     .texto-area{
         font-family: 'Poppins', sans-serif;
         font-size: 35px;
@@ -101,7 +96,7 @@
         color: #004891;
     }
     .barra-texto{
-        margin-top: -2vh;
+        margin-top: 2vh;
         width: 30vw;
         height: auto;
     }
@@ -185,7 +180,7 @@
             .espacio-texto{
                 font-family: 'Poppins', sans-serif;
                 font-size: 4vh;
-                
+                margin-top: 1.2rem;
                 line-height: 5vh;
                 
                 letter-spacing: 00.03em;

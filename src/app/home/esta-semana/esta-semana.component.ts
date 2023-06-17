@@ -1,6 +1,8 @@
+// esta-semana.component.ts
+// Bloque que representa el botón de la gráfica de esta semana
+// Cesar Miguel Camarillo Cepeda
+// 20/04/2023
 import { Component } from '@angular/core';
-import { CompartidovarService } from '../compartidovar.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-esta-semana',
@@ -8,9 +10,5 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./esta-semana.component.scss']
 })
 export class EstaSemanaComponent {
-  constructor(private http: HttpClient, public miServicio : CompartidovarService){}
-
-  openTab() {
-    this.miServicio.isCheckingEstaSemana = true;
-  }
+  
 }

@@ -1,6 +1,10 @@
+// auth.service.ts
+// Servicio para autorización de usuarios
+// Autor: Patricio Mendoza Pasapera
+// 20/04/2023
+
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { CompartidovarService } from '../home/compartidovar.service';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -13,8 +17,9 @@ export class AuthService {
    
    reqData: any;
 
-   constructor(private miservicio: CompartidovarService, private http: HttpClient) { }
+   constructor( private http: HttpClient) { }
 
+   // Función para iniciar sesión
    login(matricula: string) {
       // obtener desde la API
       let promise = new Promise((resolve, reject) => {         
@@ -32,6 +37,7 @@ export class AuthService {
                      this.isUserLoggedIn = true;
                      this.isAdmin = id[0] === 'L';  
 
+                     localStorage.setItem('token', this.reqData.token);
                      localStorage.setItem('id', id);
                   }
                   localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false"); 

@@ -1,11 +1,17 @@
+<!-- reservaciones.component.html -->
+<!-- Componente que le permite al usuario realizar reservaciones -->
+<!-- Autores:  Patricio Mendoza Pasapera -->
+
 <div class="container">
-    <div (click)="handleClick(deporte.id_deporte)" *ngFor="let deporte of deportes" class="deporte">
-        <div class = "gradient"></div>
+    <div id="{{'tarjeta-deporte' +i}}" (click)="handleClick(deporte.id_deporte)" 
+    *ngFor="let deporte of deportes, let i = index" class="deporte"
+        [ngClass]="{'disabled': !isAdmin && deportesBloqueados.includes(deporte.id_deporte)}">
+        <div class = "gradient"></div>  
         <div class="nombre-deporte-container"><div class="nombre-deporte">{{deporte.nombre}}</div></div>
         <img class="lineas-text" src="../../assets/foto_deporte/lineas-text.png">
         <img class="arrow" src="../../assets/foto_deporte/icons/arrow.png">
+        <div class="front-bg"></div>
         <img class="foto" src="{{backgroundURL(deporte.nombre)}}">
-        
         
     </div>
 </div>

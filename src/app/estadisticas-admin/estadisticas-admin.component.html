@@ -1,4 +1,10 @@
+<!-- estadisticas-admin.component.html -->
+<!-- Componente en el que se despliegan las estadisticas mas detalladas sobre el gimnasio para el administrador -->
+<!--  Autores:  Patricio Mendoza Pasapera -->
+<!-- 26/05/2023 -->
+
 <div class="container">
+    <!-- Gráfica de afluencia por semana -->
     <div class="cuadrante afluencia-semanal">
         <div class="title">Afluencia Por Semana</div>
         <app-chart 
@@ -9,6 +15,7 @@
             [data]="dataChartSemanal"
         ></app-chart>
     </div>
+    <!-- Gráfica de estancia promedio por semana -->
     <div class="cuadrante estancia-promedio">
         <div class="title">Estancia Promedio</div>
         <app-chart 
@@ -19,8 +26,9 @@
             [data]="dataChartSemanal"
         ></app-chart>
     </div>
+    <!-- Gráfica de historial por hora -->
     <div class="cuadrante historial-aforo">
-        <div class="title">Historial del Aforo</div>
+        <div class="title">Aforo por hora</div>
         <app-chart 
             [my_id]="'historial-aforo'"
             [type]="'bar'"
@@ -30,6 +38,7 @@
         ></app-chart>
     </div>
     <div class="cuadrante opciones">
+        <!-- Elemento que permite filtrar por día -->
         <div class="title">Opciones de Visualización</div>
         <div class="configuracion recargar-datos">
             <mat-form-field class="date-picker">
@@ -41,6 +50,7 @@
             </mat-form-field>
             <button (click)="recargarDatos(fechaPorCargar)" class="btn btn-primary btn-recargar">Recargar Datos</button>
         </div>
+        <!-- Elemento que permite descargar los datos de un rango de días -->
         <div class="configuracion descargar-datos">
             <mat-form-field class="date-picker">
                 <mat-label>Elige un rango de fecha</mat-label>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HomeComponent } from '../../home.component';
+import { HttpHeaders } from '@angular/common/http';
 
 const API_URI = 'http://localhost:8888/api';
 
@@ -18,8 +19,10 @@ export class EstaSemanaPopUpComponent extends HomeComponent {
 
   getDatosDeEstaSemana() {
     let apiURL = `${API_URI}/gym/estaSemana`;
+    let token = localStorage.getItem('token')
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     
-    this.http.get(apiURL).subscribe(res => {
+    this.http.get(apiURL, {headers}).subscribe(res => {
       this.reqData = res;
       this.historial = this.reqData.data.map(x => x.aforo);
     });
