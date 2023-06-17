@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+// login.component.ts
+// Componente inicial de la aplicacion que verifica las credenciales del usuario.
+// Autores:
+// Patricio Mendoza Pasapera
+// 17/04/2021
 
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -24,6 +29,7 @@ export class LoginComponent implements OnInit{
     });
   }
   
+  // llamada al API que recibe la info del usuario.
   onClickSubmit(data: any) {
     this.matricula = data.matricula;
 

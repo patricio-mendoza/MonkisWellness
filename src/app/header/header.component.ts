@@ -1,3 +1,8 @@
+// header.component.ts
+// Componente que se muestra en el header de cada pagina para mayudar al usuario con la navegación.
+// Autores:
+// Patricio Mendoza Pasapera
+
 import { Component, SimpleChanges } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';

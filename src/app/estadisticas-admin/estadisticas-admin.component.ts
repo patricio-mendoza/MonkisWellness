@@ -1,3 +1,8 @@
+// estadisticas-admin.component.ts
+// Componente en el que se despliegan las estadisticas mas detalladas sobre el gimnasio para el administrador
+// Autores:
+// Patricio Mendoza Pasapera
+
 import { Component, SimpleChanges} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -31,6 +36,7 @@ export class EstadisticasAdminComponent {
     this.getDataCharts(new Date());
   }
 
+  // hace la llamada a la API para llenar los datos de las graficas con el dia que se le mande
   getDataCharts(fecha: Date) {    
     let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
     
@@ -51,6 +57,7 @@ export class EstadisticasAdminComponent {
     });
   }
 
+  // cuando se selecciona una fecha distinta, este metodo hace la llamada al API con dicha fehca
   recargarDatos(fechaPorCargar: Date) {
     if (fechaPorCargar === undefined) { 
       alert("No hay una fecha seleccionada para recargar los datos de la página."); 
