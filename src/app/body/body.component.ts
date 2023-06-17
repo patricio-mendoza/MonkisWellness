@@ -1,3 +1,8 @@
+// Body.component.ts
+// Componente base que se despliega en todas las paginas y actua de forma de "contenedor" para otros componentes.
+// Autores:
+// Patricio Mendoza Pasapera
+
 import { Component, Input } from '@angular/core';
 
 @Component({

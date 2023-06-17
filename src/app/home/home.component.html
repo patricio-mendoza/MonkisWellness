@@ -1,19 +1,36 @@
+<!-- Home.component.html-->
+<!-- Componente base que contiene los subcomponentes de la página principal -->
+<!-- Autores:
+    Daniel Evaristo Escalera Bonilla-->
+<!-- 16/04/2023-->
+
+
 <div *ngIf="!isAdmin" class="spacer"></div>
+
+<!-- Contenedor de las cajas superiores:
+    Estado del gimnasio
+    Predicciones aforo
+    Botón modificar aforo-->
 <div class="upper-container">
     <div class="estado-gym flex-box"><app-estado-gym></app-estado-gym></div>
-    <span id="botonAforo" *ngIf="isAdmin" (click)="ocultar()"  class=" botonAforo">
+    <span id="botonAforo" *ngIf="isAdmin" (click)="ocultar()" class=" botonAforo">
         <img src="../../../../assets/Vector.png" class="img-fluid" alt="..." />
     </span>
 
-    
     <div class="flex-box2"><app-horas-proximas></app-horas-proximas></div>
 </div>
+
+<!-- Contenedor de las cajas inferiores:
+    Gráfica esta semana
+    Gráfica historial por hora-->
 <div *ngIf="isAdmin" class="lower-container">
-    <div id="esta-semana-boton" (click)="openEstaSemanaTab()" class="flex-box3"><app-esta-semana></app-esta-semana></div>
+    <div id="esta-semana-boton" (click)="openEstaSemanaTab()" class="flex-box3"><app-esta-semana></app-esta-semana>
+    </div>
     <div id="historial-boton" (click)="openHistorial()" class="flex-box4"><app-historial></app-historial></div>
 </div>
 
-<app-modif-aforo *ngIf="miServicio.isModifyingAforo" ></app-modif-aforo>
-<app-cierres *ngIf="miServicio.isClosing" id="overlay-cierres" ></app-cierres>
+<!-- Subcomponentes con las tarjetas sobrepuestas en la página principal, cada uno esta sujeto a una variable en el servicio -->
+<app-modif-aforo *ngIf="miServicio.isModifyingAforo"></app-modif-aforo>
+<app-cierres *ngIf="miServicio.isClosing" id="overlay-cierres"></app-cierres>
 <app-esta-semana-pop-up *ngIf="miServicio.isCheckingEstaSemana"></app-esta-semana-pop-up>
 <app-historial-pop-up *ngIf="miServicio.isCheckingHistorial"></app-historial-pop-up>

@@ -1,15 +1,11 @@
-
-/*
-  Estadisticas para administradores
-
-  Autores: Patricio Medoza y Nora Villarreal
-  Este componente nos ayuda a crear la pagina de estadisticas para los administradores.
-  Creamos tres graficas y agregamos dos funcionalidades mas, una nos permite seleccionar 
-  una fecha y recargar los datos para que se generen las graficas con datos de la fecha seleccionada,
-  la otra funcionalidad nos permite seleccionar un rango de fechas y descargar un documento
-  .csv con los datos de estas fechas seleccionadas.
-*/
-
+// estadisticas-admin.component.ts
+// Este componente nos ayuda a crear la pagina de estadisticas para los administradores.
+// Creamos tres graficas y agregamos dos funcionalidades mas, una nos permite seleccionar 
+// una fecha y recargar los datos para que se generen las graficas con datos de la fecha seleccionada,
+// la otra funcionalidad nos permite seleccionar un rango de fechas y descargar un documento
+// .csv con los datos de estas fechas seleccionadas.
+// Autores:
+// Nora Villarreal y Patricio Medoza
 
 import { Component, SimpleChanges} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -44,6 +40,7 @@ export class EstadisticasAdminComponent {
     this.getDataCharts(new Date());
   }
 
+  // hace la llamada a la API para llenar los datos de las graficas con el dia que se le mande
   getDataCharts(fecha: Date) {    
     let fechastr = fecha.toISOString().slice(0, 19).replace('T', ' ');
     
@@ -64,6 +61,7 @@ export class EstadisticasAdminComponent {
     });
   }
 
+  // cuando se selecciona una fecha distinta, este metodo hace la llamada al API con dicha fehca
   recargarDatos(fechaPorCargar: Date) {
     if (fechaPorCargar === undefined) { 
       alert("No hay una fecha seleccionada para recargar los datos de la página."); 
