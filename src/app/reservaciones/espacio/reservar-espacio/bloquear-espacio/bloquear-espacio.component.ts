@@ -1,3 +1,7 @@
+// bloquear-espacio.component.ts
+// Tarjeta para evitar que se puedan hacer reservaciones en un espacio en un periodo determinado
+// Daniel Evaristo Escalera Bonilla
+// 03/06/2023
 import { Component } from '@angular/core';
 import { ReservarEspacioComponent } from '../reservar-espacio.component';
 import { OnInit } from '@angular/core';
@@ -18,6 +22,7 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
   horaIni: string;
   hoy = new Date();
 
+  // Quitar el bloqueo de un espacio
   liberar(id: number) {
     let token = localStorage.getItem('token');
     const headers = new HttpHeaders()
@@ -32,6 +37,7 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
     this.getBloqueos();
   }
 
+  // Enviar la notificación cuando un bloqueo cancela la reservación
   notificarAlumnos(fechaInicio: string, fechaFin: string) {
     let reservasACancelar: any[] = [];
 
@@ -64,6 +70,7 @@ export class BloquearEspacioComponent extends ReservarEspacioComponent implement
     this.getBloqueos();
   }
 
+  // Bloquear un espacio
   bloquear() {
 
     let confirmar = window.confirm("Está seguro de que desea aplicar este bloqueo?")

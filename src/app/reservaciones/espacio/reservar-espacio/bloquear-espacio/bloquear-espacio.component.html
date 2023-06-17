@@ -1,3 +1,7 @@
+<!-- bloquear-espacio.component.html -->
+<!-- Tarjeta para bloquear los espacios por dias y horas-->
+<!-- Daniel Evaristo Escalera Bonilla -->
+<!-- 03/06/2023 -->
 <div class="d-flex align-items-center justify-content-center ps-5 blur">
 
     <!-- Caja, contiene los textos e inputs -->
@@ -9,6 +13,7 @@
 
         <p class="text-white"> Cerrar el espacio durante varios días a la misma hora</p>
 
+        <!-- Inputs de fecha y hora y botones -->
         <div class="d-flex flex-row-reverse justify-content-evenly">
 
             <div id="boton-cambio" class="d-flex flex-column-reverse col-sm-2 mt-0">
@@ -55,7 +60,8 @@
         <p id="titulo-cierre-manual" class="text-white h1"> Liberar espacio </p>
 
         <p class="text-white"> Quitar el bloqueo de un espacio</p>
-
+        
+        <!-- Lista de bloqueos -->
         <div id="caja-bloqueos" class="d-flex flex-column">
             <div class="d-flex flex-column" *ngFor="let item of bloqueosEspacio, let i = index" >
                 <div class="d-flex flex-row justify-content-between bg-primary rounded border border-2 border-white mb-1"> 

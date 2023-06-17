@@ -1,3 +1,8 @@
+<!-- estado-gym.component.html -->
+<!-- Muestra la hora, fecha, estado del gimnasio y aforo actual -->
+<!-- Daniel Evaristo Escalera Bonilla -->
+<!-- 02/05/2023 -->
+
 <div class="d-flex flex-row justify-content-start">
 
     <div class="d-flex flex-column align-items-evenly">
@@ -6,18 +11,22 @@
             <div class="separator"></div>
         </div>
 
+        <!-- Fecha y hora -->
         <div class="saludo d-flex flex-column text-white ms-5">
             <p id="saludo">
                 HOY, {{dia.toUpperCase()}}
             </p>
             <p id="fecha" class="reloj m-0">{{time | date: 'dd'}} de {{time | date: 'MMMM'}}</p>
             <p id="hora" class="reloj m-0">{{time | date: 'hh:mm a'}}</p>
+
+            <!-- Botón programar cierres -->
             <div id="boton-cierre" *ngIf="isAdmin" (click)="cierresTab()" id="boton-cierre"
                 class="shadow btn btn-light fw-bold border border-dark border-3 d-flex align-items-center justify-content-center mt-2">
                 Programar Cierre
             </div>
         </div>
 
+        <!-- Estado del gimnasio -->
         <div class="estado-actual d-flex flex-column text-white ms-5 mt-3">
             <div class="textos-estado  text-white">
                 <div class="d-flex flex-row">
@@ -33,6 +42,8 @@
         </div>
 
     </div>
+
+    <!-- Gráfica de aforo -->
     <app-graf-porcentaje [aforo_max]="aforo_max" [num_personas]="aforo_actual"
         class="grafica-porcentaje"></app-graf-porcentaje>
 </div>

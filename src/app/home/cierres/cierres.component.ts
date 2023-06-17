@@ -60,6 +60,7 @@ export class CierresComponent extends HomeComponent {
     this.getCierres();
   }
 
+  // Obtiene el estado del gimnasio de la base de datos
   getEstadoGym() {
     let apiURL = `${API_URI}/gym/estado`;
     let token = localStorage.getItem('token')
@@ -71,6 +72,7 @@ export class CierresComponent extends HomeComponent {
     });
   }
 
+  // Elimina los cierres manuales obsoletos
   cancelarCierresM() {
     let apiURL = `${API_URI}/gym/cancelarCierresM`;
     let token = localStorage.getItem('token');
@@ -165,6 +167,7 @@ export class CierresComponent extends HomeComponent {
     }
   }
 
+  // Reinicia los inputs de la sección programar cierre
   reiniciarInputP() {
     this.cierre_act = null;
     this.editarFin = "";
@@ -177,6 +180,7 @@ export class CierresComponent extends HomeComponent {
     this.diaSemanaM = 0;
   }
 
+  // Selecionar el día en la checkbox
   toggleDay(day: number): void {
     if (this.diaSemana.includes(day)) {
       this.diaSemana = this.diaSemana.filter(d => d !== day);
@@ -185,6 +189,7 @@ export class CierresComponent extends HomeComponent {
     }
   }
 
+  // Programar un cierre
   bloquear(): void {
     this.valProg1 = false;
     this.valProg2 = false;
@@ -229,7 +234,8 @@ export class CierresComponent extends HomeComponent {
       else this.valProg3 = false;
     }
   }
-
+  
+  // Obtener los cierres programados
   getCierres() {
     let apiURL = `${API_URI}/gym/cierresR`;
     let token = localStorage.getItem('token');
@@ -241,7 +247,8 @@ export class CierresComponent extends HomeComponent {
     });
 
   }
-
+  
+  // Generar una lista de cierres programados por día
   generarLista() {
 
     this.cierre_act = -1;
@@ -254,6 +261,7 @@ export class CierresComponent extends HomeComponent {
     }
   }
 
+  // Obtener un cierre en específico
   findCierre(cierre_act: number): Bloqueo {
 
     for (let cierre of this.cierresByDay) {
@@ -265,7 +273,8 @@ export class CierresComponent extends HomeComponent {
     return this.cierresByDay[0];
 
   }
-
+  
+  // Mostrar cierre seleccionado
   mostrarCierre() {
     this.editarFin = "";
     this.editarIni = "";
@@ -277,7 +286,7 @@ export class CierresComponent extends HomeComponent {
 
   }
   
-
+  // Reiniciar input de eliminación de cierres
   reiniciarInput() {
     this.cierre_act = -1;
     this.editarFin = "";
@@ -290,7 +299,8 @@ export class CierresComponent extends HomeComponent {
 
     this.diaSemanaM = 0;
   }
-
+  
+  // Eliminar un cierre programado seleccionado
   borrarCierre() {
 
     if (this.diaSemanaM == 0 || this.cierre_act == -1) {

@@ -1,3 +1,7 @@
+// estado-gym.component.ts
+// Muestra al usuario la fecha, hora, estado y aforo del gimnasio
+// Daniel Evaristo Escalera Bonilla
+// 02/05/2023
 import { Component } from '@angular/core';
 import { API_URI } from '../../../../server/server.js';
 import { HomeComponent } from '../home.component';
@@ -27,7 +31,9 @@ export class EstadoGymComponent extends HomeComponent {
   aforo_actual: number = 0;
 
   reqData: any;
-
+  
+  // Funcion que se ejecuta al inicio para obtener los datos de la API
+  // También define los intervalos de tiempo para actualizar la hora y el aforo
   ngOnInit() {
     this.getEstadoGym();
     this.getAforo();
@@ -41,7 +47,7 @@ export class EstadoGymComponent extends HomeComponent {
     
     this.intervaloAforo = setInterval(() =>{
       this.getAforo();
-    }, 5000)
+    }, 600000)
 
     // Define el estado del servicio como el que está en la base de datos
     this.miServicio.cambiarEstado(this.estado);
@@ -57,8 +63,10 @@ export class EstadoGymComponent extends HomeComponent {
 
   ngOnDestroy(){
     clearInterval(this.intervalId);
+    clearInterval(this.intervaloAforo);
   }
   
+  // Obtener el estado abierto o cerrado del gimnasio
   getEstadoGym() {
     let apiURL = `${API_URI}/gym/estado`;
     let token = localStorage.getItem('token');
@@ -69,6 +77,8 @@ export class EstadoGymComponent extends HomeComponent {
       this.estado = this.reqData.estado;
     });
   }
+
+  // Obtener el aforo del gimnasio
   getAforo() {
     let apiURL = `${API_URI}/gym/aforo`;
     let token = localStorage.getItem('token');
@@ -80,6 +90,8 @@ export class EstadoGymComponent extends HomeComponent {
       this.aforo_actual = this.reqData.data.aforo_actual;
     });
   }
+
+  // Obtener la hora de apertura
   getHoraA() {
     let apiURL = `${API_URI}/gym/siguienteAp`;
     let token = localStorage.getItem('token');
@@ -94,6 +106,7 @@ export class EstadoGymComponent extends HomeComponent {
     });
   }
   
+  // Obtener la hora de cierre
   getHoraC() {
     let apiURL = `${API_URI}/gym/siguienteCi`;
     let token = localStorage.getItem('token');

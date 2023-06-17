@@ -1,3 +1,8 @@
+// compartidor.service.ts
+// Serivicio que controla las tarjetas de la página principal y el estado de la aplicación
+// Daniel Evaristo Escalera Bonilla
+// 13/06/2023
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
@@ -25,6 +30,7 @@ export class CompartidovarService {
   private estadoSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   estado$ = this.estadoSubject.asObservable();
 
+  // Evento que notifica a los demás componentes del un cambio en el estado de la aplicación
   cambiarEstado(nuevoEstado:boolean){
     this.estadoSubject.next(nuevoEstado);
   }

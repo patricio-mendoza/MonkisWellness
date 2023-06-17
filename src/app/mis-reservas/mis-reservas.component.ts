@@ -1,3 +1,7 @@
+// mis-reservas.component.ts
+// Lista de reservaciones
+// César Miguel Camarillo Cepeda
+// 27/04/2023
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -30,6 +34,7 @@ export class MisReservasComponent implements OnInit {
     this.getReservas();
   }
 
+  // Obtiene las reservas de la API
   getReservas(): void {
     let id = localStorage.getItem("id")
     let apiURL = `${API_URI}/user/reservaciones/${id}`;
@@ -42,6 +47,7 @@ export class MisReservasComponent implements OnInit {
     });
   }
   
+  // Botón confirmar para pasar el estado a en progreso
   confirmar(reserva: Reserva){
     if (!this.isProrrogaActiva(reserva)) {return;}
 
@@ -58,6 +64,8 @@ export class MisReservasComponent implements OnInit {
     this.http.put(`${API_URI}/reserva/enprogreso/${reserva.id_reservacion}`, [], options).subscribe()
     
   }
+
+  // Pasar una reservación propia a confirmada
   cancelar(reserva: Reserva){
     let index = this.reservaciones.indexOf(reserva);
     if (this.reservaciones[index].estatus != 1) {
@@ -88,6 +96,7 @@ export class MisReservasComponent implements OnInit {
     this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
   }
 
+  // Manda el aviso de la cancelación por no confirmar la reservación
   cancelarPorNoConfirmar(reserva: Reserva) {
     let index = this.reservaciones.indexOf(reserva);
     this.reservaciones[index].estatus = 3;
@@ -109,6 +118,7 @@ export class MisReservasComponent implements OnInit {
     this.http.post(`${API_URI}/generar/aviso`, JSON.stringify(body), options).subscribe();
   }
 
+  // Obtiene la foto del deporte
   backgroundURL(nombre_deporte: string): string {
     let img_url = nombre_deporte.toLocaleLowerCase();
     img_url = img_url.replaceAll(' ', '_') + '.jpeg';
@@ -117,6 +127,7 @@ export class MisReservasComponent implements OnInit {
     return img_url; 
   }
 
+  // Detecta si la prorroga de tiempo para los alumnos está activada
   isProrrogaActiva(reserva: Reserva): boolean {
     if (reserva.estatus !== 1) {return false;}
 
@@ -129,11 +140,13 @@ export class MisReservasComponent implements OnInit {
     return now > new Date(reserva.hora_entrada) && now.getTime() < prorrogaTimeLimit.getTime();
   }
 
+  // Determina si la reservación está en progreso
   isReservacionEnProgreso(reserva: Reserva): boolean {
     let now = new Date();
     return now > new Date(reserva.hora_entrada) && now < new Date(reserva.hora_salida);
   }
 
+  // Define la prorroga
   getProrroga(hora: Date) {
     let horaDate = new Date(hora)
     return `${horaDate.getHours()}:${horaDate.getMinutes() + this.prorroga}`;

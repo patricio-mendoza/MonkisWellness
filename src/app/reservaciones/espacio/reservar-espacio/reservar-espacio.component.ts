@@ -103,6 +103,7 @@ export class ReservarEspacioComponent {
         }
     }
 
+    // Formatear hora con los minutos agregados
     sumMinutesToHour(hora: string, minutes: number) {
         const [hour, minute] = hora.split(":").map(Number);
         const totalMinutes = hour * 60 + minute + minutes;
@@ -115,6 +116,7 @@ export class ReservarEspacioComponent {
         return `${formattedHour}:${formattedMinute}`;
     }
     
+    // Determina si una hora es mayor que otra
     hourIsBigger(hour1: string, hour2: string) {
         const [firstHourValue, firstMinuteValue] = hour1.split(":").map(Number);
         const [secondHourValue, secondMinuteValue] = hour2.split(":").map(Number);
@@ -137,6 +139,8 @@ export class ReservarEspacioComponent {
         }
     }
 
+
+    // Obtiene los bloqueos del espacio
     getBloqueos(): void {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders()
@@ -151,6 +155,7 @@ export class ReservarEspacioComponent {
         })
     }
 
+    // Función que permite al usuario seleccionar una hora
     selectHora(horaSeleccionada: Hora) {
         if (horaSeleccionada.is_disabled) { return; }
 
@@ -214,6 +219,7 @@ export class ReservarEspacioComponent {
         }
     }
 
+    // Obtiene las horas disponibles del espacio
     getHorasDisponibles(dia: Date): void {
         let diaFormateado = this.datepipe.transform(dia, 'yyyy-MM-dd');
         let token = localStorage.getItem('token');
@@ -246,6 +252,7 @@ export class ReservarEspacioComponent {
         });
     }
 
+    // Cancela las horas con bloqueos activos
     getBloqueosActivos(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
@@ -284,6 +291,7 @@ export class ReservarEspacioComponent {
         });
     }
 
+    // Obtiene el horario del espacio
     getHorarioInstalacion(): void {
         this.route.paramMap.subscribe((params: ParamMap) => {
             this.id_espacio = +params.get('id')
@@ -304,6 +312,7 @@ export class ReservarEspacioComponent {
         });
     }
 
+    // Obtiene las reservaciones del espacio
     getReservaciones() {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -314,6 +323,7 @@ export class ReservarEspacioComponent {
         });
     }
 
+    // Utiliza los tiempos seleccionados para reservar un espacio
     reservar(dia: Date, hora_entrada: Hora, hora_salida: Hora): void {
         if (!dia || !hora_entrada) {
             alert("Selecciona un horario valido para tu reservación.");
@@ -374,6 +384,7 @@ export class ReservarEspacioComponent {
         }
     }
 
+    // Permite al administrador cancelar una reservación
     cancelarReservacion(id: number, dueno: string) {
         let token = localStorage.getItem('token');
         const headers = new HttpHeaders()
