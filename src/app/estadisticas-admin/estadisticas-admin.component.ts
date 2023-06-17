@@ -1,3 +1,16 @@
+
+/*
+  Estadisticas para administradores
+
+  Autores: Patricio Medoza y Nora Villarreal
+  Este componente nos ayuda a crear la pagina de estadisticas para los administradores.
+  Creamos tres graficas y agregamos dos funcionalidades mas, una nos permite seleccionar 
+  una fecha y recargar los datos para que se generen las graficas con datos de la fecha seleccionada,
+  la otra funcionalidad nos permite seleccionar un rango de fechas y descargar un documento
+  .csv con los datos de estas fechas seleccionadas.
+*/
+
+
 import { Component, SimpleChanges} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -62,6 +75,8 @@ export class EstadisticasAdminComponent {
     this.getDataCharts(fechaPorCargar);
   }
 
+  // El siguiente metodo sirve para descargar los datos en formato CSV, 
+  //Realiza validaciones y llamadas a la API utilizando HttpClient
   descargarDatos(fechaInicio: Date, fechaFinal: Date) {
     if (fechaInicio === undefined || fechaFinal === undefined) { 
       alert("Selecciona un rango de fecha valido para descargar.");
@@ -90,6 +105,7 @@ export class EstadisticasAdminComponent {
     });
   }
 
+  // El siguiente metodo recibe un arreglo de datos y los convierte en una cadena en formato CSV
   convertToCSV(data: any[]): string {
     const separator = ',';
     const keys = Object.keys(data[0]);
@@ -108,19 +124,19 @@ export class EstadisticasAdminComponent {
   const csvData = new Blob([content], { type: 'text/csv' });
 
   if ((navigator as any).msSaveBlob) {
-    // For IE and Edge
+    // Para IE y Edge
     (navigator as any).msSaveBlob(csvData, filename);
   } else {
-    // For other browsers
+    // Para otros navegadores
     const csvUrl = URL.createObjectURL(csvData);
     element.href = csvUrl;
     element.download = filename;
 
-    // Check if the browser supports the "download" attribute
+    // Verificar que el navegador admita el atributo "download" 
     if (element.download) {
       element.click();
     } else {
-      // For Safari and other browsers that do not support the "download" attribute
+      // Para navegadores que no admitan el atributo "download" 
       const windowRef = window.open(csvUrl);
       const htmlContent = '<pre>' + content + '</pre>';
       windowRef.document.write(htmlContent);
