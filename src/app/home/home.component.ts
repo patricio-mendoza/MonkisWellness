@@ -2,6 +2,7 @@
 // Componente base que contiene los subcomponentes de la página principal y les manda información e instancias relevantes
 // Autores:
 // Daniel Evaristo Escalera Bonilla
+//Omar Cota Rodríguez
 // 17/04/2021
 
 
