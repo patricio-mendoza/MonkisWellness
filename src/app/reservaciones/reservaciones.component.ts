@@ -1,3 +1,9 @@
+// login.component.ts
+// Componente que le permite al usuario realizar reservaciones
+// Autores:
+// Patricio Mendoza Pasapera
+// 17/04/2021
+
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';

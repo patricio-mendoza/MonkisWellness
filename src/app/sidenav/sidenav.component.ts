@@ -1,3 +1,8 @@
+// sidenav.component.ts
+// Componente de barra de navegación que permite navegar por la aplicacion al usuario.
+// Autores:
+// Patricio Mendoza Pasapera
+// 17/04/2021
 
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
 import { Component, Output, EventEmitter, OnInit, HostListener } from '@angular/core';
